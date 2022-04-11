@@ -3,5 +3,5 @@ project(main)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(main
-        src/main.cpp)
+add_executable(writelock src/writelock.cpp)
+add_executable(readlock src/readlock.cpp)
