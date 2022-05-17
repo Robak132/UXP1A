@@ -1,7 +1,8 @@
-# cmake_minimum_required(VERSION <specify CMake version here>)
+cmake_minimum_required(VERSION 3.16)
 project(main)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(writelock src/writelock.cpp)
-add_executable(readlock src/readlock.cpp)
+add_executable(writelock lib/src/example/writelock.cpp)
+add_executable(readlock lib/src/example/readlock.cpp)
+add_executable(lindatest lib/src/main.cpp lib/src/linda.cpp lib/src/tuple.cpp)

@@ -36,3 +36,7 @@
 
 # CMake
 /cmake-build-debug
+/CMakeFiles
+
+# Testing temp files
+/Testing/Temporary
