@@ -1,10 +1,9 @@
 #include "../include/file_manager.h"
-#include <fstream>
 #include <iostream>
-#include <utility>
 #include <fcntl.h>
 #include <unistd.h>
-#include <cstring>
+#include <sstream>
+#include <iterator>
 
 FileManager::FileManager(const std::string& file_path) {
     this -> file_path = file_path.c_str();
@@ -36,6 +35,27 @@ int FileManager::openFile() {
     return fp;
 }
 
-void FileManager::closeFile() {
+void FileManager::closeFile() const {
     close(file);
+}
+
+std::vector<std::string> FileManager::readSplitFile() const {
+    std::vector<std::string> result;
+    std::string allFile = readFile();
+    std::string temp;
+
+    for (char character : allFile) {
+        if (character != '\n' && character != '\r') {
+            temp += character;
+        } else {
+            if (!temp.empty()) {
+                result.push_back(temp);
+                temp = "";
+            }
+        }
+    }
+    if (!temp.empty()) {
+        result.push_back(temp);
+    }
+    return result;
 }

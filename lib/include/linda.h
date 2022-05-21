@@ -4,7 +4,7 @@
 class Linda {
 public:
     Linda();
-    Linda(const std::string& file_path);
+    explicit Linda(const std::string& file_path);
     int input(TuplePattern tupleTemplate, int timeout);
     int read(TuplePattern tupleTemplate, int timeout);
     int output(Tuple tuple);

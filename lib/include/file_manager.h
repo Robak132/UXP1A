@@ -4,19 +4,21 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <vector>
 
 class FileManager {
 public:
-    FileManager(const std::string& file_path);
+    explicit FileManager(const std::string& file_path);
     ~FileManager();
     std::string readFile() const;
+    std::vector<std::string> readSplitFile() const;
     void writeLine(const std::string& line);
 private:
     const char *file_path;
     int file;
 
     int openFile();
-    void closeFile();
+    void closeFile() const;
 };
 
 
