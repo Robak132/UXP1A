@@ -7,15 +7,15 @@
 
 class FileManager {
 public:
-    FileManager(std::string file_path);
+    FileManager(const std::string& file_path);
     ~FileManager();
     std::string readLine();
     void writeLine(const std::string& line);
 private:
-    std::string file_path;
-    std::fstream file;
+    const char *file_path;
+    FILE *file;
 
-    void openFile();
+    FILE * openFile();
     void closeFile();
 };
 
