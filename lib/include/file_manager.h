@@ -9,13 +9,13 @@ class FileManager {
 public:
     FileManager(const std::string& file_path);
     ~FileManager();
-    std::string readLine();
+    std::string readFile() const;
     void writeLine(const std::string& line);
 private:
     const char *file_path;
-    FILE *file;
+    int file;
 
-    FILE * openFile();
+    int openFile();
     void closeFile();
 };
 

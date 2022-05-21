@@ -1,8 +1,10 @@
 #include "../include/file_manager.h"
-
 #include <fstream>
 #include <iostream>
 #include <utility>
+#include <fcntl.h>
+#include <unistd.h>
+#include <cstring>
 
 FileManager::FileManager(const std::string& file_path) {
     this -> file_path = file_path.c_str();
@@ -13,18 +15,20 @@ FileManager::~FileManager() {
     closeFile();
 }
 
-std::string FileManager::readLine() {
-    char *line_buf = nullptr;
-    size_t line_buf_size = 0;
-    getline(&line_buf, &line_buf_size, file);
-    return line_buf;
+std::string FileManager::readFile() const {
+    char buf[4096];
+    std::string result;
+    while (read(file, buf, sizeof buf) > 0) {
+        result.append(buf);
+    }
+    return result;
 }
 
 void FileManager::writeLine(const std::string& line) {
 }
 
-FILE * FileManager::openFile() {
-    FILE *fp = fopen(file_path, "r");
+int FileManager::openFile() {
+    int fp = open(file_path, O_RDONLY);
     if (!fp) {
         perror("Error opening file");
         exit(1);
@@ -33,5 +37,5 @@ FILE * FileManager::openFile() {
 }
 
 void FileManager::closeFile() {
-    fclose(file);
+    close(file);
 }
