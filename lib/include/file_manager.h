@@ -12,7 +12,7 @@ public:
     ~FileManager();
     std::string readFile() const;
     std::vector<std::string> readSplitFile() const;
-    void writeLine(const std::string& line);
+    void writeLine(const std::string& line) const;
 private:
     const char *file_path;
     int file;

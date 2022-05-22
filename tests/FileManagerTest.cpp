@@ -16,3 +16,13 @@ TEST_CASE("Loads file and split") {
     REQUIRE(vec[1] == "aaaaaaaa");
     REQUIRE(vec[2] == "bbbbbbbb");
 }
+TEST_CASE("Write to file") {
+    system("cp ../tests/resources/test.txt ../tests/resources/test3.txt ");
+    FileManager fileManager("../tests/resources/test3.txt");
+    REQUIRE(fileManager.readFile() == "abcdefgh");
+
+    fileManager.writeLine("save_test");
+    std::vector<std::string> vec = fileManager.readSplitFile();
+    REQUIRE(vec[0] == "abcdefgh");
+    REQUIRE(vec[1] == "save_test");
+}
