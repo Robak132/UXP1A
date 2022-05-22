@@ -1,3 +1,12 @@
+#include <string>
 #include "../include/linda.h"
+#include "../include/file_manager.h"
+#include "../include/parser.h"
 
-Linda::Linda() = default;
+Linda::Linda(const std::string& file_path) {
+    Parser parser;
+    FileManager fileManager(file_path);
+    std::cout << fileManager.readFile();
+}
+
+Linda::Linda() : Linda("../resources/tuples.csv") {}
