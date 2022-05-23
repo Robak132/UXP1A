@@ -11,14 +11,16 @@ public:
     explicit FileManager(const std::string& file_path);
     ~FileManager();
     std::string readFile() const;
-    std::vector<std::string> readSplitFile() const;
-    void writeLine(const std::string& line) const;
+    void appendLine(const std::string& line);
+    void writeFile(std::vector<std::string> lines);
 private:
-    const char *file_path;
+    const char* file_path;
     int file;
 
     int openFile();
     void closeFile() const;
+
+    void writeLine(const std::string &line) const;
 };
 
 

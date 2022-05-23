@@ -1,9 +1,16 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 #include "../lib/include/file_manager.h"
+#include "../lib/include/utilities.h"
 
 TEST_CASE("Life, the universe and everything") {
     REQUIRE(7*6 == 42);
+}
+TEST_CASE("Split string") {
+    std::vector<std::string> vec = Utilities::splitString("abcdefgh\n\raaaaaaaa\n\rbbbbbbbb");
+    REQUIRE(vec[0] == "abcdefgh");
+    REQUIRE(vec[1] == "aaaaaaaa");
+    REQUIRE(vec[2] == "bbbbbbbb");
 }
 TEST_CASE("Loads file") {
     FileManager fileManager("../tests/resources/test.txt");
@@ -11,18 +18,29 @@ TEST_CASE("Loads file") {
 }
 TEST_CASE("Loads file and split") {
     FileManager fileManager("../tests/resources/test2.txt");
-    std::vector<std::string> vec = fileManager.readSplitFile();
+    std::vector<std::string> vec = Utilities::splitString(fileManager.readFile());
     REQUIRE(vec[0] == "abcdefgh");
     REQUIRE(vec[1] == "aaaaaaaa");
     REQUIRE(vec[2] == "bbbbbbbb");
 }
-TEST_CASE("Write to file") {
+TEST_CASE("Append line to file") {
     system("cp ../tests/resources/test.txt ../tests/resources/test3.txt ");
     FileManager fileManager("../tests/resources/test3.txt");
-    REQUIRE(fileManager.readFile() == "abcdefgh");
+    fileManager.appendLine("save_test");
 
-    fileManager.writeLine("save_test");
-    std::vector<std::string> vec = fileManager.readSplitFile();
+    std::vector<std::string> vec = Utilities::splitString(fileManager.readFile());
     REQUIRE(vec[0] == "abcdefgh");
     REQUIRE(vec[1] == "save_test");
+}
+TEST_CASE("Remove line from file") {
+    system("cp ../tests/resources/test2.txt ../tests/resources/test4.txt ");
+
+    FileManager fileManager("../tests/resources/test4.txt");
+    std::vector<std::string> vec = Utilities::splitString(fileManager.readFile());
+    vec.erase(vec.begin()+1);
+
+    fileManager.writeFile(vec);
+    std::vector<std::string> resultVec = Utilities::splitString(fileManager.readFile());
+    REQUIRE(resultVec[0] == "abcdefgh");
+    REQUIRE(resultVec[1] == "bbbbbbbb");
 }
