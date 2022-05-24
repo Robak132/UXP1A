@@ -8,7 +8,6 @@ add_executable(readlock lib/src/example/readlock.cpp)
 add_executable(lindatest
         lib/src/main.cpp
         lib/src/linda.cpp
-        lib/src/tuple.cpp
         lib/src/file_manager.cpp
         lib/src/parser.cpp)
 
@@ -23,5 +22,10 @@ Include(FetchContent)
     "${catch2_BINARY_DIR}")
         endif()
 
-add_executable(CatchTests tests/FileManagerTest.cpp lib/src/file_manager.cpp lib/src/utilities.cpp)
+add_executable(CatchTests
+        tests/FileManagerTest.cpp
+        tests/TupleCompareTest.cpp
+
+        lib/src/file_manager.cpp
+        lib/src/utilities.cpp)
 target_link_libraries(CatchTests Catch2::Catch2WithMain)
