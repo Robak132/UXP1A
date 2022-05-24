@@ -9,6 +9,7 @@ add_executable(lindatest
         lib/src/main.cpp
         lib/src/linda.cpp
         lib/src/file_manager.cpp
+        lib/src/tuple.cpp
         lib/src/parser.cpp)
 
 Include(FetchContent)

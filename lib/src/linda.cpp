@@ -6,7 +6,6 @@
 Linda::Linda(const std::string& file_path) {
     Parser parser;
     FileManager fileManager(file_path);
-    std::cout << fileManager.readFile();
 }
 
 Linda::Linda() : Linda("../resources/tuples.csv") {}
