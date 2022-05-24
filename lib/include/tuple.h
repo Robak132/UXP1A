@@ -3,9 +3,10 @@
 #include <utility>
 #include <vector>
 #include <cstddef>
+#include <string>
 
 enum Operator {
-    LESS, MORE, EQ_LESS, EQ_MORE, EQUAL, ANY, NONE
+    LESS, MORE, EQ_LESS, EQ_MORE, EQUAL, ANY
 };
 
 enum Type {
@@ -14,58 +15,56 @@ enum Type {
 
 class Entity {
 public:
-    virtual ~Entity() = default;
+    static Entity createIntEntity(int value, Operator anOperator=EQUAL);
+    static Entity createDoubleEntity(double value, Operator anOperator=EQUAL);
+    static Entity createStringEntity(const std::string& value, Operator anOperator=EQUAL);
+
     Type getType() {
         return type;
     };
-protected:
-    explicit Entity(Type _type) : type(_type) {}
-    Type type;
-};
-
-template <typename T>
-class TypedEntity : public Entity {
-public:
-    TypedEntity(const T& val, Operator _op) : Entity(INT), value(val), op(_op) {}
-    explicit TypedEntity(const T& val) : Entity(INT), value(val), op(NONE) {}
-
-    const T& getValue() const {
-        return value;
-    };
-    void setValue(const T& val) {
-        value = val;
+    int getIntValue() const {
+        return intValue;
     }
-    const Operator& getOperator() const {
+    void setIntValue(int _intValue) {
+        intValue = _intValue;
+        type = INT;
+    }
+    double getDoubleValue() const {
+        return doubleValue;
+    }
+    void setDoubleValue(double _doubleValue) {
+        doubleValue = _doubleValue;
+        type = FLOAT;
+    }
+    const std::string &getStringValue() const {
+        return stringValue;
+    }
+    void setStringValue(const std::string &_stringValue) {
+        stringValue = _stringValue;
+        type = STR;
+    }
+    Operator getOperator() const {
         return op;
-    };
-    void setOperator(const Operator& _op) {
+    }
+    void setOperator(Operator _op) {
         op = _op;
     }
-    template<typename S>
-    bool compare(TypedEntity<S> entity) {
-        return compare(entity, op);
-    }
-    template<typename S>
-    bool compare(TypedEntity<S> entity, Operator _op) {
-        if (typeid(T) != typeid(S)) {
-            return false;
-        }
-        return true;
-    }
+
+    bool compare(const Entity& entity, Operator _op = EQUAL);
 private:
-    T value;
-    Operator op;
+    Entity() = default;
+    Type type = INT;
+    Operator op = EQUAL;
+    int intValue = 0;
+    double doubleValue = 0;
+    std::string stringValue;
 };
 
 class Tuple {
 public:
-    explicit Tuple(std::vector<Entity*> _entities) : entities(std::move(_entities)) {}
-    ~Tuple(){
-        for(auto & entity : entities)
-            delete entity;
-    }
+    explicit Tuple(std::vector<Entity> _entities) : entities(std::move(_entities)) {}
+    bool compare(Tuple other);
 private:
-    std::vector<Entity*> entities;
-    int compare(Tuple other);
+    std::vector<Entity> entities;
 };
 #endif /* TUPLE */

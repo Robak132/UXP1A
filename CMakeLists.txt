@@ -26,6 +26,7 @@ add_executable(CatchTests
         tests/FileManagerTest.cpp
         tests/TupleCompareTest.cpp
 
+        lib/src/tuple.cpp
         lib/src/file_manager.cpp
         lib/src/utilities.cpp)
 target_link_libraries(CatchTests Catch2::Catch2WithMain)
