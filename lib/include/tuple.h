@@ -64,6 +64,7 @@ class Tuple {
 public:
     explicit Tuple(std::vector<Entity> _entities) : entities(std::move(_entities)) {}
     bool compare(Tuple other);
+    std::string toCSV();
 private:
     std::vector<Entity> entities;
 };

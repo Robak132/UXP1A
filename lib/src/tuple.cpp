@@ -51,3 +51,13 @@ bool Tuple::compare(Tuple other) {
     }
     return true;
 }
+
+std::string Tuple::toCSV() {
+    std::string outputString;
+    unsigned long entitiesSize = entities.size();
+    for (unsigned long i = 0; i < entitiesSize; i++) {
+        outputString += entities[i].toString();
+        if (i != entitiesSize) outputString += ",";
+    }
+    return outputString;
+}
