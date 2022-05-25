@@ -49,7 +49,7 @@ public:
     void setOperator(Operator _op) {
         op = _op;
     }
-
+    std::string toString();
     bool compare(const Entity& entity, Operator _op = EQUAL);
 private:
     Entity() = default;
@@ -64,6 +64,7 @@ class Tuple {
 public:
     explicit Tuple(std::vector<Entity> _entities) : entities(std::move(_entities)) {}
     bool compare(Tuple other);
+    std::string toCSV();
 private:
     std::vector<Entity> entities;
 };
