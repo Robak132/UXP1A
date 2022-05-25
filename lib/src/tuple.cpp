@@ -28,6 +28,17 @@ bool Entity::compare(const Entity& entity, Operator _op) {
     return true;
 }
 
+std::string Entity::toString() {
+    switch (type) {
+        case INT:
+            return std::to_string(intValue);
+        case FLOAT:
+            return std::to_string(doubleValue);
+        case STR:
+            return '"' + stringValue + '"';
+    }
+}
+
 bool Tuple::compare(Tuple other) {
     if (entities.size() != other.entities.size()) {
         return false;

@@ -49,7 +49,7 @@ public:
     void setOperator(Operator _op) {
         op = _op;
     }
-
+    std::string toString();
     bool compare(const Entity& entity, Operator _op = EQUAL);
 private:
     Entity() = default;
