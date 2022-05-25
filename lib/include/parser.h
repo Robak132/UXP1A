@@ -2,17 +2,52 @@
 #include <string>
 #include <iostream>
 
-class Parser {
+
+enum TokenType {
+    EQUALS_TOKEN, MORE_TOKEN, LESS_TOKEN, MORE_EQUAL_TOKEN, LESS_EQUAL_TOKEN,
+    UNSPECIFIED_RELATION_TOKEN,
+    NUMERIC_LITERAL_TOKEN, STRING_LITERAL_TOKEN,
+    COLON_TOKEN, COMA_TOKEN,
+    UNKNOWN_TOKEN
+};
+
+class Token {
 public:
-    Parser();
-    Tuple parse(std::string text);
-    std::string toCSV(Tuple tuple);
+    Token();
+    Type getType();
+
+    template <typename T>
+    T getValue();
 
 private:
-    std::vector<std::string> string_elements;
+    Type valueType;
+    int integerValue;
+    double doubleValue;
+    std::string stringValue;
+};
 
-    int parseInt(std::string text);
-    float parseFloat(std::string text);
-    std::string parseString(std::string text);
-    std::vector<std::string> splitText(std::string text);
+class Lexer {
+public:
+    Lexer();
+    Token getNextToken();
+private:
+    std::string current_character;
+    void nextCharacter();
+    void omitWhitespaces();
+    Token getSimpleToken();
+    Token getStringLiteral();
+    Token getNumberLiteral();
+    std::string buildString();
+    int buildInteger();
+    double buildFraction();
+};
+
+
+class Parser {
+public:
+    Tuple parse(const std::string& text);
+private:
+    Parser();
+    Token consumeToken(TokenType);
+
 };
