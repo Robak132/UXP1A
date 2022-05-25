@@ -3,9 +3,9 @@
 #include "../include/file_manager.h"
 #include "../include/parser.h"
 
-Linda::Linda(const std::string& file_path) {
+Linda::Linda(const std::string &dataFilePath, const std::string &sleepingProcessesPath) :
+    dataFile(FileManager(dataFilePath)), sleepingProcesses(FileManager(sleepingProcessesPath)) {
     Parser parser;
-    FileManager fileManager(file_path);
 }
 
-Linda::Linda() : Linda("../resources/tuples.csv") {}
+Linda::Linda() : Linda("../resources/tuples.csv", "../resources/sleeping.csv") {}
