@@ -25,6 +25,7 @@ Include(FetchContent)
 add_executable(CatchTests
         tests/FileManagerTest.cpp
         tests/TupleCompareTest.cpp
+        tests/TupleToCSVTest.cpp
 
         lib/src/tuple.cpp
         lib/src/file_manager.cpp
