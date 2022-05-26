@@ -13,6 +13,10 @@ enum Type {
 
 class Entity {
 public:
+    static Entity createIntEntity() {return createIntEntity(0, ANY);}
+    static Entity createDoubleEntity() {return createDoubleEntity(0, ANY);}
+    static Entity createStringEntity() {return createStringEntity("", ANY);}
+
     static Entity createIntEntity(int value, Operator anOperator=EQUAL);
     static Entity createDoubleEntity(double value, Operator anOperator=EQUAL);
     static Entity createStringEntity(const std::string& value, Operator anOperator=EQUAL);
@@ -42,24 +46,24 @@ public:
         type = STR;
     }
     Operator getOperator() const {
-        return op;
+        return compareOperator;
     }
     void setOperator(Operator _op) {
-        op = _op;
+        compareOperator = _op;
     }
     std::string toString() const;
     bool compare(const Entity& entity) const;
-    bool compare(const Entity& entity, Operator _op) const;
+    bool compare(const Entity& entity, Operator _operator) const;
 private:
     Entity() = default;
     Type type = INT;
-    Operator op = EQUAL;
+    Operator compareOperator = EQUAL;
     int intValue = 0;
     double doubleValue = 0;
     std::string stringValue;
 
-    bool compareInt(const Entity& entity, Operator _op) const;
-    bool compareDouble(const Entity& entity, Operator _op) const;
-    bool compareString(const Entity& entity, Operator _op) const;
+    bool compareInt(const Entity& entity, Operator _operator) const;
+    bool compareDouble(const Entity& entity, Operator _operator) const;
+    bool compareString(const Entity& entity, Operator _operator) const;
 };
 #endif /* ENTITY_H */

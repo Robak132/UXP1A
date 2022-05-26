@@ -22,23 +22,23 @@ Entity Entity::createStringEntity(const std::string& value, Operator anOperator)
 }
 
 bool Entity::compare(const Entity& entity) const {
-    return compare(entity, op);
+    return compare(entity, compareOperator);
 }
-bool Entity::compare(const Entity& entity, Operator _op) const {
+bool Entity::compare(const Entity& entity, Operator _operator) const {
     if (type != entity.type) return false; // Wrong type -> false
-    if (_op == ANY) return true;           // Any value & good type -> true
+    if (_operator == ANY) return true;           // Any value & good type -> true
 
     switch (type) {
         case INT:
-            return compareInt(entity, _op);
+            return compareInt(entity, _operator);
         case FLOAT:
-            return compareDouble(entity, _op);
+            return compareDouble(entity, _operator);
         case STR:
-            return compareString(entity, _op);
+            return compareString(entity, _operator);
     }
 }
-bool Entity::compareInt(const Entity &entity, Operator _op) const {
-    switch (_op) {
+bool Entity::compareInt(const Entity &entity, Operator _operator) const {
+    switch (_operator) {
         case EQ_MORE:
             return intValue >= entity.intValue;
         case EQUAL:
@@ -53,8 +53,8 @@ bool Entity::compareInt(const Entity &entity, Operator _op) const {
             return true;
     }
 }
-bool Entity::compareDouble(const Entity &entity, Operator _op) const {
-    switch (_op) {
+bool Entity::compareDouble(const Entity &entity, Operator _operator) const {
+    switch (_operator) {
         case EQ_MORE:
             return doubleValue >= entity.doubleValue;
         case EQUAL:
@@ -68,8 +68,8 @@ bool Entity::compareDouble(const Entity &entity, Operator _op) const {
         case ANY:
             return true;
     }}
-bool Entity::compareString(const Entity &entity, Operator _op) const {
-    switch (_op) {
+bool Entity::compareString(const Entity &entity, Operator _operator) const {
+    switch (_operator) {
         case EQ_MORE:
             return stringValue >= entity.stringValue;
         case EQUAL:
