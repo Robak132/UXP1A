@@ -6,12 +6,14 @@
 #include <iterator>
 #include <cstring>
 
-FileManager::FileManager(const std::string& file_path) {
+FileManager::FileManager(const std::string& file_path, const flock& lock) {
+    this -> lock = lock;
     this -> file_path = file_path.c_str();
     this -> file = openFile();
 }
 
 FileManager::~FileManager() {
+    unblockFile();
     closeFile();
 }
 
@@ -32,12 +34,32 @@ void FileManager::writeLine(const std::string& line) const {
     write(file, buf, strlen(buf));
 }
 
+void FileManager::blockFile(){
+    if ((fcntl(this->file,F_SETLKW,this->lock))==-1){
+        perror("Error while locking file");
+        exit(1);
+    }
+}
+
+void FileManager::unblockFile(){
+    struct flock closelock = {};
+    closelock.l_type = F_UNLCK;
+    closelock.l_whence = SEEK_SET;
+    closelock.l_start = 0;
+    closelock.l_len = 0;
+    if ((fcntl(file,F_SETLKW,&closelock))==-1){
+        perror("Error while unlocking file");
+        exit(1);
+    }
+}
+
 int FileManager::openFile() {
     int fp = open(file_path, O_RDWR);
     if (!fp) {
         perror("Error opening file");
         exit(1);
     }
+
     return fp;
 }
 
