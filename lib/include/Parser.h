@@ -1,17 +1,21 @@
-#include "tuple.h"
+#ifndef PARSER_H
+#define PARSER_H
+
 #include <string>
 #include <iostream>
+#include <vector>
+#include "Tuple.h"
 
 class IParser {
 public:
-    virtual Tuple parse(const std::string& text) = 0;
+    virtual Tuple* parse(const std::string& text) = 0;
 };
 
 class Parser : public IParser {
 public:
-    Parser();
+    Parser() = default;
 
-    Tuple parse(const std::string& text) override;
+    Tuple* parse(const std::string& text) override;
     std::string toCSV(Tuple tuple);
 
 private:
@@ -26,9 +30,9 @@ private:
 class MockParser : public IParser {
 public:
     explicit MockParser(std::vector<Tuple> results_);
-    Tuple parse(const std::string& text) override;
+    Tuple* parse(const std::string& text) override;
 private:
     std::vector<Tuple> results;
     int iterator = 0;
-
 };
+#endif /* PARSER_H */

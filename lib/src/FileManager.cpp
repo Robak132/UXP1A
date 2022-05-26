@@ -1,5 +1,5 @@
-#include "../include/file_manager.h"
-#include "../include/utilities.h"
+#include "../include/FileManager.h"
+#include "../include/Utilities.h"
 #include <fcntl.h>
 #include <unistd.h>
 #include <cstring>

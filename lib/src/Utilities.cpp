@@ -1,7 +1,6 @@
-#include "../include/utilities.h"
+#include "../include/Utilities.h"
 #include "string"
 
-Utilities::Utilities() = default;
 std::vector<std::string> Utilities::splitString(const std::string& input) {
     std::string temp;
     std::vector<std::string> result;

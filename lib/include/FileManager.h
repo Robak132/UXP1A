@@ -1,5 +1,5 @@
-#ifndef MAIN_FILE_MANAGER_H
-#define MAIN_FILE_MANAGER_H
+#ifndef FILE_MANAGER_H
+#define FILE_MANAGER_H
 
 #include <fstream>
 #include <iostream>
@@ -24,6 +24,4 @@ private:
 
     void writeLine(const std::string &line) const;
 };
-
-
-#endif //MAIN_FILE_MANAGER_H
+#endif /* FILE_MANAGER_H */

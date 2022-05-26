@@ -1,8 +1,8 @@
 #include <iostream>
 #include <cstring>
 #include <string>
-#include "../include/linda.h"
-#include "../include/parser.h"
+#include "../include/Linda.h"
+#include "../include/Parser.h"
 
 int main(int argc, char *argv[]) {
     Linda linda = Linda();
