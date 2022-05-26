@@ -6,22 +6,33 @@ set(CMAKE_CXX_STANDARD 14)
 add_executable(writelock lib/src/example/writelock.cpp)
 add_executable(readlock lib/src/example/readlock.cpp)
 add_executable(lindatest
-        lib/src/main.cpp
-        lib/src/linda.cpp
-        lib/src/tuple.cpp
-        lib/src/file_manager.cpp
-        lib/src/parser.cpp)
+        lib/src/Main.cpp
+        lib/src/Linda.cpp
+        lib/src/FileManager.cpp
+        lib/src/Tuple.cpp
+        lib/src/Entity.cpp
+        lib/src/Parser.cpp)
 
-Include(FetchContent)
-    FetchContent_Declare(
-        Catch2
-        GIT_REPOSITORY https://github.com/catchorg/Catch2.git GIT_TAG origin/devel)
-        FetchContent_GetProperties(Catch2)
-        if(NOT catch2_POPULATED)
-            FetchContent_Populate(Catch2)
-            add_subdirectory("${catch2_SOURCE_DIR}"
-    "${catch2_BINARY_DIR}")
-        endif()
+set(url https://github.com/philsquared/Catch/releases/download/v2.13.6/catch.hpp)
+file(
+        DOWNLOAD ${url} "${CMAKE_CURRENT_BINARY_DIR}/catch.hpp"
+        STATUS status
+        EXPECTED_HASH SHA256=681e7505a50887c9085539e5135794fc8f66d8e5de28eadf13a30978627b0f47)
+list(GET status 0 error)
+if(error)
+    message(FATAL_ERROR "Could not download ${url}")
+endif()
 
-add_executable(CatchTests tests/FileManagerTest.cpp lib/src/file_manager.cpp)
-target_link_libraries(CatchTests Catch2::Catch2WithMain)
+add_executable(CatchTests
+        tests/FileManagerTest.cpp
+        tests/TupleCompareTest.cpp
+        tests/TupleToCSVTest.cpp
+        tests/LindaMainTest.cpp
+
+        lib/src/Tuple.cpp
+        lib/src/Entity.cpp
+        lib/src/Linda.cpp
+        lib/src/Parser.cpp
+        lib/src/FileManager.cpp
+        lib/src/Utilities.cpp)
+target_include_directories(CatchTests PUBLIC "${CMAKE_CURRENT_BINARY_DIR}")
