@@ -1,4 +1,4 @@
-#include "../lib/include/tuple.h"
+#include "../lib/include/Tuple.h"
 #include "../lib/include/linda.h"
 #include "catch.hpp"
 

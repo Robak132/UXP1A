@@ -19,11 +19,11 @@ void Linda::output(Tuple tuple) {
 Tuple* Linda::input(const Tuple& tupleTemplate, int timeout) {
     std::vector<std::string> data = Utilities::splitString(dataFile->readFile());
     int resultIndex = -1;
-    Tuple result;
+    Tuple* result = nullptr;
 
     for (int i=0;i<data.size();i++) {
-        Tuple tuple = stringParser->parse(data[i]);
-        if (tupleTemplate.compare(tuple)) {
+        Tuple* tuple = stringParser->parse(data[i]);
+        if (tupleTemplate.compare(*tuple)) {
             result = tuple;
             resultIndex = i;
             break;
@@ -32,27 +32,23 @@ Tuple* Linda::input(const Tuple& tupleTemplate, int timeout) {
     if (resultIndex != -1) {
         data.erase(data.begin()+resultIndex);
         dataFile->writeFile(data);
-        return new Tuple(result);
     }
     //TODO Go to sleep
-    return nullptr;
+    return result;
 }
 Tuple* Linda::read(const Tuple& tupleTemplate, int timeout) {
     std::vector<std::string> data = Utilities::splitString(dataFile->readFile());
     int resultIndex = -1;
-    Tuple result;
+    Tuple* result = nullptr;
 
     for (int i=0;i<data.size();i++) {
-        Tuple tuple = stringParser->parse(data[i]);
-        if (tupleTemplate.compare(tuple)) {
+        Tuple* tuple = stringParser->parse(data[i]);
+        if (tupleTemplate.compare(*tuple)) {
             result = tuple;
             resultIndex = i;
             break;
         }
     }
-    if (resultIndex != -1) {
-        return new Tuple(result);
-    }
     //TODO Go to sleep
-    return nullptr;
+    return result;
 }

@@ -9,7 +9,8 @@ add_executable(lindatest
         lib/src/main.cpp
         lib/src/linda.cpp
         lib/src/file_manager.cpp
-        lib/src/tuple.cpp
+        lib/src/Tuple.cpp
+        lib/src/Entity.cpp
         lib/src/parser.cpp)
 
 set(url https://github.com/philsquared/Catch/releases/download/v2.13.6/catch.hpp)
@@ -28,7 +29,8 @@ add_executable(CatchTests
         tests/TupleToCSVTest.cpp
         tests/LindaMainTest.cpp
 
-        lib/src/tuple.cpp
+        lib/src/Tuple.cpp
+        lib/src/Entity.cpp
         lib/src/linda.cpp
         lib/src/parser.cpp
         lib/src/file_manager.cpp

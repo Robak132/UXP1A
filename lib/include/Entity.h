@@ -1,8 +1,6 @@
-#ifndef TUPLE
-#define TUPLE
-#include <utility>
-#include <vector>
-#include <cstddef>
+#ifndef ENTITY
+#define ENTITY
+
 #include <string>
 
 enum Operator {
@@ -49,8 +47,9 @@ public:
     void setOperator(Operator _op) {
         op = _op;
     }
-    std::string toString();
-    bool compare(const Entity& entity, Operator _op = EQUAL) const;
+    std::string toString() const;
+    bool compare(const Entity& entity) const;
+    bool compare(const Entity& entity, Operator _op) const;
 private:
     Entity() = default;
     Type type = INT;
@@ -58,18 +57,9 @@ private:
     int intValue = 0;
     double doubleValue = 0;
     std::string stringValue;
-};
 
-class Tuple {
-public:
-    Tuple() = default;
-    Tuple(Tuple const &other) {
-        entities = other.entities;
-    }
-    explicit Tuple(std::vector<Entity> _entities) : entities(std::move(_entities)) {}
-    bool compare(Tuple other) const;
-    std::string toCSV();
-private:
-    std::vector<Entity> entities;
+    bool compareInt(const Entity& entity, Operator _op) const;
+    bool compareDouble(const Entity& entity, Operator _op) const;
+    bool compareString(const Entity& entity, Operator _op) const;
 };
-#endif /* TUPLE */
+#endif /* ENTITY */

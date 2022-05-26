@@ -1,7 +1,7 @@
 #ifndef UTILITIES
 #define UTILITIES
-#include "tuple.h"
-#include "string"
+#include <vector>
+#include <string>
 
 class Utilities {
 public:

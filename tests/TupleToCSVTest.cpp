@@ -1,4 +1,4 @@
-#include "../lib/include/tuple.h"
+#include "../lib/include/Tuple.h"
 #include "catch.hpp"
 
 TEST_CASE("Check toCSV()") {

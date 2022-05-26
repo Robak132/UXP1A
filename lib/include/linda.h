@@ -1,6 +1,6 @@
 #ifndef LINDA
 #define LINDA
-#include "tuple.h"
+#include "Tuple.h"
 #include "file_manager.h"
 #include "parser.h"
 
