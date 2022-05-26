@@ -76,11 +76,7 @@ TEST_CASE("Linda read") {
     REQUIRE(result->compare(testTuple1));
 
     FileManager fileManager("../tests/resources/data.csv");
-    std::string dataString = fileManager.readFile();
-    std::string expected = "1,\"abc\",3.1415,\"d\"\r\n10,\"abc\",3.1415,\r\n2,3,1,\"Ala ma kota\"";
-    for (int i=0;i<expected.size();i++) {
-        std::cout << i << ": " << (dataString[i] == expected[i]) << std::endl;
-    }
+    REQUIRE(fileManager.readFile() == "1,\"abc\",3.1415,\"d\"\r\n10,\"abc\",3.1415,\r\n2,3,1,\"Ala ma kota\"");
 
     delete result;
 }
