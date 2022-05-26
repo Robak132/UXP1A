@@ -13,19 +13,19 @@ TEST_CASE("Split string") {
     REQUIRE(vec[2] == "bbbbbbbb");
 }
 TEST_CASE("Loads file") {
-    FileManager fileManager("../tests/resources/test.txt");
+    FileManager fileManager("../tests/resources/fm_test.txt");
     REQUIRE(fileManager.readFile() == "abcdefgh");
 }
 TEST_CASE("Loads file and split") {
-    FileManager fileManager("../tests/resources/test2.txt");
+    FileManager fileManager("../tests/resources/fm_test2.txt");
     std::vector<std::string> vec = Utilities::splitString(fileManager.readFile());
     REQUIRE(vec[0] == "abcdefgh");
     REQUIRE(vec[1] == "aaaaaaaa");
     REQUIRE(vec[2] == "bbbbbbbb");
 }
 TEST_CASE("Append line to file") {
-    system("cp ../tests/resources/test.txt ../tests/resources/test3.txt ");
-    FileManager fileManager("../tests/resources/test3.txt");
+    system("cp ../tests/resources/fm_test.txt ../tests/resources/fm_test3.txt ");
+    FileManager fileManager("../tests/resources/fm_test3.txt");
     fileManager.appendLine("save_test");
 
     std::vector<std::string> vec = Utilities::splitString(fileManager.readFile());
@@ -33,9 +33,9 @@ TEST_CASE("Append line to file") {
     REQUIRE(vec[1] == "save_test");
 }
 TEST_CASE("Remove line from file") {
-    system("cp ../tests/resources/test2.txt ../tests/resources/test4.txt ");
+    system("cp ../tests/resources/fm_test2.txt ../tests/resources/fm_test4.txt ");
 
-    FileManager fileManager("../tests/resources/test4.txt");
+    FileManager fileManager("../tests/resources/fm_test4.txt");
     std::vector<std::string> vec = Utilities::splitString(fileManager.readFile());
     vec.erase(vec.begin()+1);
 

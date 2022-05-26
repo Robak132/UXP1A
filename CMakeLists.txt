@@ -26,8 +26,11 @@ add_executable(CatchTests
         tests/FileManagerTest.cpp
         tests/TupleCompareTest.cpp
         tests/TupleToCSVTest.cpp
+        tests/LindaMainTest.cpp
 
         lib/src/tuple.cpp
+        lib/src/linda.cpp
+        lib/src/parser.cpp
         lib/src/file_manager.cpp
         lib/src/utilities.cpp)
 target_include_directories(CatchTests PUBLIC "${CMAKE_CURRENT_BINARY_DIR}")

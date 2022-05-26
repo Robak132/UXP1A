@@ -2,16 +2,20 @@
 #define LINDA
 #include "tuple.h"
 #include "file_manager.h"
+#include "parser.h"
 
 class Linda {
 public:
-    Linda();
-    Linda(const std::string& dataFilePath, const std::string& sleepingProcessesPath);
-    int input(Tuple tupleTemplate, int timeout);
-    int read(Tuple tupleTemplate, int timeout);
-    int output(Tuple tuple);
+    ~Linda();
+    explicit Linda(std::string dataFilePath = "../resources/linda_test_data.csv",
+                   std::string sleepingProcessesPath = "../resources/sleeping.csv",
+                   IParser* parser = new Parser());
+    Tuple* input(const Tuple& tupleTemplate, int timeout=0);
+    Tuple* read(const Tuple& tupleTemplate, int timeout=0);
+    void output(Tuple tuple);
 private:
-    FileManager dataFile;
-    FileManager sleepingProcesses;
+    FileManager* dataFile;
+    FileManager* sleepingProcesses;
+    IParser* stringParser;
 };
 #endif /* LINDA */

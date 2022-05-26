@@ -22,7 +22,7 @@ Entity Entity::createStringEntity(const std::string& value, Operator anOperator)
     return entity;
 }
 
-bool Entity::compare(const Entity& entity, Operator _op) {
+bool Entity::compare(const Entity& entity, Operator _op) const {
     if (type != entity.type) {
         return false;
     }
@@ -43,7 +43,7 @@ std::string Entity::toString() {
     }
 }
 
-bool Tuple::compare(Tuple other) {
+bool Tuple::compare(Tuple other) const {
     if (entities.size() != other.entities.size()) {
         return false;
     }
