@@ -1,5 +1,5 @@
-#ifndef TUPLE
-#define TUPLE
+#ifndef TUPLE_H
+#define TUPLE_H
 
 #include <vector>
 #include <string>
@@ -21,4 +21,4 @@ public:
 private:
     std::vector<Entity> entities;
 };
-#endif /* TUPLE */
+#endif /* TUPLE_H */

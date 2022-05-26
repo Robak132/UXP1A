@@ -1,5 +1,5 @@
-#ifndef ENTITY
-#define ENTITY
+#ifndef ENTITY_H
+#define ENTITY_H
 
 #include <string>
 
@@ -62,4 +62,4 @@ private:
     bool compareDouble(const Entity& entity, Operator _op) const;
     bool compareString(const Entity& entity, Operator _op) const;
 };
-#endif /* ENTITY */
+#endif /* ENTITY_H */

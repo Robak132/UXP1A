@@ -1,5 +1,5 @@
 #include "../lib/include/Tuple.h"
-#include "../lib/include/linda.h"
+#include "../lib/include/Linda.h"
 #include "catch.hpp"
 
 Tuple testTuple1 = Tuple(std::vector<Entity> {

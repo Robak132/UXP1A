@@ -7,6 +7,6 @@ class Utilities {
 public:
     static std::vector<std::string> splitString(const std::string& input);
 private:
-    Utilities();
+    Utilities() = default;
 };
 #endif /* UTILITIES */

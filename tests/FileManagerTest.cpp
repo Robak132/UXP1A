@@ -1,7 +1,7 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
-#include "../lib/include/file_manager.h"
-#include "../lib/include/utilities.h"
+#include "../lib/include/FileManager.h"
+#include "../lib/include/Utilities.h"
 
 TEST_CASE("Life, the universe and everything") {
     REQUIRE(7*6 == 42);

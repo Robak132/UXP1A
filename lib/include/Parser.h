@@ -1,6 +1,10 @@
-#include "Tuple.h"
+#ifndef PARSER_H
+#define PARSER_H
+
 #include <string>
 #include <iostream>
+#include <vector>
+#include "Tuple.h"
 
 class IParser {
 public:
@@ -9,7 +13,7 @@ public:
 
 class Parser : public IParser {
 public:
-    Parser();
+    Parser() = default;
 
     Tuple* parse(const std::string& text) override;
     std::string toCSV(Tuple tuple);
@@ -30,5 +34,5 @@ public:
 private:
     std::vector<Tuple> results;
     int iterator = 0;
-
 };
+#endif /* PARSER_H */

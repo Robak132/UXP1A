@@ -6,12 +6,12 @@ set(CMAKE_CXX_STANDARD 14)
 add_executable(writelock lib/src/example/writelock.cpp)
 add_executable(readlock lib/src/example/readlock.cpp)
 add_executable(lindatest
-        lib/src/main.cpp
-        lib/src/linda.cpp
-        lib/src/file_manager.cpp
+        lib/src/Main.cpp
+        lib/src/Linda.cpp
+        lib/src/FileManager.cpp
         lib/src/Tuple.cpp
         lib/src/Entity.cpp
-        lib/src/parser.cpp)
+        lib/src/Parser.cpp)
 
 set(url https://github.com/philsquared/Catch/releases/download/v2.13.6/catch.hpp)
 file(
@@ -31,8 +31,8 @@ add_executable(CatchTests
 
         lib/src/Tuple.cpp
         lib/src/Entity.cpp
-        lib/src/linda.cpp
-        lib/src/parser.cpp
-        lib/src/file_manager.cpp
-        lib/src/utilities.cpp)
+        lib/src/Linda.cpp
+        lib/src/Parser.cpp
+        lib/src/FileManager.cpp
+        lib/src/Utilities.cpp)
 target_include_directories(CatchTests PUBLIC "${CMAKE_CURRENT_BINARY_DIR}")

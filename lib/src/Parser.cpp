@@ -1,11 +1,6 @@
-#include "../include/parser.h"
+#include "../include/Parser.h"
 
 #include <utility>
-
-
-Parser::Parser() {
-
-}
 
 Tuple* Parser::parse(const std::string& text) {
     std::vector<std::string> splitText = this -> splitText(text);
