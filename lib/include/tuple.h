@@ -49,8 +49,8 @@ public:
     void setOperator(Operator _op) {
         op = _op;
     }
-
-    bool compare(const Entity& entity, Operator _op = EQUAL);
+    std::string toString();
+    bool compare(const Entity& entity, Operator _op = EQUAL) const;
 private:
     Entity() = default;
     Type type = INT;
@@ -62,8 +62,13 @@ private:
 
 class Tuple {
 public:
+    Tuple() = default;
+    Tuple(Tuple const &other) {
+        entities = other.entities;
+    }
     explicit Tuple(std::vector<Entity> _entities) : entities(std::move(_entities)) {}
-    bool compare(Tuple other);
+    bool compare(Tuple other) const;
+    std::string toCSV();
 private:
     std::vector<Entity> entities;
 };

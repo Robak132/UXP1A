@@ -1,4 +1,5 @@
 #include "../include/tuple.h"
+#include <sstream>
 
 Entity Entity::createIntEntity(int value, Operator anOperator) {
     Entity entity = Entity();
@@ -21,14 +22,28 @@ Entity Entity::createStringEntity(const std::string& value, Operator anOperator)
     return entity;
 }
 
-bool Entity::compare(const Entity& entity, Operator _op) {
+bool Entity::compare(const Entity& entity, Operator _op) const {
     if (type != entity.type) {
         return false;
     }
     return true;
 }
 
-bool Tuple::compare(Tuple other) {
+std::string Entity::toString() {
+    std::ostringstream stream;
+    switch (type) {
+        case INT:
+            stream << intValue;
+            return stream.str();
+        case FLOAT:
+            stream << doubleValue;
+            return stream.str();
+        case STR:
+            return '"' + stringValue + '"';
+    }
+}
+
+bool Tuple::compare(Tuple other) const {
     if (entities.size() != other.entities.size()) {
         return false;
     }
@@ -39,4 +54,14 @@ bool Tuple::compare(Tuple other) {
         }
     }
     return true;
+}
+
+std::string Tuple::toCSV() {
+    std::string outputString;
+    unsigned long entitiesSize = entities.size();
+    for (unsigned long i = 0; i < entitiesSize; i++) {
+        outputString += entities[i].toString();
+        if (i != entitiesSize - 1) outputString += ",";
+    }
+    return outputString;
 }
