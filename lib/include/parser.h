@@ -13,13 +13,17 @@ enum TokenType {
 
 class Token {
 public:
-    Token();
+    explicit Token(TokenType tokenType);
+    Token(std::string value, TokenType tokenType);
+    Token(int value, TokenType tokenType);
+    Token(double value, TokenType tokenType);
     Type getType();
 
     template <typename T>
     T getValue();
 
 private:
+    TokenType type;
     Type valueType;
     int integerValue;
     double doubleValue;

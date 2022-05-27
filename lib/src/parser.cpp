@@ -5,14 +5,27 @@
 
 Parser::Parser() {
 
+Token::Token(TokenType tokenType) {
+    type = tokenType;
+    valueType = NONE;
 }
 
-Tuple Parser::parse(std::string text) {
-    std::vector<std::string> splitText = this -> splitText(std::move(text));
+Token::Token(std::string value, TokenType tokenType) {
+    type = tokenType;
+    stringValue = value;
+    valueType = STR;
 }
 
-std::string Parser::toCSV(Tuple tuple) {
-    return "";
+Token::Token(int value, TokenType tokenType) {
+    type = tokenType;
+    integerValue = value;
+    valueType = INT;
+}
+
+Token::Token(double value, TokenType tokenType) {
+    type = tokenType;
+    doubleValue = value;
+    valueType = FLOAT;
 }
 
 int Parser::parseInt(std::string text) {
