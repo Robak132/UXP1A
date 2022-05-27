@@ -1,6 +1,10 @@
-#include "tuple.h"
+#ifndef PARSER_H
+#define PARSER_H
+
 #include <string>
 #include <iostream>
+#include <vector>
+#include "Tuple.h"
 
 
 enum TokenType {
@@ -32,7 +36,7 @@ private:
 
 class Lexer {
 public:
-    Lexer();
+    explicit Lexer(const std::string& input);
     Token getNextToken();
 private:
     std::string sourceText;
@@ -40,20 +44,42 @@ private:
     int currentCharacterIndex;
     void nextCharacter();
     void omitWhitespaces();
-    Token getSimpleToken();
-    Token getStringLiteral();
-    Token getNumberLiteral();
+    Token* getSimpleToken();
+    Token* getStringLiteral();
+    Token* getNumberLiteral();
     std::string buildString();
     int buildInteger();
     double buildFraction();
 };
 
 
-class Parser {
+
+class IParser {
 public:
-    Parser();
-    Tuple parse(const std::string& text);
+    virtual Tuple* parse(const std::string& text) = 0;
+};
+
+
+
+
+class Parser : public IParser {
+public:
+    Parser() = default;
+    Tuple* parse(const std::string& text) override;
+
 private:
     Token consumeToken(TokenType);
-
 };
+
+
+
+
+class MockParser : public IParser {
+public:
+    explicit MockParser(std::vector<Tuple> results_);
+    Tuple* parse(const std::string& text) override;
+private:
+    std::vector<Tuple> results;
+    int iterator = 0;
+};
+#endif /* PARSER_H */

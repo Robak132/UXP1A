@@ -1,4 +1,4 @@
-#include "../include/parser.h"
+#include "../include/Parser.h"
 
 #include <utility>
 #include <map>
@@ -16,6 +16,8 @@ const std::map<std::string, int> WHITESPACES{
 
 Token::Token(TokenType tokenType) {
     type = tokenType;
+    integerValue = 0;
+    doubleValue = 0;
     valueType = NONE;
 }
 
@@ -41,6 +43,7 @@ Token::Token(double value, TokenType tokenType) {
     valueType = FLOAT;
 }
 
+
 TokenType Token::getType() {
     return type;
 }
@@ -59,20 +62,58 @@ T Token::getValue() {
     }
 }
 
-float Parser::parseFloat(std::string text) {
-    return 0.0;
+
+
+Lexer::Lexer(const std::string &input) {
+    sourceText = input;
+    if (input.length() > 0) {
+        currentCharacter = input[0];
+        currentCharacterIndex = 0;
+    }
+}
+
+void Lexer::nextCharacter() {
+    if (currentCharacterIndex + 1 < sourceText.length()) {
+        currentCharacter = sourceText[++currentCharacterIndex];
+    }
 }
 
 void Lexer::omitWhitespaces() {
-    while (WHITESPACES.contains(current_character)) {
+    while (WHITESPACES.contains(currentCharacter)) {
         nextCharacter();
     }
 }
 
-std::vector<std::string> Parser::splitText(std::string text) {
-    std::vector<std::string> elements;
+Token Lexer::getNextToken() {
+    omitWhitespaces();
+    Token *token;
 
-    return elements;
+    token = getSimpleToken();
+    if (token) return *token;
+
+    token = getNumberLiteral();
+    if (token) return *token;
+
+    token = getStringLiteral();
+    if (token) return *token;
+
+    return Token(UNKNOWN_TOKEN);
 }
 
-Parser::Parser() = default;
+
+
+Tuple* Parser::parse(const std::string& text) {
+    return nullptr;
+}
+
+
+
+MockParser::MockParser(std::vector<Tuple> results_) {
+    results = std::move(results_);
+}
+
+Tuple* MockParser::parse(const std::string& text) {
+    if (results.size() <= iterator) iterator=0;
+    Tuple result = results[iterator++];
+    return new Tuple(result);
+}

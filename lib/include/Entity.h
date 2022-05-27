@@ -1,8 +1,6 @@
-#ifndef TUPLE
-#define TUPLE
-#include <utility>
-#include <vector>
-#include <cstddef>
+#ifndef ENTITY_H
+#define ENTITY_H
+
 #include <string>
 
 enum Operator {
@@ -15,6 +13,10 @@ enum Type {
 
 class Entity {
 public:
+    static Entity createIntEntity() {return createIntEntity(0, ANY);}
+    static Entity createDoubleEntity() {return createDoubleEntity(0, ANY);}
+    static Entity createStringEntity() {return createStringEntity("", ANY);}
+
     static Entity createIntEntity(int value, Operator anOperator=EQUAL);
     static Entity createDoubleEntity(double value, Operator anOperator=EQUAL);
     static Entity createStringEntity(const std::string& value, Operator anOperator=EQUAL);
@@ -44,28 +46,24 @@ public:
         type = STR;
     }
     Operator getOperator() const {
-        return op;
+        return compareOperator;
     }
     void setOperator(Operator _op) {
-        op = _op;
+        compareOperator = _op;
     }
-    std::string toString();
-    bool compare(const Entity& entity, Operator _op = EQUAL);
+    std::string toString() const;
+    bool compare(const Entity& entity) const;
+    bool compare(const Entity& entity, Operator _operator) const;
 private:
     Entity() = default;
     Type type = INT;
-    Operator op = EQUAL;
+    Operator compareOperator = EQUAL;
     int intValue = 0;
     double doubleValue = 0;
     std::string stringValue;
-};
 
-class Tuple {
-public:
-    explicit Tuple(std::vector<Entity> _entities) : entities(std::move(_entities)) {}
-    bool compare(Tuple other);
-    std::string toCSV();
-private:
-    std::vector<Entity> entities;
+    bool compareInt(const Entity& entity, Operator _operator) const;
+    bool compareDouble(const Entity& entity, Operator _operator) const;
+    bool compareString(const Entity& entity, Operator _operator) const;
 };
-#endif /* TUPLE */
+#endif /* ENTITY_H */
