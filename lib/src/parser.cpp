@@ -12,19 +12,23 @@ Token::Token(TokenType tokenType) {
 
 Token::Token(std::string value, TokenType tokenType) {
     type = tokenType;
-    stringValue = value;
+    stringValue = std::move(value);
+    integerValue = 0;
+    doubleValue = 0;
     valueType = STR;
 }
 
 Token::Token(int value, TokenType tokenType) {
     type = tokenType;
     integerValue = value;
+    doubleValue = 0;
     valueType = INT;
 }
 
 Token::Token(double value, TokenType tokenType) {
     type = tokenType;
     doubleValue = value;
+    integerValue = 0;
     valueType = FLOAT;
 }
 
