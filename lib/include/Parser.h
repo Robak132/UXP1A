@@ -15,6 +15,8 @@ enum TokenType {
     UNKNOWN_TOKEN
 };
 
+
+
 class Token {
 public:
     explicit Token(TokenType tokenType);
@@ -34,14 +36,18 @@ private:
     std::string stringValue;
 };
 
+
+
 class Lexer {
 public:
     explicit Lexer(const std::string& input);
     Token getNextToken();
+
 private:
     std::string sourceText;
     std::string currentCharacter;
     int currentCharacterIndex;
+
     void nextCharacter();
     void omitWhitespaces();
     Token* getSimpleToken();
@@ -61,7 +67,6 @@ public:
 
 
 
-
 class Parser : public IParser {
 public:
     Parser() = default;
@@ -78,6 +83,7 @@ class MockParser : public IParser {
 public:
     explicit MockParser(std::vector<Tuple> results_);
     Tuple* parse(const std::string& text) override;
+
 private:
     std::vector<Tuple> results;
     int iterator = 0;
