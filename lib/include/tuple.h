@@ -10,7 +10,7 @@ enum Operator {
 };
 
 enum Type {
-    INT=0, FLOAT=1, STR=2
+    INT=0, FLOAT=1, STR=2, NONE=3
 };
 
 class Entity {
