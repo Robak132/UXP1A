@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(main)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 20)
 
 add_executable(writelock lib/src/example/writelock.cpp)
 add_executable(readlock lib/src/example/readlock.cpp)

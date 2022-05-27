@@ -1,9 +1,18 @@
 #include "../include/parser.h"
 
 #include <utility>
+#include <map>
 
 
-Parser::Parser() {
+const std::map<std::string, int> WHITESPACES{
+        {" ", 0},
+        {"\t", 0},
+        {"\n", 0},
+        {"\v", 0},
+        {"\f", 0},
+        {"\r", 0},
+};
+
 
 Token::Token(TokenType tokenType) {
     type = tokenType;
@@ -40,8 +49,10 @@ float Parser::parseFloat(std::string text) {
     return 0.0;
 }
 
-std::string Parser::parseString(std::string text) {
-    return "";
+void Lexer::omitWhitespaces() {
+    while (WHITESPACES.contains(current_character)) {
+        nextCharacter();
+    }
 }
 
 std::vector<std::string> Parser::splitText(std::string text) {
