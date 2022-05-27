@@ -51,9 +51,9 @@ private:
 
 class Parser {
 public:
+    Parser();
     Tuple parse(const std::string& text);
 private:
-    Parser();
     Token consumeToken(TokenType);
 
 };

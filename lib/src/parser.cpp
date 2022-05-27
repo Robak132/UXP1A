@@ -74,3 +74,5 @@ std::vector<std::string> Parser::splitText(std::string text) {
 
     return elements;
 }
+
+Parser::Parser() = default;
