@@ -84,6 +84,14 @@ void Lexer::omitWhitespaces() {
     }
 }
 
+Token* Lexer::getSimpleToken() {return nullptr;}
+Token* Lexer::getStringLiteral() {return nullptr;}
+Token* Lexer::getNumberLiteral() {return nullptr;}
+std::string Lexer::buildString() {return "";}
+int Lexer::buildInteger() {return 0;}
+double Lexer::buildFraction() {return 0.0;}
+
+
 Token Lexer::getNextToken() {
     omitWhitespaces();
     Token *token;
