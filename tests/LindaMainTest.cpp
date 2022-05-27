@@ -47,13 +47,11 @@ TEST_CASE("Main functions") {
                 "../tests/resources/data.csv",
                 "../tests/resources/processes.csv",
                 mockParser);
-        Tuple *result = linda.input(templateTuple);
-        REQUIRE(result->compare(testTuple1));
+        Tuple result = linda.input(templateTuple);
+        REQUIRE(result.compare(testTuple1));
 
         FileManager fileManager("../tests/resources/data.csv");
         REQUIRE(fileManager.readFile() == "10,\"abc\",3.1415,\n2,3,1,\"Ala ma kota\"");
-
-        delete result;
     }
     SECTION("Read") {
         system("cp ../tests/resources/linda_test_data.csv ../tests/resources/data.csv");
@@ -70,13 +68,11 @@ TEST_CASE("Main functions") {
                 "../tests/resources/data.csv",
                 "../tests/resources/processes.csv",
                 mockParser);
-        Tuple *result = linda.read(templateTuple);
-        REQUIRE(result->compare(testTuple1));
+        Tuple result = linda.read(templateTuple);
+        REQUIRE(result.compare(testTuple1));
 
         FileManager fileManager("../tests/resources/data.csv");
         REQUIRE(fileManager.readFile() == "1,\"abc\",3.1415,\"d\"\r\n10,\"abc\",3.1415,\r\n2,3,1,\"Ala ma kota\"");
-
-        delete result;
     }
     delete mockParser;
 }
