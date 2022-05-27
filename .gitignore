@@ -51,3 +51,7 @@ readlock
 writelock
 lindatest
 /tests/CatchTests
+CatchTests
+catch.hpp
+/build
+Makefile
