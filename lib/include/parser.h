@@ -17,7 +17,7 @@ public:
     Token(std::string value, TokenType tokenType);
     Token(int value, TokenType tokenType);
     Token(double value, TokenType tokenType);
-    Type getType();
+    TokenType getType();
 
     template <typename T>
     T getValue();
@@ -35,7 +35,9 @@ public:
     Lexer();
     Token getNextToken();
 private:
-    std::string current_character;
+    std::string sourceText;
+    std::string currentCharacter;
+    int currentCharacterIndex;
     void nextCharacter();
     void omitWhitespaces();
     Token getSimpleToken();

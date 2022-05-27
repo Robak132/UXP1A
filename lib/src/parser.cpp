@@ -41,8 +41,22 @@ Token::Token(double value, TokenType tokenType) {
     valueType = FLOAT;
 }
 
-int Parser::parseInt(std::string text) {
-    return 0;
+TokenType Token::getType() {
+    return type;
+}
+
+template<typename T>
+T Token::getValue() {
+    switch (valueType) {
+        case INT:
+            return integerValue;
+        case FLOAT:
+            return doubleValue;
+        case STR:
+            return stringValue;
+        case NONE:
+            return nullptr;
+    }
 }
 
 float Parser::parseFloat(std::string text) {
