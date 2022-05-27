@@ -20,6 +20,8 @@ TEST_CASE("Main functions") {
             Entity::createIntEntity(1),
             Entity::createStringEntity("Ala ma kota"),
     });
+    auto *mockParser = new MockParser({testTuple1, testTuple2, testTuple3});
+
     SECTION("Output") {
         system("rm ../tests/resources/data.csv");
         system("rm ../tests/resources/processes.csv");
@@ -40,8 +42,6 @@ TEST_CASE("Main functions") {
                 Entity::createDoubleEntity(),
                 Entity::createStringEntity("d"),
         });
-
-        auto *mockParser = new MockParser({testTuple1, testTuple2, testTuple3});
 
         Linda linda = Linda(
                 "../tests/resources/data.csv",
@@ -66,8 +66,6 @@ TEST_CASE("Main functions") {
                 Entity::createStringEntity("d"),
         });
 
-        auto *mockParser = new MockParser({testTuple1, testTuple2, testTuple3});
-
         Linda linda = Linda(
                 "../tests/resources/data.csv",
                 "../tests/resources/processes.csv",
@@ -80,4 +78,5 @@ TEST_CASE("Main functions") {
 
         delete result;
     }
+    delete mockParser;
 }

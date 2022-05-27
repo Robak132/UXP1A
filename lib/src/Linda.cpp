@@ -13,7 +13,7 @@ Linda::~Linda() {
     delete sleepingProcesses;
 }
 
-void Linda::output(Tuple tuple) {
+void Linda::output(const Tuple& tuple) {
     dataFile->appendLine(tuple.toCSV());
 }
 Tuple* Linda::input(const Tuple& tupleTemplate, int timeout) {
@@ -37,18 +37,22 @@ Tuple* Linda::input(const Tuple& tupleTemplate, int timeout) {
     return result;
 }
 Tuple* Linda::read(const Tuple& tupleTemplate, int timeout) {
+    Tuple result;
+    findTuple(tupleTemplate, result, timeout);
+    return new Tuple(result);
+}
+int Linda::findTuple(const Tuple& tupleTemplate, Tuple& result, int timeout) {
     std::vector<std::string> data = Utilities::splitString(dataFile->readFile());
     int resultIndex = -1;
-    Tuple* result = nullptr;
 
     for (int i=0;i<data.size();i++) {
         Tuple* tuple = stringParser->parse(data[i]);
         if (tupleTemplate.compare(*tuple)) {
-            result = tuple;
+            result = *tuple;
             resultIndex = i;
+            delete tuple;
             break;
         }
     }
-    //TODO Go to sleep
-    return result;
+    return resultIndex;
 }

@@ -12,10 +12,12 @@ public:
                    IParser* parser = new Parser());
     Tuple* input(const Tuple& tupleTemplate, int timeout=0);
     Tuple* read(const Tuple& tupleTemplate, int timeout=0);
-    void output(Tuple tuple);
+    void output(const Tuple& tuple);
 private:
     FileManager* dataFile;
     FileManager* sleepingProcesses;
     IParser* stringParser;
+
+    int findTuple(const Tuple &tupleTemplate, Tuple& result, int timeout);
 };
 #endif /* LINDA_H */
