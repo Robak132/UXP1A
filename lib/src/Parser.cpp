@@ -20,6 +20,7 @@ const std::map<std::string, TokenType> SIMPLE_SINGLE_TOKENS{
         {">", MORE_TOKEN},
         {"=", EQUALS_TOKEN},
         {"*", UNSPECIFIED_RELATION_TOKEN},
+        {"-", MINUS_TOKEN},
         {":", COLON_TOKEN},
         {",", COMA_TOKEN},
 };
