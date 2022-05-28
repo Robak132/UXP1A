@@ -3,7 +3,11 @@
 
 #include <vector>
 #include <string>
+#include <sys/sem.h>
+#include <sys/syscall.h>
+#include <unistd.h>
 #include "Entity.h"
+#include "Utilities.h"
 
 class Tuple {
 public:
@@ -18,7 +22,20 @@ public:
     friend std::ostream& operator << (std::ostream& outs, const Tuple& tuple) {
         return outs << tuple.toCSV();
     }
+
+    int semWait(int timeout);
+    int semPost();
+
 private:
+
+    void semInit(key_t key);
+    void semCreate();
+    void semDelete();
+
     std::vector<Entity> entities;
+    int semId;
+    key_t semKey;
+
+
 };
 #endif /* TUPLE_H */

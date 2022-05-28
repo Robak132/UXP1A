@@ -20,7 +20,7 @@ TEST_CASE("Write to file") {
     lock.l_start = 0;
     lock.l_whence = SEEK_SET;
     lock.l_len = 0;
-    FileManager fileManager("../tests/resources/test3.txt", lock);
+    FileManager fileManager("../tests/resources/test3.txt");
     REQUIRE(fileManager.readFile() == "abcdefgh");
 }
 

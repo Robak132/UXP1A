@@ -19,14 +19,14 @@ void FileManager::create() {
     closeFile();
 }
 
-void FileManager::blockFile(flock& lock){
-    if ((fcntl(this->file,F_SETLKW,this->lock))==-1){
+void FileManager::lockFile(flock& lock){
+    if ((fcntl(this->file,F_SETLKW,lock))==-1){
         perror("Error while locking file");
         exit(1);
     }
 }
 
-void FileManager::unblockFile(){
+void FileManager::unlockFile(){
     struct flock closelock = {};
     closelock.l_type = F_UNLCK;
     closelock.l_whence = SEEK_SET;
@@ -66,6 +66,13 @@ void FileManager::writeFile(std::vector<std::string> lines) {
 }
 void FileManager::appendLine(const std::string& line) {
     if (file == -1) openFile();
+    
+    // struct flock lock;
+    // lock.l_type    = F_WRLCK;
+    // lock.l_start   = 0;
+    // lock.l_whence  = SEEK_END;
+    // lock.l_len     = sizeof(line);
+    // lockFile(lock);
 
     long set = lseek(file, 0, SEEK_SET);
     long end = lseek(file, 0, SEEK_END);
@@ -74,6 +81,9 @@ void FileManager::appendLine(const std::string& line) {
     } else {
         writeLine(line);
     }
+
+    // unlockFile();
+    
     closeFile();
 }
 

@@ -4,6 +4,7 @@ project(main)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(writelock lib/src/example/writelock.cpp)
+add_executable(writelock2 lib/src/example/writelock2.cpp)
 add_executable(readlock lib/src/example/readlock.cpp)
 add_executable(lindatest
         lib/src/Main.cpp
@@ -11,7 +12,8 @@ add_executable(lindatest
         lib/src/FileManager.cpp
         lib/src/Tuple.cpp
         lib/src/Entity.cpp
-        lib/src/Parser.cpp)
+        lib/src/Parser.cpp
+        lib/src/Utilities.cpp)
 
 set(url https://github.com/philsquared/Catch/releases/download/v2.13.6/catch.hpp)
 file(

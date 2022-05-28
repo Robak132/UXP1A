@@ -20,8 +20,8 @@ public:
     void openFile();
     void closeFile();
 
-    void blockFile(flock& lock);
-    void unblockFile();
+    void lockFile(flock& lock);
+    void unlockFile();
     
 private:
     std::string file_path;
