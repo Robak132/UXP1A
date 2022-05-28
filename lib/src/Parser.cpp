@@ -148,6 +148,47 @@ std::string Lexer::buildString() {return "";}
 int Lexer::buildInteger() {return 0;}
 double Lexer::buildFraction() {return 0.0;}
 
+std::string Lexer::buildString() {
+    std::string usedQuoteSign = currentCharacter;
+    std::string buffer;
+    nextCharacter();
+    while (currentCharacter != usedQuoteSign) {
+        // String length exceeded
+        if (buffer.length() >= MAX_STRING_LENGTH) {
+            throw "Exceeded the maximum length of the string in tuple.";
+        }
+            // EOF
+        if (currentCharacter == END_OF_FILE) {
+            throw "Unterminated string in tuple.";
+        }
+        // Escape characters
+        else if (currentCharacter == BACKSLASH) {
+            nextCharacter();
+            if (currentCharacter == usedQuoteSign) {
+                buffer += usedQuoteSign;
+            } else {
+                try {
+                    std::string newCharacter = ESCAPE_CHARACTERS.at(currentCharacter);
+                    buffer += newCharacter;
+                } catch (std::out_of_range& exception) {
+                    throw "Unexpected character during scanning.";
+                }
+            }
+        } else {
+            buffer += currentCharacter;
+        }
+        nextCharacter();
+    }
+    return buffer;
+}
+
+int Lexer::buildInteger() {
+    return 0;
+}
+
+double Lexer::buildFraction() {
+    return 0.0;
+}
 
 Token Lexer::getNextToken() {
     omitWhitespaces();
