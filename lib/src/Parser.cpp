@@ -3,6 +3,8 @@
 #include <utility>
 #include <map>
 
+const std::string END_OF_FILE = "\0";
+const std::string BACKSLASH = "\\";
 
 const std::map<std::string, int> WHITESPACES{
         {" ", 0},
@@ -11,6 +13,34 @@ const std::map<std::string, int> WHITESPACES{
         {"\v", 0},
         {"\f", 0},
         {"\r", 0},
+};
+
+const std::map<std::string, TokenType> SIMPLE_SINGLE_TOKENS{
+        {"<", LESS_TOKEN},
+        {">", MORE_TOKEN},
+        {"=", EQUALS_TOKEN},
+        {"*", UNSPECIFIED_RELATION_TOKEN},
+        {":", COLON_TOKEN},
+        {",", COMA_TOKEN},
+};
+
+const std::vector<TokenType> SIMPLE_DOUBLE_TOKENS_PREFIXES {{LESS_TOKEN, MORE_TOKEN}};
+
+const std::map<std::string, TokenType> SIMPLE_DOUBLE_TOKENS{
+        {"<=", LESS_EQUAL_TOKEN},
+        {">=", MORE_EQUAL_TOKEN},
+};
+
+const int MAX_STRING_LENGTH = 200;
+
+std::map<std::string, std::string> ESCAPE_CHARACTERS = {
+        {"n", "\n"},        // New line
+        {"r", "\r"},        // Carriage return
+        {"t", "\t"},        // Tab
+        {"b", "\b"},        // Backspace
+        {"f", "\f"},        // Form feed
+        {"\\", BACKSLASH},  // Backslash
+        {"0", END_OF_FILE}, // End of file
 };
 
 
