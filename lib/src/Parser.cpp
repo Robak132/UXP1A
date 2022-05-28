@@ -1,5 +1,6 @@
 #include "../include/Parser.h"
 
+#include <math.h>
 #include <utility>
 #include <map>
 
@@ -199,7 +200,24 @@ int Lexer::buildInteger() {
         }
         return value;
     }
-    return 0;
+    return -1;
+}
+
+double Lexer::buildFraction() {
+    int value = 0;
+    int fractionDigitsQuantity = 0;
+    if (currentCharacter == ".") {
+        nextCharacter();
+        while (isDecimal(currentCharacter)) {
+            value *= 10;
+            value += std::stoi(currentCharacter);
+            fractionDigitsQuantity += 1;
+            nextCharacter();
+        }
+        double fractionalPart = value / pow(10, fractionDigitsQuantity);
+        return fractionalPart;
+    }
+    return -1;
 }
 
 bool Lexer::isDecimal(const std::string& character) {
