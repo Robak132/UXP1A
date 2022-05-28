@@ -144,11 +144,30 @@ Token* Lexer::getSimpleToken() {
     return nullptr;
 }
 
-Token* Lexer::getStringLiteral() {return nullptr;}
-Token* Lexer::getNumberLiteral() {return nullptr;}
-std::string Lexer::buildString() {return "";}
-int Lexer::buildInteger() {return 0;}
-double Lexer::buildFraction() {return 0.0;}
+Token* Lexer::getStringLiteral() {
+    if (currentCharacter == "'" || currentCharacter == "\"") {
+        std::string value = buildString();
+        nextCharacter();
+        return new Token(value, STRING_LITERAL_TOKEN);
+    }
+    return nullptr;
+}
+
+Token* Lexer::getNumberLiteral() {
+    int integerValue = buildInteger();
+    double resultValue = 0.;
+    double fractionValue = buildFraction();
+
+    if (integerValue >= 0) {
+        if (fractionValue >= 0) {
+            resultValue += integerValue + fractionValue;
+            return new Token(resultValue, NUMERIC_LITERAL_TOKEN);
+        }
+        return new Token(integerValue, NUMERIC_LITERAL_TOKEN);
+    }
+
+    return nullptr;
+}
 
 std::string Lexer::buildString() {
     std::string usedQuoteSign = currentCharacter;
@@ -228,10 +247,6 @@ bool Lexer::isDecimal(const std::string& character) {
     return false;
 }
 
-
-double Lexer::buildFraction() {
-    return 0.0;
-}
 
 Token Lexer::getNextToken() {
     omitWhitespaces();
