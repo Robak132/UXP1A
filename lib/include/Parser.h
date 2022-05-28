@@ -55,6 +55,7 @@ private:
     Token* getNumberLiteral();
     std::string buildString();
     int buildInteger();
+    static bool isDecimal(const std::string& character);
     double buildFraction();
 };
 

@@ -183,8 +183,32 @@ std::string Lexer::buildString() {
 }
 
 int Lexer::buildInteger() {
+    int value = 0;
+    if (isDecimal(currentCharacter)) {
+        if (currentCharacter == "0") {
+            nextCharacter();
+            return 0;
+        }
+        value = std::stoi(currentCharacter);
+        nextCharacter();
+        while (isDecimal(currentCharacter)) {
+            value *= 10;
+            value += std::stoi(currentCharacter);
+            nextCharacter();
+        }
+        return value;
+    }
     return 0;
 }
+
+bool Lexer::isDecimal(const std::string& character) {
+    if (character == "0" || character == "1" || character == "2" || character == "3" || character == "4" ||
+        character == "5" || character == "6" || character == "7" || character == "8" || character == "9") {
+        return true;
+    }
+    return false;
+}
+
 
 double Lexer::buildFraction() {
     return 0.0;
