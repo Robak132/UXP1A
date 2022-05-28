@@ -114,7 +114,34 @@ void Lexer::omitWhitespaces() {
     }
 }
 
-Token* Lexer::getSimpleToken() {return nullptr;}
+Token* Lexer::getSimpleToken() {
+    try {
+        TokenType tokenType = SIMPLE_SINGLE_TOKENS.at(currentCharacter);
+        for (TokenType doubleTokenPrefix : SIMPLE_DOUBLE_TOKENS_PREFIXES) {
+            if (tokenType == doubleTokenPrefix) {
+                //It is possible, that token is 2 signed
+                std::string buffer = currentCharacter;
+                nextCharacter();
+                buffer += currentCharacter;
+                try {
+                    TokenType alternativeTokenType = SIMPLE_DOUBLE_TOKENS.at(buffer);
+                    nextCharacter();
+                    return new Token(alternativeTokenType);
+                } catch (std::out_of_range& innerException) {
+                    return new Token(tokenType);
+                }
+            } else {
+                // Single sign token
+                return new Token(tokenType);
+            }
+        }
+    } catch (std::out_of_range& exception) {
+        // No match with simple tokens
+        return nullptr;
+    }
+    return nullptr;
+}
+
 Token* Lexer::getStringLiteral() {return nullptr;}
 Token* Lexer::getNumberLiteral() {return nullptr;}
 std::string Lexer::buildString() {return "";}
