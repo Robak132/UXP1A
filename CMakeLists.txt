@@ -28,6 +28,7 @@ add_executable(CatchTests
         tests/TupleCompareTest.cpp
         tests/TupleToCSVTest.cpp
         tests/LindaMainTest.cpp
+        tests/ParserTest.cpp
 
         lib/src/Tuple.cpp
         lib/src/Entity.cpp
