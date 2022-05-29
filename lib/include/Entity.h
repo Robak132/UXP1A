@@ -13,6 +13,10 @@ enum Type {
 
 class Entity {
 public:
+    Entity(int value, Operator anOperator=EQUAL);
+    Entity(double value, Operator anOperator=EQUAL);
+    Entity(const std::string& value, Operator anOperator=EQUAL);
+
     static Entity createIntEntity() {return createIntEntity(0, ANY);}
     static Entity createDoubleEntity() {return createDoubleEntity(0, ANY);}
     static Entity createStringEntity() {return createStringEntity("", ANY);}

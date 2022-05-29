@@ -2,6 +2,25 @@
 #include <sstream>
 #include "../include/Entity.h"
 
+Entity::Entity(int value, Operator anOperator) {
+    intValue = value;
+    doubleValue = 0;
+    compareOperator = anOperator;
+}
+
+Entity::Entity(double value, Operator anOperator) {
+    doubleValue = value;
+    intValue = 0;
+    compareOperator = anOperator;
+}
+
+Entity::Entity(const std::string& value, Operator anOperator) {
+    stringValue = value;
+    intValue = 0;
+    doubleValue = 0;
+    compareOperator = anOperator;
+}
+
 Entity Entity::createIntEntity(int value, Operator anOperator) {
     Entity entity = Entity();
     entity.setIntValue(value);
