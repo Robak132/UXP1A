@@ -318,6 +318,40 @@ Tuple* Parser::parse(const std::string& text) {
     return nullptr;
 }
 
+void Parser::nextToken() {
+    currentToken = lexer.getNextToken();
+}
+
+Token* Parser::consumeToken(TokenType tokenType, bool isStrict) {
+    Token* token = &currentToken;
+    if (token->getType() == tokenType) {
+        nextToken();
+        return token;
+    }
+    if (isStrict) {
+        throw UnexpectedTokenException();
+    }
+    return nullptr;
+}
+
+Token* Parser::consumeToken(const std::list<TokenType>& tokenTypes, bool isStrict) {
+    for (TokenType tokenType : tokenTypes) {
+        Token* token = consumeToken(tokenType, false);
+        if (token != nullptr) {
+            return token;
+        }
+    }
+    if (isStrict) {
+        throw UnexpectedTokenException();
+    }
+    return nullptr;
+}
+
+Entity* Parser::parseEntity() {
+
+    return nullptr;
+}
+
 
 
 MockParser::MockParser(std::vector<Tuple> results_) {

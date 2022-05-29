@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <list>
 #include "Tuple.h"
 
 const int MAX_STRING_LENGTH = 200;
@@ -31,6 +32,20 @@ struct UnexpectedCharacterException : ScanningException {
         return "Unexpected character during scanning.";
     }
 };
+
+
+struct ParsingException : public std::exception {
+    [[nodiscard]] const char * what () const noexcept override {
+        return "Parsing exception.";
+    }
+};
+
+struct UnexpectedTokenException : ParsingException {
+    [[nodiscard]] const char * what () const noexcept override {
+        return "Unexpected token during parsing.";
+    }
+};
+
 
 enum TokenType {
     EQUALS_TOKEN, MORE_TOKEN, LESS_TOKEN, MORE_EQUAL_TOKEN, LESS_EQUAL_TOKEN,
@@ -105,7 +120,13 @@ public:
     Tuple* parse(const std::string& text) override;
 
 private:
-    Token consumeToken(TokenType);
+    Token currentToken;
+    Lexer lexer;
+
+    void nextToken();
+    Token* consumeToken(TokenType tokenType, bool isStrict = true);
+    Token* consumeToken(const std::list<TokenType>& tokenTypes, bool isStrict = true);
+    Entity* parseEntity();
 };
 
 
