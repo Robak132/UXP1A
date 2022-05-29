@@ -29,6 +29,33 @@ TEST_CASE("Lexer") {
 
         REQUIRE(resultTokens == correctTokens);
     }
+    SECTION("Test for doubles") {
+        std::string inputLine = R"(1.512, 10.1, -20.4567, 0, 3212432.28378273)";
+        std::vector<Token> correctTokens = {
+                Token(1.512, NUMERIC_LITERAL_TOKEN),
+                Token(COMA_TOKEN),
+                Token(10.1, NUMERIC_LITERAL_TOKEN),
+                Token(COMA_TOKEN),
+                Token(MINUS_TOKEN),
+                Token(20.4567, NUMERIC_LITERAL_TOKEN),
+                Token(COMA_TOKEN),
+                Token(0, NUMERIC_LITERAL_TOKEN),
+                Token(COMA_TOKEN),
+                Token(3212432.28378273, NUMERIC_LITERAL_TOKEN),
+                Token(END_TOKEN),
+        };
+        std::vector<Token> resultTokens;
+
+        Lexer lexer = Lexer(inputLine);
+        Token tempToken = Token(UNKNOWN_TOKEN);
+
+        while (tempToken.getType() != END_TOKEN) {
+            tempToken = lexer.getNextToken();
+            resultTokens.push_back(tempToken);
+        }
+
+        REQUIRE(resultTokens == correctTokens);
+    }
     SECTION("Test for strings") {
         std::string inputLine = R"('Oklahoma', "Some escaping\"", "\"", "'''", "10.20", ",", '"""', '\'')";
         std::vector<Token> correctTokens = {

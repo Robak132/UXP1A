@@ -76,6 +76,15 @@ Token::Token(double value, TokenType tokenType) {
 }
 
 
+
+bool compare_float(double x, double y, double epsilon = 0.01f){
+    if(fabs(x - y) < epsilon)
+        return true;
+    return false;
+}
+
+
+
 TokenType Token::getType() {
     return type;
 }
@@ -97,7 +106,7 @@ T Token::getValue() {
 bool operator== (const Token& left, const Token& right) {
     bool goodValues = left.stringValue == right.stringValue &&
                       left.integerValue == right.integerValue &&
-                      left.doubleValue == right.doubleValue;
+                      compare_float(left.doubleValue, right.doubleValue);
     bool goodTypes = left.type == right.type &&
                      left.valueType == right.valueType;
     return goodValues && goodTypes;
