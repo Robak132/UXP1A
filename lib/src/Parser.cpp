@@ -188,11 +188,11 @@ std::string Lexer::buildString() {
     while (currentCharacter != usedQuoteSign) {
         // String length exceeded
         if (buffer.length() >= MAX_STRING_LENGTH) {
-            throw "Exceeded the maximum length of the string in tuple.";
+            throw ExceededStringLimitException();
         }
             // EOF
         if (currentCharacter == END_OF_FILE) {
-            throw "Unterminated string in tuple.";
+            throw UnterminatedStringException();
         }
         // Escape characters
         else if (currentCharacter == BACKSLASH) {
@@ -204,7 +204,7 @@ std::string Lexer::buildString() {
                     std::string newCharacter = ESCAPE_CHARACTERS.at(currentCharacter);
                     buffer += newCharacter;
                 } catch (std::out_of_range& exception) {
-                    throw "Unexpected character during scanning.";
+                    throw UnexpectedCharacterException();
                 }
             }
         } else {

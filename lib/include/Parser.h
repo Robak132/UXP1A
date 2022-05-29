@@ -8,6 +8,30 @@
 
 const int MAX_STRING_LENGTH = 200;
 
+struct ScanningException : public std::exception {
+    [[nodiscard]] const char * what () const noexcept override {
+        return "Scanning exception.";
+    }
+};
+
+struct ExceededStringLimitException : ScanningException {
+    [[nodiscard]] const char * what () const noexcept override {
+        return "Exceeded the maximum length of the string in tuple.";
+    }
+};
+
+struct UnterminatedStringException : ScanningException {
+    [[nodiscard]] const char * what () const noexcept override {
+        return "The string seems to be terminated incorrectly.";
+    }
+};
+
+struct UnexpectedCharacterException : ScanningException {
+    [[nodiscard]] const char * what () const noexcept override {
+        return "Unexpected character during scanning.";
+    }
+};
+
 enum TokenType {
     EQUALS_TOKEN, MORE_TOKEN, LESS_TOKEN, MORE_EQUAL_TOKEN, LESS_EQUAL_TOKEN,
     UNSPECIFIED_RELATION_TOKEN,

@@ -85,7 +85,40 @@ TEST_CASE("Lexer") {
 
         REQUIRE(resultTokens == correctTokens);
     }
-    SECTION("Test 2") {
-        REQUIRE(0 == 0);
+    SECTION("String limit exceeded") {
+        std::string innerString = "Something";
+        for (int i = 0; i < MAX_STRING_LENGTH; i++) innerString += "x";
+        std::string inputLine = "'" + innerString + "'";
+
+        bool exceptionOccurrence = false;
+        try {
+            Lexer lexer = Lexer(inputLine);
+            Token tempToken = Token(UNKNOWN_TOKEN);
+
+            while (tempToken.getType() != END_TOKEN) {
+                tempToken = lexer.getNextToken();
+            }
+        } catch (const ExceededStringLimitException &message) {
+            exceptionOccurrence = true;
+        }
+
+        REQUIRE(exceptionOccurrence);
+    }
+    SECTION("Unterminated string") {
+        std::string inputLine = "'Something";
+
+        bool exceptionOccurrence = false;
+        try {
+            Lexer lexer = Lexer(inputLine);
+            Token tempToken = Token(UNKNOWN_TOKEN);
+
+            while (tempToken.getType() != END_TOKEN) {
+                tempToken = lexer.getNextToken();
+            }
+        } catch (const UnterminatedStringException &message) {
+            exceptionOccurrence = true;
+        }
+
+        REQUIRE(exceptionOccurrence);
     }
 }
