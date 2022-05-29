@@ -24,6 +24,7 @@ const std::map<std::string, TokenType> SIMPLE_SINGLE_TOKENS{
         {"-", MINUS_TOKEN},
         {":", COLON_TOKEN},
         {",", COMA_TOKEN},
+        {END_OF_FILE, END_TOKEN}
 };
 
 const std::vector<TokenType> SIMPLE_DOUBLE_TOKENS_PREFIXES {{LESS_TOKEN, MORE_TOKEN}};
@@ -106,7 +107,10 @@ Lexer::Lexer(const std::string &input) {
 
 void Lexer::nextCharacter() {
     if (currentCharacterIndex + 1 < sourceText.length()) {
-        currentCharacter = sourceText[++currentCharacterIndex];
+        currentCharacterIndex += 1;
+        currentCharacter = sourceText[currentCharacterIndex];
+    } else {
+        currentCharacter = END_OF_FILE;
     }
 }
 
@@ -132,11 +136,11 @@ Token* Lexer::getSimpleToken() {
                 } catch (std::out_of_range& innerException) {
                     return new Token(tokenType);
                 }
-            } else {
-                // Single sign token
-                return new Token(tokenType);
             }
         }
+        // Single sign token
+        nextCharacter();
+        return new Token(tokenType);
     } catch (std::out_of_range& exception) {
         // No match with simple tokens
         return nullptr;
