@@ -97,18 +97,20 @@ TokenType Token::getType() {
     return type;
 }
 
-template<typename T>
-T Token::getValue() {
-    switch (valueType) {
-        case INT:
-            return integerValue;
-        case FLOAT:
-            return doubleValue;
-        case STR:
-            return stringValue;
-        case NONE:
-            return nullptr;
-    }
+Type Token::getValueType() {
+    return valueType;
+}
+
+int Token::getIntegerValue() {
+    return integerValue;
+}
+
+double Token::getDoubleValue() {
+    return doubleValue;
+}
+
+std::string Token::getStringValue() {
+    return stringValue;
 }
 
 bool operator== (const Token& left, const Token& right) {

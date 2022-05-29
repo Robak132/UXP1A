@@ -66,9 +66,11 @@ public:
     Token(int value, TokenType tokenType);
     Token(double value, TokenType tokenType);
     TokenType getType();
+    Type getValueType();
 
-    template <typename T>
-    T getValue();
+    int getIntegerValue();
+    double getDoubleValue();
+    std::string getStringValue();
 
     friend bool operator== (const Token& left, const Token& right);
 
