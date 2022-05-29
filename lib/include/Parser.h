@@ -128,7 +128,9 @@ private:
     void nextToken();
     Token* consumeToken(TokenType tokenType, bool isStrict = true);
     Token* consumeToken(const std::list<TokenType>& tokenTypes, bool isStrict = true);
-    Entity* parseEntity();
+    Entity parseEntity();
+    Entity* parseString();
+    Entity* parseNumber();
 };
 
 

@@ -349,8 +349,49 @@ Token* Parser::consumeToken(const std::list<TokenType>& tokenTypes, bool isStric
     return nullptr;
 }
 
-Entity* Parser::parseEntity() {
+Entity Parser::parseEntity() {
+    Entity* entity;
 
+    entity = parseNumber();
+    if (entity) return *entity;
+
+    entity = parseString();
+    if (entity) return *entity;
+
+    return (Entity &&) ("");
+}
+
+Entity* Parser::parseString() {
+    Token *token = consumeToken(STRING_LITERAL_TOKEN, false);
+    if (token) {
+        return new Entity(token -> getStringValue());
+    }
+    return nullptr;
+}
+
+Entity* Parser::parseNumber() {
+    bool negationNeeded = false;
+    Token* token = consumeToken(MINUS_TOKEN, false);
+
+    if (token) negationNeeded = true;
+
+    token = consumeToken(NUMERIC_LITERAL_TOKEN, false);
+    if (token) {
+        int integerValue;
+        double doubleValue;
+        switch(token -> getValueType()) {
+            case INT:
+                integerValue = token -> getIntegerValue();
+                if (negationNeeded) integerValue *= -1;
+                return new Entity(integerValue);
+            case FLOAT:
+                doubleValue = token -> getDoubleValue();
+                if (negationNeeded) doubleValue *= -1;
+                return new Entity(doubleValue);
+            case STR: case NONE:
+                return nullptr;
+        }
+    }
     return nullptr;
 }
 
