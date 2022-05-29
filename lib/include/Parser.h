@@ -6,6 +6,7 @@
 #include <vector>
 #include "Tuple.h"
 
+const int MAX_STRING_LENGTH = 200;
 
 enum TokenType {
     EQUALS_TOKEN, MORE_TOKEN, LESS_TOKEN, MORE_EQUAL_TOKEN, LESS_EQUAL_TOKEN,

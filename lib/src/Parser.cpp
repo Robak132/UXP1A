@@ -34,7 +34,6 @@ const std::map<std::string, TokenType> SIMPLE_DOUBLE_TOKENS{
         {">=", MORE_EQUAL_TOKEN},
 };
 
-const int MAX_STRING_LENGTH = 200;
 
 std::map<std::string, std::string> ESCAPE_CHARACTERS = {
         {"n", "\n"},        // New line
