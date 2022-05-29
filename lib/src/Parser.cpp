@@ -1,6 +1,6 @@
 #include "../include/Parser.h"
 
-#include <math.h>
+#include <cmath>
 #include <utility>
 #include <map>
 
@@ -153,7 +153,6 @@ Token* Lexer::getSimpleToken() {
         // No match with simple tokens
         return nullptr;
     }
-    return nullptr;
 }
 
 Token* Lexer::getStringLiteral() {
@@ -216,7 +215,7 @@ std::string Lexer::buildString() {
 }
 
 int Lexer::buildInteger() {
-    int value = 0;
+    int value;
     if (isDecimal(currentCharacter)) {
         if (currentCharacter == "0") {
             nextCharacter();
