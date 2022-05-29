@@ -94,6 +94,15 @@ T Token::getValue() {
     }
 }
 
+bool operator== (const Token& left, const Token& right) {
+    bool goodValues = left.stringValue == right.stringValue &&
+                      left.integerValue == right.integerValue &&
+                      left.doubleValue == right.doubleValue;
+    bool goodTypes = left.type == right.type &&
+                     left.valueType == right.valueType;
+    return goodValues && goodTypes;
+}
+
 
 
 Lexer::Lexer(const std::string &input) {

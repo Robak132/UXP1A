@@ -30,6 +30,9 @@ public:
     template <typename T>
     T getValue();
 
+    friend bool operator== (const Token& left, const Token& right);
+
+
 private:
     TokenType type;
     Type valueType;
