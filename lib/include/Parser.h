@@ -36,6 +36,7 @@ enum TokenType {
     EQUALS_TOKEN, MORE_TOKEN, LESS_TOKEN, MORE_EQUAL_TOKEN, LESS_EQUAL_TOKEN,
     UNSPECIFIED_RELATION_TOKEN,
     NUMERIC_LITERAL_TOKEN, STRING_LITERAL_TOKEN,
+    INT_KEYWORD_TOKEN, FLOAT_KEYWORD_TOKEN, STRING_KEYWORD_TOKEN,
     MINUS_TOKEN,
     COLON_TOKEN, COMA_TOKEN,
     UNKNOWN_TOKEN, END_TOKEN
@@ -82,6 +83,7 @@ private:
     Token* getSimpleToken();
     Token* getStringLiteral();
     Token* getNumberLiteral();
+    Token* getKeyword();
     std::string buildString();
     int buildInteger();
     static bool isDecimal(const std::string& character);

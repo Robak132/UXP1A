@@ -29,6 +29,29 @@ TEST_CASE("Lexer") {
 
         REQUIRE(resultTokens == correctTokens);
     }
+    SECTION("Omitting whitespaces") {
+        std::string inputLine = "\n10,       \r\n-20,             \t3212432";
+        std::vector<Token> correctTokens = {
+                Token(10, NUMERIC_LITERAL_TOKEN),
+                Token(COMA_TOKEN),
+                Token(MINUS_TOKEN),
+                Token(20, NUMERIC_LITERAL_TOKEN),
+                Token(COMA_TOKEN),
+                Token(3212432, NUMERIC_LITERAL_TOKEN),
+                Token(END_TOKEN),
+        };
+        std::vector<Token> resultTokens;
+
+        Lexer lexer = Lexer(inputLine);
+        Token tempToken = Token(UNKNOWN_TOKEN);
+
+        while (tempToken.getType() != END_TOKEN) {
+            tempToken = lexer.getNextToken();
+            resultTokens.push_back(tempToken);
+        }
+
+        REQUIRE(resultTokens == correctTokens);
+    }
     SECTION("Test for doubles") {
         std::string inputLine = R"(1.512, 10.1, -20.4567, 0, 3212432.28378273)";
         std::vector<Token> correctTokens = {
@@ -74,6 +97,29 @@ TEST_CASE("Lexer") {
                 Token(R"(""")", STRING_LITERAL_TOKEN),
                 Token(COMA_TOKEN),
                 Token("'", STRING_LITERAL_TOKEN),
+                Token(END_TOKEN),
+        };
+        std::vector<Token> resultTokens;
+
+        Lexer lexer = Lexer(inputLine);
+        Token tempToken = Token(UNKNOWN_TOKEN);
+
+        while (tempToken.getType() != END_TOKEN) {
+            tempToken = lexer.getNextToken();
+            resultTokens.push_back(tempToken);
+        }
+
+        REQUIRE(resultTokens == correctTokens);
+    }
+    SECTION("Test for keywords") {
+        std::string inputLine = R"(int string float string    string int)";
+        std::vector<Token> correctTokens = {
+                Token(INT_KEYWORD_TOKEN),
+                Token(STRING_KEYWORD_TOKEN),
+                Token(FLOAT_KEYWORD_TOKEN),
+                Token(STRING_KEYWORD_TOKEN),
+                Token(STRING_KEYWORD_TOKEN),
+                Token(INT_KEYWORD_TOKEN),
                 Token(END_TOKEN),
         };
         std::vector<Token> resultTokens;
@@ -143,6 +189,23 @@ TEST_CASE("Lexer") {
                 tempToken = lexer.getNextToken();
             }
         } catch (const UnterminatedStringException &message) {
+            exceptionOccurrence = true;
+        }
+
+        REQUIRE(exceptionOccurrence);
+    }
+    SECTION("Keyword exception") {
+        std::string inputLine = "definitelyNotAKeyword";
+
+        bool exceptionOccurrence = false;
+        try {
+            Lexer lexer = Lexer(inputLine);
+            Token tempToken = Token(UNKNOWN_TOKEN);
+
+            while (tempToken.getType() != END_TOKEN) {
+                tempToken = lexer.getNextToken();
+            }
+        } catch (const ScanningException &message) {
             exceptionOccurrence = true;
         }
 

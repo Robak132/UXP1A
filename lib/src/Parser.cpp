@@ -3,6 +3,8 @@
 #include <cmath>
 #include <utility>
 #include <map>
+#include <cctype>
+
 
 const std::string END_OF_FILE = "\0";
 const std::string BACKSLASH = "\\";
@@ -32,6 +34,12 @@ const std::vector<TokenType> SIMPLE_DOUBLE_TOKENS_PREFIXES {{LESS_TOKEN, MORE_TO
 const std::map<std::string, TokenType> SIMPLE_DOUBLE_TOKENS{
         {"<=", LESS_EQUAL_TOKEN},
         {">=", MORE_EQUAL_TOKEN},
+};
+
+const std::map<std::string, TokenType> KEYWORD_TOKENS{
+        {"int", INT_KEYWORD_TOKEN},
+        {"float", FLOAT_KEYWORD_TOKEN},
+        {"string", STRING_KEYWORD_TOKEN},
 };
 
 
@@ -267,6 +275,23 @@ bool Lexer::isDecimal(const std::string& character) {
     return false;
 }
 
+Token* Lexer::getKeyword() {
+    std::string buffer;
+
+    if (std::isalpha(currentCharacter[0])) {
+        while (std::isalpha(currentCharacter[0])) {
+            buffer += currentCharacter;
+            nextCharacter();
+        }
+        try {
+            TokenType tokenType = KEYWORD_TOKENS.at(buffer);
+            return new Token(tokenType);
+        } catch (std::out_of_range &exception) {
+            throw ScanningException();
+        }
+    }
+    return nullptr;
+}
 
 Token Lexer::getNextToken() {
     omitWhitespaces();
@@ -279,6 +304,9 @@ Token Lexer::getNextToken() {
     if (token) return *token;
 
     token = getStringLiteral();
+    if (token) return *token;
+
+    token = getKeyword();
     if (token) return *token;
 
     return Token(UNKNOWN_TOKEN);
