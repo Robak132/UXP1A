@@ -297,7 +297,7 @@ Token* Lexer::getKeyword() {
 
 Token Lexer::getNextToken() {
     omitWhitespaces();
-    Token *token;
+    Token* token;
 
     token = getSimpleToken();
     if (token) return *token;
@@ -326,7 +326,7 @@ void Parser::nextToken() {
 
 Token* Parser::consumeToken(TokenType tokenType, bool isStrict) {
     Token* token = &currentToken;
-    if (token->getType() == tokenType) {
+    if (token -> getType() == tokenType) {
         nextToken();
         return token;
     }
@@ -339,7 +339,7 @@ Token* Parser::consumeToken(TokenType tokenType, bool isStrict) {
 Token* Parser::consumeToken(const std::list<TokenType>& tokenTypes, bool isStrict) {
     for (TokenType tokenType : tokenTypes) {
         Token* token = consumeToken(tokenType, false);
-        if (token != nullptr) {
+        if (token) {
             return token;
         }
     }
