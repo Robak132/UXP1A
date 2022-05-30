@@ -78,3 +78,16 @@ TEST_CASE("Check toPattern()") {
         REQUIRE(result == correctCSV);
     }
 }
+TEST_CASE("Check toFilePattern()") {
+    Tuple tuple = Tuple(std::vector<Entity>{
+            Entity(1),
+            Entity("2"),
+            Entity(3.1),
+            Entity(4),
+    });
+    tuple.setSemaphoreAddress(12121212);
+
+    std::string result = tuple.toFilePattern();
+    std::string correctCSV = "12121212,integer:=1,string:=\"2\",float:=3.1,integer:=4";
+    REQUIRE(result == correctCSV);
+}

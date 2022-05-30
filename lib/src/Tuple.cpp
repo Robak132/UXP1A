@@ -36,7 +36,7 @@ std::string Tuple::toPattern() const {
 std::string Tuple::toFilePattern() const {
     std::string outputString;
 
-    outputString += std::to_string(semaphoreAddress) + ", ";
+    outputString += std::to_string(semaphoreAddress) + ",";
     outputString += toPattern();
 
     return outputString;
