@@ -1,5 +1,6 @@
 #include "../lib/include/Tuple.h"
 #include "../lib/include/Linda.h"
+#include "../lib/include/Utilities.h"
 #include "catch.hpp"
 
 TEST_CASE("Main functions") {
@@ -76,7 +77,12 @@ TEST_CASE("Main functions") {
         REQUIRE(result->compare(testTuple1));
 
         FileManager fileManager("../tests/resources/data.csv");
-        REQUIRE(fileManager.readFile() == "1,\"abc\",3.1415,\"d\"\r\n10,\"abc\",3.1415,\r\n2,3,1,\"Ala ma kota\"");
+
+        std::vector<std::string> readFileResult = Utilities::splitString(fileManager.readFile());
+        std::string correctString = "1,\"abc\",3.1415,\"d\"\r\n10,\"abc\",3.1415,\r\n2,3,1,\"Ala ma kota\"";
+        std::vector<std::string> correctVector = Utilities::splitString(correctString);
+
+        REQUIRE(readFileResult == correctVector);
 
         delete result;
     }
