@@ -132,7 +132,7 @@ bool operator== (const Entity& left, const Entity& right) {
             case INT:
                 return left.intValue == right.intValue;
             case FLOAT:
-                return Utilities::compare_float(left.doubleValue, right.intValue);
+                return Utilities::compare_float(left.doubleValue, right.doubleValue);
             case STR:
                 return left.stringValue == right.stringValue;
             case NONE:
