@@ -60,6 +60,14 @@ Token::Token() {
     valueType = NONE;
 }
 
+Token::Token(const Token &other) {
+    type = other.type;
+    integerValue = other.integerValue;
+    doubleValue = other.doubleValue;
+    stringValue = other.stringValue;
+    valueType = other.valueType;
+}
+
 Token::Token(TokenType tokenType) {
     type = tokenType;
     integerValue = 0;
@@ -373,7 +381,7 @@ Token* Parser::consumeToken(TokenType tokenType, bool isStrict) {
     Token token = currentToken;
     if (token.getType() == tokenType) {
         nextToken();
-        return &token;
+        return new Token(token);
     }
     if (isStrict) {
         throw UnexpectedTokenException();

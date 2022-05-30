@@ -63,6 +63,7 @@ class Token {
 public:
     Token();
     explicit Token(TokenType tokenType);
+    Token(Token const &other);
     Token(std::string value, TokenType tokenType);
     Token(int value, TokenType tokenType);
     Token(double value, TokenType tokenType);
