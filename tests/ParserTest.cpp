@@ -241,4 +241,19 @@ TEST_CASE("Parser") {
         bool condition = (*resultTuple == correctTuple);
         REQUIRE(condition);
     }
+    SECTION("Test file pattern") {
+        std::string inputLine = R"(123456, integer:600, float:*, string:"Simba", float:<3.14)";
+        Tuple correctTuple = Tuple(std::vector<Entity> {
+                Entity(600, EQUAL),
+                Entity(FLOAT),
+                Entity("Simba", EQUAL),
+                Entity(3.14, LESS),
+        });
+        correctTuple.addSemaphoreAddress(123456);
+        Parser parser = Parser();
+        Tuple* resultTuple = parser.parseFilePattern(inputLine);
+
+        bool condition = (*resultTuple == correctTuple);
+        REQUIRE(condition);
+    }
 }

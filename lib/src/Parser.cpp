@@ -365,7 +365,25 @@ Tuple* Parser::parseCSV(const std::string& text) {
  * entity = string_literal | numeric_literal ;
  * */
 Tuple* Parser::parseFilePattern(const std::string& text) {
-    return nullptr;
+    lexer = Lexer(text);
+    nextToken();
+
+    std::vector<Entity> entities;
+
+    Token* token = consumeToken(NUMERIC_LITERAL_TOKEN, true);
+    int semaphoreAddress = token -> getIntegerValue();
+
+    consumeToken(COMA_TOKEN, true);
+
+    while (Entity* entityPattern = parseEntityPattern()) {
+        entities.push_back(*entityPattern);
+        consumeToken(COMA_TOKEN, false);
+    }
+
+    auto* tuple = new Tuple(entities);
+    tuple ->addSemaphoreAddress(semaphoreAddress);
+
+    return tuple;
 }
 
 /* Pattern grammar:

@@ -23,8 +23,15 @@ std::string Tuple::toCSV() const {
     return outputString;
 }
 
+int Tuple::addSemaphoreAddress(int address) {
+    semaphoreAddress = address;
+}
+
 bool operator== (const Tuple& left, const Tuple& right) {
     if (left.entities.size() != right.entities.size()) {
+        return false;
+    }
+    if (left.semaphoreAddress != right.semaphoreAddress) {
         return false;
     }
 
