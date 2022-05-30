@@ -57,6 +57,9 @@ bool Entity::compare(const Entity& entity, Operator _operator) const {
             return compareDouble(entity, _operator);
         case STR:
             return compareString(entity, _operator);
+        case NONE:
+        default:
+            return false;
     }
 }
 bool Entity::compareInt(const Entity &entity, Operator _operator) const {

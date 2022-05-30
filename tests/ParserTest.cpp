@@ -212,3 +212,19 @@ TEST_CASE("Lexer") {
         REQUIRE(exceptionOccurrence);
     }
 }
+
+TEST_CASE("Parser") {
+    SECTION("Test 1") {
+        std::string inputLine = R"(1,"a'b'c",3.14159,"d")";
+        Tuple correctTuple = Tuple(std::vector<Entity> {
+                Entity(1),
+                Entity("a'b'c"),
+                Entity(3.14159),
+                Entity("d"),
+        });
+        Parser parser = Parser();
+        Tuple* resultTuple = parser.parseCSV(inputLine);
+
+        REQUIRE(resultTuple->compare(correctTuple));
+    }
+}

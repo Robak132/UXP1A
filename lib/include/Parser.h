@@ -71,7 +71,7 @@ public:
 
     int getIntegerValue();
     double getDoubleValue();
-    std::string getStringValue();
+    std::string* getStringValue();
 
     friend bool operator== (const Token& left, const Token& right);
 
@@ -114,6 +114,9 @@ private:
 class IParser {
 public:
     virtual Tuple* parse(const std::string& text) = 0;
+    virtual Tuple* parseCSV(const std::string& text) = 0;
+    virtual Tuple* parsePattern(const std::string& text) = 0;
+    virtual Tuple* parseFilePattern(const std::string& text) = 0;
 };
 
 
@@ -122,6 +125,9 @@ class Parser : public IParser {
 public:
     Parser();
     Tuple* parse(const std::string& text) override;
+    Tuple* parseCSV(const std::string& text) override;
+    Tuple* parsePattern(const std::string& text) override;
+    Tuple* parseFilePattern(const std::string& text) override;
 
 private:
     Token currentToken = Token(UNKNOWN_TOKEN);
@@ -142,6 +148,9 @@ class MockParser : public IParser {
 public:
     explicit MockParser(std::vector<Tuple> results_);
     Tuple* parse(const std::string& text) override;
+    Tuple* parseCSV(const std::string& text) override;
+    Tuple* parsePattern(const std::string& text) override;
+    Tuple* parseFilePattern(const std::string& text) override;
 
 private:
     std::vector<Tuple> results;

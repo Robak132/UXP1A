@@ -115,8 +115,8 @@ double Token::getDoubleValue() {
     return doubleValue;
 }
 
-std::string Token::getStringValue() {
-    return stringValue;
+std::string* Token::getStringValue() {
+    return &stringValue;
 }
 
 bool operator== (const Token& left, const Token& right) {
@@ -337,6 +337,26 @@ Tuple* Parser::parse(const std::string& text) {
     return nullptr;
 }
 
+/* CSV grammar:
+ * line = entity { ',' entity } ;
+ * entity = string_literal | numeric_literal ;
+ * */
+Tuple* Parser::parseCSV(const std::string& text) {
+    lexer = Lexer(text);
+    nextToken();
+
+    std::vector<Entity> entities;
+
+    while (Entity* entity = parseEntity()) {
+        entities.push_back(*entity);
+        consumeToken(COMA_TOKEN, false);
+    }
+
+    auto* tuple = new Tuple(entities);
+
+    return tuple;
+}
+
 void Parser::nextToken() {
     currentToken = lexer.getNextToken();
 }
@@ -381,7 +401,8 @@ Entity* Parser::parseEntity() {
 Entity* Parser::parseString() {
     Token *token = consumeToken(STRING_LITERAL_TOKEN, false);
     if (token) {
-        return new Entity(token -> getStringValue());
+        std::string stringValue = *token -> getStringValue();
+        return new Entity(stringValue);
     }
     return nullptr;
 }
@@ -422,4 +443,16 @@ Tuple* MockParser::parse(const std::string& text) {
     if (results.size() <= iterator) iterator=0;
     Tuple result = results[iterator++];
     return new Tuple(result);
+}
+
+Tuple* MockParser::parseCSV(const std::string& text) {
+    return parse(text);
+}
+
+Tuple* MockParser::parsePattern(const std::string& text) {
+    return parse(text);
+}
+
+Tuple* MockParser::parseFilePattern(const std::string& text) {
+    return parse(text);
 }
