@@ -357,6 +357,14 @@ Tuple* Parser::parseCSV(const std::string& text) {
     return tuple;
 }
 
+Tuple* Parser::parseFilePattern(const std::string& text) {
+    return nullptr;
+}
+
+Tuple* Parser::parsePattern(const std::string& text) {
+    return nullptr;
+}
+
 void Parser::nextToken() {
     currentToken = lexer.getNextToken();
 }
