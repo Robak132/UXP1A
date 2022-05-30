@@ -23,6 +23,19 @@ std::string Tuple::toCSV() const {
     return outputString;
 }
 
+std::string Tuple::toPattern() const {
+    return "";
+}
+
+std::string Tuple::toFilePattern() const {
+    std::string outputString;
+
+    outputString += std::to_string(semaphoreAddress) + ", ";
+    outputString += toPattern();
+
+    return outputString;
+}
+
 void Tuple::setSemaphoreAddress(int address) {
     semaphoreAddress = address;
 }
