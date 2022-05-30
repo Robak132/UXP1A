@@ -53,6 +53,12 @@ std::map<std::string, std::string> ESCAPE_CHARACTERS = {
         {"0", END_OF_FILE}, // End of file
 };
 
+Token::Token() {
+    type = UNKNOWN_TOKEN;
+    integerValue = 0;
+    doubleValue = 0;
+    valueType = NONE;
+}
 
 Token::Token(TokenType tokenType) {
     type = tokenType;
@@ -124,11 +130,18 @@ bool operator== (const Token& left, const Token& right) {
 
 
 
+Lexer::Lexer() {
+
+}
+
 Lexer::Lexer(const std::string &input) {
     sourceText = input;
+    currentCharacterIndex = 0;
     if (input.length() > 0) {
         currentCharacter = input[0];
-        currentCharacterIndex = 0;
+    } else {
+        currentCharacter = "";
+
     }
 }
 
@@ -316,6 +329,10 @@ Token Lexer::getNextToken() {
 
 
 
+Parser::Parser() {
+
+}
+
 Tuple* Parser::parse(const std::string& text) {
     return nullptr;
 }
@@ -325,10 +342,10 @@ void Parser::nextToken() {
 }
 
 Token* Parser::consumeToken(TokenType tokenType, bool isStrict) {
-    Token* token = &currentToken;
-    if (token -> getType() == tokenType) {
+    Token token = currentToken;
+    if (token.getType() == tokenType) {
         nextToken();
-        return token;
+        return &token;
     }
     if (isStrict) {
         throw UnexpectedTokenException();
@@ -349,16 +366,16 @@ Token* Parser::consumeToken(const std::list<TokenType>& tokenTypes, bool isStric
     return nullptr;
 }
 
-Entity Parser::parseEntity() {
+Entity* Parser::parseEntity() {
     Entity* entity;
 
     entity = parseNumber();
-    if (entity) return *entity;
+    if (entity) return entity;
 
     entity = parseString();
-    if (entity) return *entity;
+    if (entity) return entity;
 
-    throw ParsingException();
+    return nullptr;
 }
 
 Entity* Parser::parseString() {

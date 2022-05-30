@@ -61,6 +61,7 @@ enum TokenType {
 
 class Token {
 public:
+    Token();
     explicit Token(TokenType tokenType);
     Token(std::string value, TokenType tokenType);
     Token(int value, TokenType tokenType);
@@ -87,6 +88,7 @@ private:
 
 class Lexer {
 public:
+    Lexer();
     explicit Lexer(const std::string& input);
     Token getNextToken();
 
@@ -118,17 +120,17 @@ public:
 
 class Parser : public IParser {
 public:
-    Parser() = default;
+    Parser();
     Tuple* parse(const std::string& text) override;
 
 private:
-    Token currentToken;
+    Token currentToken = Token(UNKNOWN_TOKEN);
     Lexer lexer;
 
     void nextToken();
     Token* consumeToken(TokenType tokenType, bool isStrict = true);
     Token* consumeToken(const std::list<TokenType>& tokenTypes, bool isStrict = true);
-    Entity parseEntity();
+    Entity* parseEntity();
     Entity* parseString();
     Entity* parseNumber();
 };

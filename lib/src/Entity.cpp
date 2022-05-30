@@ -6,12 +6,14 @@ Entity::Entity(int value, Operator anOperator) {
     intValue = value;
     doubleValue = 0;
     compareOperator = anOperator;
+    type = INT;
 }
 
 Entity::Entity(double value, Operator anOperator) {
     doubleValue = value;
     intValue = 0;
     compareOperator = anOperator;
+    type = FLOAT;
 }
 
 Entity::Entity(const std::string& value, Operator anOperator) {
@@ -19,6 +21,7 @@ Entity::Entity(const std::string& value, Operator anOperator) {
     intValue = 0;
     doubleValue = 0;
     compareOperator = anOperator;
+    type = STR;
 }
 
 Entity Entity::createIntEntity(int value, Operator anOperator) {
@@ -114,5 +117,8 @@ std::string Entity::toString() const {
             return stream.str();
         case STR:
             return '"' + stringValue + '"';
+        case NONE:
+        default:
+            return "";
     }
 }
