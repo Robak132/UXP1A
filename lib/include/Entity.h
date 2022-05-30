@@ -1,6 +1,7 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
+#include "Utilities.h"
 #include <string>
 
 enum Operator {
@@ -8,11 +9,16 @@ enum Operator {
 };
 
 enum Type {
-    INT=0, FLOAT=1, STR=2
+    INT=0, FLOAT=1, STR=2, NONE=3
 };
 
 class Entity {
 public:
+    Entity(Type entityType);
+    Entity(int value, Operator anOperator=EQUAL);
+    Entity(double value, Operator anOperator=EQUAL);
+    Entity(const std::string& value, Operator anOperator=EQUAL);
+
     static Entity createIntEntity() {return createIntEntity(0, ANY);}
     static Entity createDoubleEntity() {return createDoubleEntity(0, ANY);}
     static Entity createStringEntity() {return createStringEntity("", ANY);}
@@ -54,6 +60,10 @@ public:
     std::string toString() const;
     bool compare(const Entity& entity) const;
     bool compare(const Entity& entity, Operator _operator) const;
+
+    friend bool operator== (const Entity& left, const Entity& right);
+    friend bool operator!= (const Entity& left, const Entity& right);
+
 private:
     Entity() = default;
     Type type = INT;

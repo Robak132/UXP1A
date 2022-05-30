@@ -2,6 +2,35 @@
 #include <sstream>
 #include "../include/Entity.h"
 
+Entity::Entity(Type entityType) {
+    intValue = 0;
+    doubleValue = 0;
+    compareOperator = ANY;
+    type = entityType;
+}
+
+Entity::Entity(int value, Operator anOperator) {
+    intValue = value;
+    doubleValue = 0;
+    compareOperator = anOperator;
+    type = INT;
+}
+
+Entity::Entity(double value, Operator anOperator) {
+    doubleValue = value;
+    intValue = 0;
+    compareOperator = anOperator;
+    type = FLOAT;
+}
+
+Entity::Entity(const std::string& value, Operator anOperator) {
+    stringValue = value;
+    intValue = 0;
+    doubleValue = 0;
+    compareOperator = anOperator;
+    type = STR;
+}
+
 Entity Entity::createIntEntity(int value, Operator anOperator) {
     Entity entity = Entity();
     entity.setIntValue(value);
@@ -35,6 +64,9 @@ bool Entity::compare(const Entity& entity, Operator _operator) const {
             return compareDouble(entity, _operator);
         case STR:
             return compareString(entity, _operator);
+        case NONE:
+        default:
+            return false;
     }
 }
 bool Entity::compareInt(const Entity &entity, Operator _operator) const {
@@ -95,5 +127,27 @@ std::string Entity::toString() const {
             return stream.str();
         case STR:
             return '"' + stringValue + '"';
+        case NONE:
+        default:
+            return "";
     }
+}
+
+bool operator== (const Entity& left, const Entity& right) {
+    if (left.type == right.type and left.compareOperator == right.compareOperator) {
+        switch (left.type) {
+            case INT:
+                return left.intValue == right.intValue;
+            case FLOAT:
+                return Utilities::compare_float(left.doubleValue, right.doubleValue);
+            case STR:
+                return left.stringValue == right.stringValue;
+            case NONE:
+                return true;
+        }
+    } else return false;
+}
+
+bool operator!= (const Entity& left, const Entity& right) {
+    return !(left == right);
 }

@@ -7,10 +7,30 @@ TEST_CASE("Life, the universe and everything") {
     REQUIRE(7*6 == 42);
 }
 TEST_CASE("Split string") {
-    std::vector<std::string> vec = Utilities::splitString("abcdefgh\n\raaaaaaaa\n\rbbbbbbbb");
-    REQUIRE(vec[0] == "abcdefgh");
-    REQUIRE(vec[1] == "aaaaaaaa");
-    REQUIRE(vec[2] == "bbbbbbbb");
+    SECTION("NR") {
+        std::vector<std::string> vec = Utilities::splitString("abcdefgh\n\raaaaaaaa\n\rbbbbbbbb");
+        REQUIRE(vec[0] == "abcdefgh");
+        REQUIRE(vec[1] == "aaaaaaaa");
+        REQUIRE(vec[2] == "bbbbbbbb");
+    }
+    SECTION("N") {
+        std::vector<std::string> vec = Utilities::splitString("abcdefgh\naaaaaaaa\nbbbbbbbb");
+        REQUIRE(vec[0] == "abcdefgh");
+        REQUIRE(vec[1] == "aaaaaaaa");
+        REQUIRE(vec[2] == "bbbbbbbb");
+    }
+    SECTION("R") {
+        std::vector<std::string> vec = Utilities::splitString("abcdefgh\raaaaaaaa\rbbbbbbbb");
+        REQUIRE(vec[0] == "abcdefgh");
+        REQUIRE(vec[1] == "aaaaaaaa");
+        REQUIRE(vec[2] == "bbbbbbbb");
+    }
+    SECTION("RN") {
+        std::vector<std::string> vec = Utilities::splitString("abcdefgh\r\naaaaaaaa\r\nbbbbbbbb");
+        REQUIRE(vec[0] == "abcdefgh");
+        REQUIRE(vec[1] == "aaaaaaaa");
+        REQUIRE(vec[2] == "bbbbbbbb");
+    }
 }
 
 TEST_CASE("Write to file") {

@@ -1,5 +1,4 @@
 #include "../include/Tuple.h"
-#include <sstream>
 
 
 bool Tuple::compare(const Tuple& other) const {
@@ -24,3 +23,22 @@ std::string Tuple::toCSV() const {
     return outputString;
 }
 
+void Tuple::addSemaphoreAddress(int address) {
+    semaphoreAddress = address;
+}
+
+bool operator== (const Tuple& left, const Tuple& right) {
+    if (left.entities.size() != right.entities.size()) {
+        return false;
+    }
+    if (left.semaphoreAddress != right.semaphoreAddress) {
+        return false;
+    }
+
+    for (int i=0; i < left.entities.size(); i++) {
+        if (left.entities[i] != right.entities[i]) {
+            return false;
+        }
+    }
+    return true;
+}

@@ -12,6 +12,9 @@ Linda::~Linda() {
     delete dataFile;
     delete sleepingProcesses;
 }
+void Linda::output(const std::string& stringTemplate) {
+    return output(*stringParser->parseCSV(stringTemplate));
+}
 
 void Linda::output(Tuple& tuple) {
     struct flock lock;
@@ -45,31 +48,13 @@ Tuple* Linda::input(Tuple& tupleTemplate, int timeout) {
             Tuple* result = getTuple(tupleTemplate, sleepingProcesses, true);
             return nullptr;
         }
-
     }
     return result;
 }
-Tuple* Linda::read(Tuple& tupleTemplate, int timeout) {
-   
-
-    Tuple* result = getTuple(tupleTemplate, dataFile, false);
-
-    if (result == nullptr){
-        int semId;
-        key_t semKey;
-        semCreate(semKey, semId);
-        // save semKey and tupleTemplate to sleepingProcess
-        if(semWait(timeout, semId) == 0){
-            result = getTuple(tupleTemplate, dataFile, false);
-        }
-        else{
-            Tuple* result = getTuple(tupleTemplate, sleepingProcesses, true);
-            return nullptr;
-        }
-
-    }
-    return result;
+Tuple* Linda::input(const std::string& stringTemplate, int timeout) {
+    return input(*stringParser->parsePattern(stringTemplate), timeout);
 }
+
 
 Tuple* Linda::getTuple(Tuple& tuple, FileManager* file, bool remove){
     struct flock lock;
@@ -100,7 +85,31 @@ Tuple* Linda::getTuple(Tuple& tuple, FileManager* file, bool remove){
     file->unlockFile();
     return result;
 }
+Tuple* Linda::read(const std::string& stringTemplate, int timeout) {
+    return read(*stringParser->parsePattern(stringTemplate), timeout);
+}
 
+Tuple* Linda::read(Tuple& tupleTemplate, int timeout) {
+   
+
+    Tuple* result = getTuple(tupleTemplate, dataFile, false);
+
+    if (result == nullptr){
+        int semId;
+        key_t semKey;
+        semCreate(semKey, semId);
+        // save semKey and tupleTemplate to sleepingProcess
+        if(semWait(timeout, semId) == 0){
+            result = getTuple(tupleTemplate, dataFile, false);
+        }
+        else{
+            Tuple* result = getTuple(tupleTemplate, sleepingProcesses, true);
+            return nullptr;
+        }
+
+    }
+    return result;
+}
 
 void Linda::semCreate(key_t &semKey, int &semId){
     int sid = syscall(SYS_gettid);
