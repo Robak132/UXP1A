@@ -23,7 +23,7 @@ std::string Tuple::toCSV() const {
     return outputString;
 }
 
-int Tuple::addSemaphoreAddress(int address) {
+void Tuple::addSemaphoreAddress(int address) {
     semaphoreAddress = address;
 }
 
