@@ -99,14 +99,6 @@ Token::Token(double value, TokenType tokenType) {
 
 
 
-bool compare_float(double x, double y, double epsilon = 0.01f) {
-    if(fabs(x - y) < epsilon)
-        return true;
-    return false;
-}
-
-
-
 TokenType Token::getType() {
     return type;
 }

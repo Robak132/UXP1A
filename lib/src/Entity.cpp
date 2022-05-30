@@ -2,6 +2,13 @@
 #include <sstream>
 #include "../include/Entity.h"
 
+Entity::Entity(Type entityType) {
+    intValue = 0;
+    doubleValue = 0;
+    compareOperator = ANY;
+    type = entityType;
+}
+
 Entity::Entity(int value, Operator anOperator) {
     intValue = value;
     doubleValue = 0;

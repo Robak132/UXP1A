@@ -214,7 +214,7 @@ TEST_CASE("Lexer") {
 }
 
 TEST_CASE("Parser") {
-    SECTION("Test 1") {
+    SECTION("Test CSV") {
         std::string inputLine = R"(1,"a'b'c",3.14159,"d")";
         Tuple correctTuple = Tuple(std::vector<Entity> {
                 Entity(1),
