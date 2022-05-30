@@ -24,7 +24,13 @@ std::string Tuple::toCSV() const {
 }
 
 std::string Tuple::toPattern() const {
-    return "";
+    std::string outputString;
+    unsigned long entitiesSize = entities.size();
+    for (unsigned long i = 0; i < entitiesSize; i++) {
+        outputString += entities[i].toPatternString();
+        if (i != entitiesSize - 1) outputString += ",";
+    }
+    return outputString;
 }
 
 std::string Tuple::toFilePattern() const {

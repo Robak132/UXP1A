@@ -41,3 +41,40 @@ TEST_CASE("Check toCSV()") {
         REQUIRE(result == correctCSV);
     }
 }
+TEST_CASE("Check toPattern()") {
+    SECTION("Test 1 - simple entities") {
+        Tuple tuple = Tuple(std::vector<Entity>{
+                Entity(1),
+                Entity("2"),
+                Entity(3.1),
+                Entity(4),
+        });
+
+        std::string result = tuple.toPattern();
+        std::string correctCSV = "integer:=1,string:=\"2\",float:=3.1,integer:=4";
+        REQUIRE(result == correctCSV);
+    }
+    SECTION("Test 2 - operators") {
+        Tuple tuple = Tuple(std::vector<Entity>{
+                Entity(1, MORE),
+                Entity("2", LESS),
+                Entity(3.1, EQ_MORE),
+                Entity(4, EQ_LESS),
+        });
+
+        std::string result = tuple.toPattern();
+        std::string correctCSV = "integer:>1,string:<\"2\",float:>=3.1,integer:<=4";
+        REQUIRE(result == correctCSV);
+    }
+    SECTION("Test 3 - ANY") {
+        Tuple tuple = Tuple(std::vector<Entity>{
+                Entity(INT),
+                Entity(FLOAT),
+                Entity(STR),
+        });
+
+        std::string result = tuple.toPattern();
+        std::string correctCSV = "integer:*,float:*,string:*";
+        REQUIRE(result == correctCSV);
+    }
+}

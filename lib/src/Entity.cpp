@@ -133,6 +133,43 @@ std::string Entity::toString() const {
     }
 }
 
+std::string Entity::toPatternString() const {
+    std::ostringstream stream;
+    switch (type) {
+        case INT:
+            if (compareOperator == ANY) return "integer:" + operatorToString();
+            stream << "integer:" << operatorToString() << intValue;
+            return stream.str();
+        case FLOAT:
+            if (compareOperator == ANY) return "float:" + operatorToString();
+            stream << "float:" << operatorToString() << doubleValue;
+            return stream.str();
+        case STR:
+            if (compareOperator == ANY) return "string:" + operatorToString();
+            return "string:" + operatorToString() + '"' + stringValue + '"';
+        case NONE:
+        default:
+            return "";
+    }
+}
+
+std::string Entity::operatorToString() const {
+    switch (compareOperator) {
+        case LESS:
+            return "<";
+        case MORE:
+            return ">";
+        case EQ_LESS:
+            return "<=";
+        case EQ_MORE:
+            return ">=";
+        case EQUAL:
+            return "=";
+        case ANY:
+            return "*";
+    }
+}
+
 bool operator== (const Entity& left, const Entity& right) {
     if (left.type == right.type and left.compareOperator == right.compareOperator) {
         switch (left.type) {

@@ -58,6 +58,8 @@ public:
         compareOperator = _op;
     }
     std::string toString() const;
+    std::string toPatternString() const;
+    std::string operatorToString() const;
     bool compare(const Entity& entity) const;
     bool compare(const Entity& entity, Operator _operator) const;
 
