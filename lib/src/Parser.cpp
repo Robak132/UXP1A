@@ -99,7 +99,7 @@ Token::Token(double value, TokenType tokenType) {
 
 
 
-bool compare_float(double x, double y, double epsilon = 0.01f){
+bool compare_float(double x, double y, double epsilon = 0.01f) {
     if(fabs(x - y) < epsilon)
         return true;
     return false;
@@ -115,11 +115,11 @@ Type Token::getValueType() {
     return valueType;
 }
 
-int Token::getIntegerValue() {
+int Token::getIntegerValue() const {
     return integerValue;
 }
 
-double Token::getDoubleValue() {
+double Token::getDoubleValue() const {
     return doubleValue;
 }
 

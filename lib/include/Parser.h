@@ -70,8 +70,8 @@ public:
     TokenType getType();
     Type getValueType();
 
-    int getIntegerValue();
-    double getDoubleValue();
+    int getIntegerValue() const;
+    double getDoubleValue() const;
     std::string* getStringValue();
 
     friend bool operator== (const Token& left, const Token& right);
