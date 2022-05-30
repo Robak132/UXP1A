@@ -225,7 +225,7 @@ TEST_CASE("Parser") {
         Parser parser = Parser();
         Tuple* resultTuple = parser.parseCSV(inputLine);
 
-        REQUIRE(resultTuple->compare(correctTuple));
+        REQUIRE(*resultTuple == correctTuple);
     }
     SECTION("Test pattern") {
         std::string inputLine = R"(integer:600, float:*, string:"Simba", float:<3.14)";
@@ -248,7 +248,7 @@ TEST_CASE("Parser") {
                 Entity("Simba", EQUAL),
                 Entity(3.14, LESS),
         });
-        correctTuple.addSemaphoreAddress(123456);
+        correctTuple.setSemaphoreAddress(123456);
         Parser parser = Parser();
         Tuple* resultTuple = parser.parseFilePattern(inputLine);
 

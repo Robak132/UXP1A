@@ -377,7 +377,7 @@ Tuple* Parser::parseFilePattern(const std::string& text) {
     }
 
     auto* tuple = new Tuple(entities);
-    tuple ->addSemaphoreAddress(semaphoreAddress);
+    tuple -> setSemaphoreAddress(semaphoreAddress);
 
     return tuple;
 }
