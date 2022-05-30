@@ -358,7 +358,7 @@ Entity Parser::parseEntity() {
     entity = parseString();
     if (entity) return *entity;
 
-    return (Entity &&) ("");
+    throw ParsingException();
 }
 
 Entity* Parser::parseString() {
