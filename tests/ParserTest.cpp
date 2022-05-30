@@ -227,4 +227,18 @@ TEST_CASE("Parser") {
 
         REQUIRE(resultTuple->compare(correctTuple));
     }
+    SECTION("Test pattern") {
+        std::string inputLine = R"(integer:600, float:*, string:"Simba", float:<3.14)";
+        Tuple correctTuple = Tuple(std::vector<Entity> {
+                Entity(600, EQUAL),
+                Entity(FLOAT),
+                Entity("Simba", EQUAL),
+                Entity(3.14, LESS),
+        });
+        Parser parser = Parser();
+        Tuple* resultTuple = parser.parsePattern(inputLine);
+
+        bool condition = (*resultTuple == correctTuple);
+        REQUIRE(condition);
+    }
 }

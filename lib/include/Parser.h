@@ -139,8 +139,10 @@ private:
     Token* consumeToken(TokenType tokenType, bool isStrict = true);
     Token* consumeToken(const std::list<TokenType>& tokenTypes, bool isStrict = true);
     Entity* parseEntity();
+    Entity* parseEntityPattern();
     Entity* parseString();
     Entity* parseNumber();
+    Operator parseRelationOperator();
 };
 
 

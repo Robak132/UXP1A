@@ -376,7 +376,19 @@ Tuple* Parser::parseFilePattern(const std::string& text) {
  * entity = string_literal | numeric_literal ;
  * */
 Tuple* Parser::parsePattern(const std::string& text) {
-    return nullptr;
+    lexer = Lexer(text);
+    nextToken();
+
+    std::vector<Entity> entities;
+
+    while (Entity* entityPattern = parseEntityPattern()) {
+        entities.push_back(*entityPattern);
+        consumeToken(COMA_TOKEN, false);
+    }
+
+    auto* tuple = new Tuple(entities);
+
+    return tuple;
 }
 
 void Parser::nextToken() {
@@ -420,6 +432,43 @@ Entity* Parser::parseEntity() {
     return nullptr;
 }
 
+Entity* Parser::parseEntityPattern() {
+    if (consumeToken(END_TOKEN, false)) return nullptr;
+
+    Token *keywordToken = consumeToken(
+            std::list<TokenType>{INT_KEYWORD_TOKEN, FLOAT_KEYWORD_TOKEN, STRING_KEYWORD_TOKEN},
+            true);
+    consumeToken(COLON_TOKEN, true);
+    Operator relationOperator = parseRelationOperator();
+    Entity* entity = parseEntity();
+
+    if (entity) {
+        switch (keywordToken->getType()) {
+            case INT_KEYWORD_TOKEN:
+                return new Entity(entity->getIntValue(), relationOperator);
+            case FLOAT_KEYWORD_TOKEN:
+                return new Entity(entity->getDoubleValue(), relationOperator);
+            case STRING_KEYWORD_TOKEN:
+                return new Entity(entity->getStringValue(), relationOperator);
+            default:
+                break;
+        }
+    } else {
+        consumeToken(UNSPECIFIED_RELATION_TOKEN, true);
+        switch (keywordToken->getType()) {
+            case INT_KEYWORD_TOKEN:
+                return new Entity(INT);
+            case FLOAT_KEYWORD_TOKEN:
+                return new Entity(FLOAT);
+            case STRING_KEYWORD_TOKEN:
+                return new Entity(STR);
+            default:
+                break;
+        }
+    }
+    return nullptr;
+}
+
 Entity* Parser::parseString() {
     Token *token = consumeToken(STRING_LITERAL_TOKEN, false);
     if (token) {
@@ -455,7 +504,29 @@ Entity* Parser::parseNumber() {
     return nullptr;
 }
 
-
+Operator Parser::parseRelationOperator() {
+    Token *token = consumeToken(
+            std::list<TokenType>{EQUALS_TOKEN, MORE_TOKEN, LESS_TOKEN, MORE_EQUAL_TOKEN, LESS_EQUAL_TOKEN},
+            false);
+    if (token) {
+        switch (token->getType()) {
+            case EQUALS_TOKEN:
+                return EQUAL;
+            case MORE_TOKEN:
+                return MORE;
+            case LESS_TOKEN:
+                return LESS;
+            case MORE_EQUAL_TOKEN:
+                return EQ_MORE;
+            case LESS_EQUAL_TOKEN:
+                return EQ_LESS;
+            case UNSPECIFIED_RELATION_TOKEN:
+            default:
+                return ANY;
+        }
+    }
+    return EQUAL;
+}
 
 MockParser::MockParser(std::vector<Tuple> results_) {
     results = std::move(results_);
