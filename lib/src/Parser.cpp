@@ -365,10 +365,24 @@ Tuple* Parser::parseCSV(const std::string& text) {
     return tuple;
 }
 
+/* File pattern grammar:
+ * line = address, pattern { ',' pattern } ;
+ * pattern = entity_type ':' [ relation_operator ] ( entity | '*' ) ;
+ * relation_operator = '>' | '<' | '>=' | '<=' | '=' ;
+ * entity_type = 'int' | 'float' | 'string' ;
+ * entity = string_literal | numeric_literal ;
+ * */
 Tuple* Parser::parseFilePattern(const std::string& text) {
     return nullptr;
 }
 
+/* Pattern grammar:
+ * line = pattern { ',' pattern } ;
+ * pattern = entity_type ':' [ relation_operator ] ( entity | '*' ) ;
+ * relation_operator = '>' | '<' | '>=' | '<=' | '=' ;
+ * entity_type = 'int' | 'float' | 'string' ;
+ * entity = string_literal | numeric_literal ;
+ * */
 Tuple* Parser::parsePattern(const std::string& text) {
     return nullptr;
 }
