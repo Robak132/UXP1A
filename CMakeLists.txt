@@ -14,6 +14,9 @@ add_executable(lindatest
         lib/src/Entity.cpp
         lib/src/Parser.cpp
         lib/src/Utilities.cpp)
+add_executable(test
+        lib/src/test.cpp
+        lib/src/FileManager.cpp)
 
 set(url https://github.com/philsquared/Catch/releases/download/v2.13.6/catch.hpp)
 file(

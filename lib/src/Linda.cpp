@@ -14,6 +14,12 @@ Linda::~Linda() {
 }
 
 void Linda::output(Tuple& tuple) {
+    struct flock lock;
+    lock.l_type    = F_WRLCK;  
+    lock.l_start   = 0;
+    lock.l_whence  = SEEK_SET;
+    lock.l_len     = 0;
+    dataFile ->lockFile(&lock);
     dataFile->appendLine(tuple.toCSV());
     Tuple* result = getTuple(tuple, sleepingProcesses, true);
     if(result != nullptr){
@@ -21,6 +27,7 @@ void Linda::output(Tuple& tuple) {
         //    semId = semInit(read key)
         //    val = semPost()
     }
+    dataFile->unlockFile();
 
 }
 Tuple* Linda::input(Tuple& tupleTemplate, int timeout) {
@@ -35,7 +42,7 @@ Tuple* Linda::input(Tuple& tupleTemplate, int timeout) {
             result = getTuple(tupleTemplate, dataFile, true);
         }
         else{
-            //remove tupleTemplate from sleeping.csv
+            Tuple* result = getTuple(tupleTemplate, sleepingProcesses, true);
             return nullptr;
         }
 
@@ -56,7 +63,7 @@ Tuple* Linda::read(Tuple& tupleTemplate, int timeout) {
             result = getTuple(tupleTemplate, dataFile, false);
         }
         else{
-            //remove tupleTemplate from sleeping.csv
+            Tuple* result = getTuple(tupleTemplate, sleepingProcesses, true);
             return nullptr;
         }
 
@@ -64,14 +71,23 @@ Tuple* Linda::read(Tuple& tupleTemplate, int timeout) {
     return result;
 }
 
-Tuple* Linda::getTuple(Tuple& tupleTemplate, FileManager* file, bool remove){
+Tuple* Linda::getTuple(Tuple& tuple, FileManager* file, bool remove){
+    struct flock lock;
+    if(remove)
+        lock.l_type    = F_WRLCK;
+    else 
+        lock.l_type    = F_RDLCK;
+    lock.l_start   = 0;
+    lock.l_whence  = SEEK_SET;
+    lock.l_len     = 0;
+    file ->lockFile(&lock);
     std::vector<std::string> data = Utilities::splitString(file->readFile());
     Tuple* result = nullptr;
     int resultIndex = -1;
 
     for (int i=0;i<data.size();i++) {
         Tuple* tuple = stringParser->parse(data[i]);
-        if (tupleTemplate.compare(*tuple)) {
+        if (tuple->compare(*tuple)) {
             result = tuple;
             resultIndex = i;
             break;
@@ -79,8 +95,9 @@ Tuple* Linda::getTuple(Tuple& tupleTemplate, FileManager* file, bool remove){
     }
     if(remove && resultIndex != -1){
         data.erase(data.begin()+resultIndex);
-        dataFile->writeFile(data);
+        file->writeFile(data);
     }
+    file->unlockFile();
     return result;
 }
 

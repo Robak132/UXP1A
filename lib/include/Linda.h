@@ -12,7 +12,7 @@ public:
                    IParser* parser = new Parser());
     Tuple* input(Tuple& tupleTemplate, int timeout=0);
     Tuple* read(Tuple& tupleTemplate, int timeout=0);
-    void output(Tuple tuple);
+    void output(Tuple& tuple);
     int semWait(int timeout, int semId);
     int semPost(int semId);
 

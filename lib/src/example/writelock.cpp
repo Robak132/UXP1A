@@ -7,14 +7,21 @@
 int main() {
     int fd;
     struct flock lock{}, savelock{};
-    std::string line = "\n1,-15.5,Słoń,42,,,";
-    const char *buf = line.c_str();
+    // std::string line = "\n1,-15.5,Słoń,42,,,";
+    // const char *buf = line.c_str();
 
     fd = open("file.txt", O_RDWR);
+    off_t size = lseek(fd,0,SEEK_END);
+    if(size==-1)
+    {
+        perror("lseek");
+        exit(1);
+    }
+
     lock.l_type    = F_WRLCK;   /* Test for any lock on any part of file. */
     lock.l_start   = 0;
-    lock.l_whence  = SEEK_END;
-    lock.l_len     = sizeof(line);
+    lock.l_whence  = SEEK_SET;
+    lock.l_len     = size;
     savelock = lock;
     
     printf("trying to get lock..\n");
@@ -25,11 +32,11 @@ int main() {
         exit(1);         
     }
     printf("locked\n");
-    if((lseek(fd,0,SEEK_END))==-1)
-    {
-            perror("lseek");
-            exit(1);
-    }
+    // if((lseek(fd,0,SEEK_END))==-1)
+    // {
+    //         perror("lseek");
+    //         exit(1);
+    // }
     // if((write(fd, buf, sizeof(line)))==-1)
     // {
     //         perror("write");

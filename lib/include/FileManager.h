@@ -26,7 +26,6 @@ public:
 private:
     std::string file_path;
     int file = -1;
-    struct flock lock;  
     
     void writeLine(const std::string &line) const;
 };
