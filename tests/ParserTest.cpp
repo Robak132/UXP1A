@@ -112,7 +112,7 @@ TEST_CASE("Lexer") {
         REQUIRE(resultTokens == correctTokens);
     }
     SECTION("Test for keywords") {
-        std::string inputLine = R"(int string float string    string int)";
+        std::string inputLine = R"(integer string float string    string integer)";
         std::vector<Token> correctTokens = {
                 Token(INT_KEYWORD_TOKEN),
                 Token(STRING_KEYWORD_TOKEN),

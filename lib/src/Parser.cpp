@@ -37,7 +37,7 @@ const std::map<std::string, TokenType> SIMPLE_DOUBLE_TOKENS{
 };
 
 const std::map<std::string, TokenType> KEYWORD_TOKENS{
-        {"int", INT_KEYWORD_TOKEN},
+        {"integer", INT_KEYWORD_TOKEN},
         {"float", FLOAT_KEYWORD_TOKEN},
         {"string", STRING_KEYWORD_TOKEN},
 };
