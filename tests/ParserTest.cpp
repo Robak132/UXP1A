@@ -238,8 +238,7 @@ TEST_CASE("Parser") {
         Parser parser = Parser();
         Tuple* resultTuple = parser.parsePattern(inputLine);
 
-        bool condition = (*resultTuple == correctTuple);
-        REQUIRE(condition);
+        REQUIRE(*resultTuple == correctTuple);
     }
     SECTION("Test file pattern") {
         std::string inputLine = R"(123456, integer:600, float:*, string:"Simba", float:<3.14)";
@@ -253,7 +252,19 @@ TEST_CASE("Parser") {
         Parser parser = Parser();
         Tuple* resultTuple = parser.parseFilePattern(inputLine);
 
-        bool condition = (*resultTuple == correctTuple);
-        REQUIRE(condition);
+        REQUIRE(*resultTuple == correctTuple);
+    }
+    SECTION("Test file pattern exception") {
+        std::string inputLine = R"(123456.11, integer:600, float:*, string:"Simba", float:<3.14)";
+        Parser parser = Parser();
+        bool exceptionOccurrence = false;
+
+        try {
+            parser.parseFilePattern(inputLine);
+        } catch (NoSemaphoreAddressException& exception) {
+            exceptionOccurrence = true;
+        }
+
+        REQUIRE(exceptionOccurrence);
     }
 }

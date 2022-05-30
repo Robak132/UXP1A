@@ -10,40 +10,46 @@
 
 const int MAX_STRING_LENGTH = 200;
 
-struct ScanningException : public std::exception {
+class ScanningException : public std::exception {
     [[nodiscard]] const char * what () const noexcept override {
         return "Scanning exception.";
     }
 };
 
-struct ExceededStringLimitException : ScanningException {
+class ExceededStringLimitException : ScanningException {
     [[nodiscard]] const char * what () const noexcept override {
         return "Exceeded the maximum length of the string in tuple.";
     }
 };
 
-struct UnterminatedStringException : ScanningException {
+class UnterminatedStringException : ScanningException {
     [[nodiscard]] const char * what () const noexcept override {
         return "The string seems to be terminated incorrectly.";
     }
 };
 
-struct UnexpectedCharacterException : ScanningException {
+class UnexpectedCharacterException : ScanningException {
     [[nodiscard]] const char * what () const noexcept override {
         return "Unexpected character during scanning.";
     }
 };
 
 
-struct ParsingException : public std::exception {
+class ParsingException : public std::exception {
     [[nodiscard]] const char * what () const noexcept override {
         return "Parsing exception.";
     }
 };
 
-struct UnexpectedTokenException : ParsingException {
+class UnexpectedTokenException : ParsingException {
     [[nodiscard]] const char * what () const noexcept override {
         return "Unexpected token during parsing.";
+    }
+};
+
+class NoSemaphoreAddressException : ParsingException {
+    [[nodiscard]] const char * what () const noexcept override {
+        return "No semaphore address provided.";
     }
 };
 
@@ -90,7 +96,7 @@ private:
 
 class Lexer {
 public:
-    Lexer();
+    Lexer() = default;
     explicit Lexer(const std::string& input);
     Token getNextToken();
 
@@ -125,7 +131,7 @@ public:
 
 class Parser : public IParser {
 public:
-    Parser();
+    Parser() = default;
     Tuple* parse(const std::string& text) override;
     Tuple* parseCSV(const std::string& text) override;
     Tuple* parsePattern(const std::string& text) override;

@@ -130,10 +130,6 @@ bool operator== (const Token& left, const Token& right) {
 
 
 
-Lexer::Lexer() {
-
-}
-
 Lexer::Lexer(const std::string &input) {
     sourceText = input;
     currentCharacterIndex = 0;
@@ -329,10 +325,6 @@ Token Lexer::getNextToken() {
 
 
 
-Parser::Parser() {
-
-}
-
 Tuple* Parser::parse(const std::string& text) {
     return nullptr;
 }
@@ -371,7 +363,11 @@ Tuple* Parser::parseFilePattern(const std::string& text) {
     std::vector<Entity> entities;
 
     Token* token = consumeToken(NUMERIC_LITERAL_TOKEN, true);
-    int semaphoreAddress = token -> getIntegerValue();
+    int semaphoreAddress = 0;
+    if (token) {
+        semaphoreAddress = token -> getIntegerValue();
+        if (!semaphoreAddress) throw NoSemaphoreAddressException();
+    }
 
     consumeToken(COMA_TOKEN, true);
 
