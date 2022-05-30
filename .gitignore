@@ -35,7 +35,7 @@
 /.idea
 
 # CMake
-/cmake-build-debug
+/cmake-build*
 /CMakeFiles
 
 # Testing temp files

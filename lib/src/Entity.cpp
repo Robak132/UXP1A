@@ -82,6 +82,7 @@ bool Entity::compareInt(const Entity &entity, Operator _operator) const {
         case EQ_LESS:
             return intValue <= entity.intValue;
         case ANY:
+        default:
             return true;
     }
 }
@@ -98,6 +99,7 @@ bool Entity::compareDouble(const Entity &entity, Operator _operator) const {
         case EQ_LESS:
             return doubleValue <= entity.doubleValue;
         case ANY:
+        default:
             return true;
     }}
 bool Entity::compareString(const Entity &entity, Operator _operator) const {
@@ -113,6 +115,7 @@ bool Entity::compareString(const Entity &entity, Operator _operator) const {
         case EQ_LESS:
             return stringValue <= entity.stringValue;
         case ANY:
+        default:
             return true;
     }}
 
