@@ -1,4 +1,5 @@
 #include "../lib/include/Tuple.h"
+#include "../lib/include/Parser.h"
 #include "catch.hpp"
 
 TEST_CASE("Check toCSV()") {
@@ -78,6 +79,7 @@ TEST_CASE("Check toPattern()") {
         REQUIRE(result == correctCSV);
     }
 }
+
 TEST_CASE("Check toFilePattern()") {
     Tuple tuple = Tuple(std::vector<Entity>{
             Entity(1),
@@ -90,4 +92,59 @@ TEST_CASE("Check toFilePattern()") {
     std::string result = tuple.toFilePattern();
     std::string correctCSV = "12121212,integer:=1,string:=\"2\",float:=3.1,integer:=4";
     REQUIRE(result == correctCSV);
+}
+
+TEST_CASE("Reverse tests (parsing and converting to strings)") {
+    SECTION("Test 1 - toCSV") {
+        Tuple tuple = Tuple(std::vector<Entity>{
+                Entity(1),
+                Entity("2"),
+                Entity(3.1),
+                Entity(4),
+        });
+
+        std::string result = tuple.toCSV();
+        std::string correctCSV = "1,\"2\",3.1,4";
+        REQUIRE(result == correctCSV);
+
+        Parser parser = Parser();
+        Tuple *resultTuple = parser.parseCSV(result);
+
+        REQUIRE(*resultTuple == tuple);
+    }
+    SECTION("Test 2 - toPattern") {
+        Tuple tuple = Tuple(std::vector<Entity>{
+                Entity(1),
+                Entity("2"),
+                Entity(3.1),
+                Entity(4),
+        });
+
+        std::string result = tuple.toPattern();
+        std::string correctCSV = "integer:=1,string:=\"2\",float:=3.1,integer:=4";
+        REQUIRE(result == correctCSV);
+
+        Parser parser = Parser();
+        Tuple *resultTuple = parser.parsePattern(result);
+
+        REQUIRE(*resultTuple == tuple);
+    }
+    SECTION("Test 3 - toFilePattern") {
+        Tuple tuple = Tuple(std::vector<Entity>{
+                Entity(1),
+                Entity("2"),
+                Entity(3.1),
+                Entity(4),
+        });
+        tuple.setSemaphoreAddress(12121212);
+
+        std::string result = tuple.toFilePattern();
+        std::string correctCSV = "12121212,integer:=1,string:=\"2\",float:=3.1,integer:=4";
+        REQUIRE(result == correctCSV);
+
+        Parser parser = Parser();
+        Tuple *resultTuple = parser.parseFilePattern(result);
+
+        REQUIRE(*resultTuple == tuple);
+    }
 }
