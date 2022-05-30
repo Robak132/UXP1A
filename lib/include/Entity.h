@@ -14,10 +14,10 @@ enum Type {
 
 class Entity {
 public:
-    Entity(Type entityType);
-    Entity(int value, Operator anOperator=EQUAL);
-    Entity(double value, Operator anOperator=EQUAL);
-    Entity(const std::string& value, Operator anOperator=EQUAL);
+    explicit Entity(Type entityType);
+    explicit Entity(int value, Operator anOperator=EQUAL);
+    explicit Entity(double value, Operator anOperator=EQUAL);
+    explicit Entity(const std::string& value, Operator anOperator=EQUAL);
 
     static Entity createIntEntity();
     static Entity createDoubleEntity();
@@ -27,19 +27,19 @@ public:
     static Entity createStringEntity(const std::string& value, Operator anOperator=EQUAL);
 
     Type getType();
-    int getIntValue() const;
+    [[nodiscard]] int getIntValue() const;
     void setIntValue(int _intValue);
-    double getDoubleValue() const;
+    [[nodiscard]] double getDoubleValue() const;
     void setDoubleValue(double _doubleValue);
-    const std::string &getStringValue() const;
+    [[nodiscard]] const std::string &getStringValue() const;
     void setStringValue(const std::string &_stringValue);
-    Operator getOperator() const;
+    [[nodiscard]] Operator getOperator() const;
     void setOperator(Operator _op);
-    std::string toString() const;
-    std::string toPatternString() const;
-    std::string operatorToString() const;
-    bool compare(const Entity& entity) const;
-    bool compare(const Entity& entity, Operator _operator) const;
+    [[nodiscard]] std::string toString() const;
+    [[nodiscard]] std::string toPatternString() const;
+    [[nodiscard]] std::string operatorToString() const;
+    [[nodiscard]] bool compare(const Entity& entity) const;
+    [[nodiscard]] bool compare(const Entity& entity, Operator _operator) const;
 
     friend bool operator== (const Entity& left, const Entity& right);
     friend bool operator!= (const Entity& left, const Entity& right);
@@ -52,8 +52,8 @@ private:
     double doubleValue = 0;
     std::string stringValue;
 
-    bool compareInt(const Entity& entity, Operator _operator) const;
-    bool compareDouble(const Entity& entity, Operator _operator) const;
-    bool compareString(const Entity& entity, Operator _operator) const;
+    [[nodiscard]] bool compareInt(const Entity& entity, Operator _operator) const;
+    [[nodiscard]] bool compareDouble(const Entity& entity, Operator _operator) const;
+    [[nodiscard]] bool compareString(const Entity& entity, Operator _operator) const;
 };
 #endif /* ENTITY_H */
