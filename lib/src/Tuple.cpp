@@ -1,5 +1,4 @@
 #include "../include/Tuple.h"
-#include <sstream>
 
 bool Tuple::compare(const Tuple& other) const {
     if (entities.size() != other.entities.size()) {

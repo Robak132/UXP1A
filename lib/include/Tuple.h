@@ -24,6 +24,6 @@ public:
 
 private:
     std::vector<Entity> entities;
-    int semaphoreAddress;
+    int semaphoreAddress = 0;
 };
 #endif /* TUPLE_H */
