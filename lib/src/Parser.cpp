@@ -460,28 +460,31 @@ Entity* Parser::parseEntityPattern() {
     Operator relationOperator = parseRelationOperator();
     Entity* entity = parseEntity();
 
-    if (entity) {
-        switch (keywordToken->getType()) {
-            case INT_KEYWORD_TOKEN:
-                return new Entity(entity->getIntValue(), relationOperator);
-            case FLOAT_KEYWORD_TOKEN:
-                return new Entity(entity->getDoubleValue(), relationOperator);
-            case STRING_KEYWORD_TOKEN:
-                return new Entity(entity->getStringValue(), relationOperator);
-            default:
-                break;
-        }
-    } else {
-        consumeToken(UNSPECIFIED_RELATION_TOKEN, true);
-        switch (keywordToken->getType()) {
-            case INT_KEYWORD_TOKEN:
-                return new Entity(INT);
-            case FLOAT_KEYWORD_TOKEN:
-                return new Entity(FLOAT);
-            case STRING_KEYWORD_TOKEN:
-                return new Entity(STR);
-            default:
-                break;
+
+    if (keywordToken) {
+        if (entity) {
+            switch (keywordToken->getType()) {
+                case INT_KEYWORD_TOKEN:
+                    return new Entity(entity->getIntValue(), relationOperator);
+                case FLOAT_KEYWORD_TOKEN:
+                    return new Entity(entity->getDoubleValue(), relationOperator);
+                case STRING_KEYWORD_TOKEN:
+                    return new Entity(entity->getStringValue(), relationOperator);
+                default:
+                    break;
+            }
+        } else {
+            consumeToken(UNSPECIFIED_RELATION_TOKEN, true);
+            switch (keywordToken->getType()) {
+                case INT_KEYWORD_TOKEN:
+                    return new Entity(INT);
+                case FLOAT_KEYWORD_TOKEN:
+                    return new Entity(FLOAT);
+                case STRING_KEYWORD_TOKEN:
+                    return new Entity(STR);
+                default:
+                    break;
+            }
         }
     }
     return nullptr;
