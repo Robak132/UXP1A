@@ -13,18 +13,25 @@ int main(){
     int semId, readsemId;
     int fd; 
     char buff[255];
-    char semx[10];
+    char semx[255];
     int sid = syscall(SYS_gettid);
 	semKey = ftok(".", sid);
 	semId = semget( semKey, 1, IPC_CREAT | IPC_EXCL | 0660 );
     printf("%d, %d\n", semId, semKey);
     fd = open("sem.txt", O_RDWR);
-    sprintf(semx, "%d", semId);
+    sprintf(semx, "%d", semKey);
     write(fd, &semx, sizeof(semId));
     close(fd);
     struct sembuf sem_lock = { 0, -1, 0 };
     printf("sem waiting ...\n");
-	int val = semop(semId, &sem_lock, 1);
+    timespec time;
+    time.tv_sec = 5;
+    time.tv_nsec = 0;
+	int val = semtimedop(semId, &sem_lock, 1, &time);
+    if(val < 0){
+        perror("timeout");
+        exit(1);
+    }
     printf("semwait done\n");
     semctl(semId, 0, IPC_RMID);
     struct flock lock;

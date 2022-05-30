@@ -9,12 +9,14 @@
 int main(){
     int fd;
     char buff[255];
-    int semId;
+    int semKey, semId;
     fd = open("sem.txt", O_RDONLY);
     read(fd, buff, sizeof(int));
-    semId = strtol(buff, NULL, 10);
-    printf("%d\n", semId);
+    semKey = strtol(buff, NULL, 10);
+    printf("%d\n", semKey);
+    
     close(fd);
+    semId = semget(semKey, 1, 0660);
     struct flock lock;
     fd = open("file.txt", O_RDWR);
     lock.l_type    = F_WRLCK;   /* Test for any lock on any part of file. */

@@ -23,18 +23,11 @@ public:
         return outs << tuple.toCSV();
     }
 
-    int semWait(int timeout);
-    int semPost();
+
 
 private:
 
-    void semInit(key_t key);
-    void semCreate();
-    void semDelete();
-
     std::vector<Entity> entities;
-    int semId;
-    key_t semKey;
 
 
 };
