@@ -19,7 +19,7 @@ void Linda::output(Tuple& tuple) {
     lock.l_start   = 0;
     lock.l_whence  = SEEK_SET;
     lock.l_len     = 0;
-    dataFile ->lockFile(&lock);
+    dataFile ->lockFile(lock);
     dataFile->appendLine(tuple.toCSV());
     Tuple* result = getTuple(tuple, sleepingProcesses, true);
     if(result != nullptr){
@@ -80,7 +80,7 @@ Tuple* Linda::getTuple(Tuple& tuple, FileManager* file, bool remove){
     lock.l_start   = 0;
     lock.l_whence  = SEEK_SET;
     lock.l_len     = 0;
-    file ->lockFile(&lock);
+    file ->lockFile(lock);
     std::vector<std::string> data = Utilities::splitString(file->readFile());
     Tuple* result = nullptr;
     int resultIndex = -1;

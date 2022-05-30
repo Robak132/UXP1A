@@ -19,8 +19,9 @@ void FileManager::create() {
     closeFile();
 }
 
-void FileManager::lockFile(flock& lock){
-    if ((fcntl(this->file,F_SETLKW,lock))==-1){
+void FileManager::lockFile(flock &lock){
+    if (file == -1) openFile();
+    if ((fcntl(this->file,F_SETLKW,&lock))==-1){
         perror("Error while locking file");
         exit(1);
     }

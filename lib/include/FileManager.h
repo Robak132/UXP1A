@@ -20,7 +20,7 @@ public:
     void openFile();
     void closeFile();
 
-    void lockFile(flock& lock);
+    void lockFile(flock &lock);
     void unlockFile();
     
 private:
