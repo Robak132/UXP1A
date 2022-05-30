@@ -19,44 +19,22 @@ public:
     Entity(double value, Operator anOperator=EQUAL);
     Entity(const std::string& value, Operator anOperator=EQUAL);
 
-    static Entity createIntEntity() {return createIntEntity(0, ANY);}
-    static Entity createDoubleEntity() {return createDoubleEntity(0, ANY);}
-    static Entity createStringEntity() {return createStringEntity("", ANY);}
-
+    static Entity createIntEntity();
+    static Entity createDoubleEntity();
+    static Entity createStringEntity();
     static Entity createIntEntity(int value, Operator anOperator=EQUAL);
     static Entity createDoubleEntity(double value, Operator anOperator=EQUAL);
     static Entity createStringEntity(const std::string& value, Operator anOperator=EQUAL);
 
-    Type getType() {
-        return type;
-    };
-    int getIntValue() const {
-        return intValue;
-    }
-    void setIntValue(int _intValue) {
-        intValue = _intValue;
-        type = INT;
-    }
-    double getDoubleValue() const {
-        return doubleValue;
-    }
-    void setDoubleValue(double _doubleValue) {
-        doubleValue = _doubleValue;
-        type = FLOAT;
-    }
-    const std::string &getStringValue() const {
-        return stringValue;
-    }
-    void setStringValue(const std::string &_stringValue) {
-        stringValue = _stringValue;
-        type = STR;
-    }
-    Operator getOperator() const {
-        return compareOperator;
-    }
-    void setOperator(Operator _op) {
-        compareOperator = _op;
-    }
+    Type getType();
+    int getIntValue() const;
+    void setIntValue(int _intValue);
+    double getDoubleValue() const;
+    void setDoubleValue(double _doubleValue);
+    const std::string &getStringValue() const;
+    void setStringValue(const std::string &_stringValue);
+    Operator getOperator() const;
+    void setOperator(Operator _op);
     std::string toString() const;
     std::string toPatternString() const;
     std::string operatorToString() const;
