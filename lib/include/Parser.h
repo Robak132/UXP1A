@@ -6,6 +6,7 @@
 #include <vector>
 #include <list>
 #include "Tuple.h"
+#include "Utilities.h"
 
 const int MAX_STRING_LENGTH = 200;
 

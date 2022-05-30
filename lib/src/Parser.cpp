@@ -130,7 +130,7 @@ std::string* Token::getStringValue() {
 bool operator== (const Token& left, const Token& right) {
     bool goodValues = left.stringValue == right.stringValue &&
                       left.integerValue == right.integerValue &&
-                      compare_float(left.doubleValue, right.doubleValue);
+                      Utilities::compare_float(left.doubleValue, right.doubleValue);
     bool goodTypes = left.type == right.type &&
                      left.valueType == right.valueType;
     return goodValues && goodTypes;

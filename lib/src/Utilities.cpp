@@ -1,5 +1,6 @@
 #include "../include/Utilities.h"
 #include <map>
+#include <cmath>
 
 
 const std::map<std::string, int> LINE_ENDINGS {
@@ -30,4 +31,10 @@ std::vector<std::string> Utilities::splitString(const std::string& input) {
         result.push_back(temp);
     }
     return result;
+}
+
+bool Utilities::compare_float(double x, double y, double epsilon) {
+    if (fabs(x - y) < epsilon)
+        return true;
+    return false;
 }
