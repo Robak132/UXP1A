@@ -13,6 +13,7 @@ bool Tuple::compare(const Tuple& other) const {
     }
     return true;
 }
+
 std::string Tuple::toCSV() const {
     std::string outputString;
     unsigned long entitiesSize = entities.size();
@@ -23,7 +24,26 @@ std::string Tuple::toCSV() const {
     return outputString;
 }
 
-void Tuple::addSemaphoreAddress(int address) {
+std::string Tuple::toPattern() const {
+    std::string outputString;
+    unsigned long entitiesSize = entities.size();
+    for (unsigned long i = 0; i < entitiesSize; i++) {
+        outputString += entities[i].toPatternString();
+        if (i != entitiesSize - 1) outputString += ",";
+    }
+    return outputString;
+}
+
+std::string Tuple::toFilePattern() const {
+    std::string outputString;
+
+    outputString += std::to_string(semaphoreAddress) + ",";
+    outputString += toPattern();
+
+    return outputString;
+}
+
+void Tuple::setSemaphoreAddress(int address) {
     semaphoreAddress = address;
 }
 

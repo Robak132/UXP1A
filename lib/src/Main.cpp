@@ -2,7 +2,6 @@
 #include <cstring>
 #include <string>
 #include "../include/Linda.h"
-#include "../include/Parser.h"
 
 int main(int argc, char *argv[]) {
     switch(argc) {

@@ -14,52 +14,32 @@ enum Type {
 
 class Entity {
 public:
-    Entity(Type entityType);
-    Entity(int value, Operator anOperator=EQUAL);
-    Entity(double value, Operator anOperator=EQUAL);
-    Entity(const std::string& value, Operator anOperator=EQUAL);
+    explicit Entity(Type entityType);
+    explicit Entity(int value, Operator anOperator=EQUAL);
+    explicit Entity(double value, Operator anOperator=EQUAL);
+    explicit Entity(const std::string& value, Operator anOperator=EQUAL);
 
-    static Entity createIntEntity() {return createIntEntity(0, ANY);}
-    static Entity createDoubleEntity() {return createDoubleEntity(0, ANY);}
-    static Entity createStringEntity() {return createStringEntity("", ANY);}
-
+    static Entity createIntEntity();
+    static Entity createDoubleEntity();
+    static Entity createStringEntity();
     static Entity createIntEntity(int value, Operator anOperator=EQUAL);
     static Entity createDoubleEntity(double value, Operator anOperator=EQUAL);
     static Entity createStringEntity(const std::string& value, Operator anOperator=EQUAL);
 
-    Type getType() {
-        return type;
-    };
-    int getIntValue() const {
-        return intValue;
-    }
-    void setIntValue(int _intValue) {
-        intValue = _intValue;
-        type = INT;
-    }
-    double getDoubleValue() const {
-        return doubleValue;
-    }
-    void setDoubleValue(double _doubleValue) {
-        doubleValue = _doubleValue;
-        type = FLOAT;
-    }
-    const std::string &getStringValue() const {
-        return stringValue;
-    }
-    void setStringValue(const std::string &_stringValue) {
-        stringValue = _stringValue;
-        type = STR;
-    }
-    Operator getOperator() const {
-        return compareOperator;
-    }
-    void setOperator(Operator _op) {
-        compareOperator = _op;
-    }
-    std::string toString() const;
-    bool compare(const Entity& entity) const;
-    bool compare(const Entity& entity, Operator _operator) const;
+    Type getType();
+    [[nodiscard]] int getIntValue() const;
+    void setIntValue(int _intValue);
+    [[nodiscard]] double getDoubleValue() const;
+    void setDoubleValue(double _doubleValue);
+    [[nodiscard]] const std::string &getStringValue() const;
+    void setStringValue(const std::string &_stringValue);
+    [[nodiscard]] Operator getOperator() const;
+    void setOperator(Operator _op);
+    [[nodiscard]] std::string toString() const;
+    [[nodiscard]] std::string toPatternString() const;
+    [[nodiscard]] std::string operatorToString() const;
+    [[nodiscard]] bool compare(const Entity& entity) const;
+    [[nodiscard]] bool compare(const Entity& entity, Operator _operator) const;
 
     friend bool operator== (const Entity& left, const Entity& right);
     friend bool operator!= (const Entity& left, const Entity& right);
@@ -72,8 +52,8 @@ private:
     double doubleValue = 0;
     std::string stringValue;
 
-    bool compareInt(const Entity& entity, Operator _operator) const;
-    bool compareDouble(const Entity& entity, Operator _operator) const;
-    bool compareString(const Entity& entity, Operator _operator) const;
+    [[nodiscard]] bool compareInt(const Entity& entity, Operator _operator) const;
+    [[nodiscard]] bool compareDouble(const Entity& entity, Operator _operator) const;
+    [[nodiscard]] bool compareString(const Entity& entity, Operator _operator) const;
 };
 #endif /* ENTITY_H */

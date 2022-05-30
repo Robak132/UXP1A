@@ -17,9 +17,11 @@ public:
         semaphoreAddress = 0;
     }
     explicit Tuple(std::vector<Entity> _entities) : entities(std::move(_entities)) { semaphoreAddress = 0;}
-    bool compare(const Tuple& other) const;
-    std::string toCSV() const;
-    void addSemaphoreAddress(int address);
+    [[nodiscard]] bool compare(const Tuple& other) const;
+    [[nodiscard]] std::string toCSV() const;
+    [[nodiscard]] std::string toPattern() const;
+    [[nodiscard]] std::string toFilePattern() const;
+    void setSemaphoreAddress(int address);
 
     friend std::ostream& operator << (std::ostream& outs, const Tuple& tuple) {
         return outs << tuple.toCSV();
