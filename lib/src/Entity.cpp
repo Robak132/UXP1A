@@ -31,18 +31,32 @@ Entity::Entity(const std::string& value, Operator anOperator) {
     type = STR;
 }
 
+Entity Entity::createIntEntity() {
+    return createIntEntity(0, ANY);
+}
+
+Entity Entity::createDoubleEntity() {
+    return createDoubleEntity(0, ANY);
+}
+
+Entity Entity::createStringEntity() {
+    return createStringEntity("", ANY);
+}
+
 Entity Entity::createIntEntity(int value, Operator anOperator) {
     Entity entity = Entity();
     entity.setIntValue(value);
     entity.setOperator(anOperator);
     return entity;
 }
+
 Entity Entity::createDoubleEntity(double value, Operator anOperator) {
     Entity entity = Entity();
     entity.setDoubleValue(value);
     entity.setOperator(anOperator);
     return entity;
 }
+
 Entity Entity::createStringEntity(const std::string& value, Operator anOperator) {
     Entity entity = Entity();
     entity.setStringValue(value);
@@ -50,9 +64,49 @@ Entity Entity::createStringEntity(const std::string& value, Operator anOperator)
     return entity;
 }
 
+Type Entity::getType() {
+    return type;
+};
+
+int Entity::getIntValue() const {
+    return intValue;
+}
+
+void Entity::setIntValue(int _intValue) {
+    intValue = _intValue;
+    type = INT;
+}
+
+double Entity::getDoubleValue() const {
+    return doubleValue;
+}
+
+void Entity::setDoubleValue(double _doubleValue) {
+    doubleValue = _doubleValue;
+    type = FLOAT;
+}
+
+const std::string& Entity::getStringValue() const {
+    return stringValue;
+}
+
+void Entity::setStringValue(const std::string &_stringValue) {
+    stringValue = _stringValue;
+    type = STR;
+}
+
+Operator Entity::getOperator() const {
+    return compareOperator;
+}
+
+void Entity::setOperator(Operator _op) {
+    compareOperator = _op;
+}
+
 bool Entity::compare(const Entity& entity) const {
     return compare(entity, compareOperator);
 }
+
 bool Entity::compare(const Entity& entity, Operator _operator) const {
     if (type != entity.type) return false; // Wrong type -> false
     if (_operator == ANY) return true;           // Any value & good type -> true
@@ -69,6 +123,7 @@ bool Entity::compare(const Entity& entity, Operator _operator) const {
             return false;
     }
 }
+
 bool Entity::compareInt(const Entity &entity, Operator _operator) const {
     switch (_operator) {
         case EQ_MORE:
@@ -86,6 +141,7 @@ bool Entity::compareInt(const Entity &entity, Operator _operator) const {
             return true;
     }
 }
+
 bool Entity::compareDouble(const Entity &entity, Operator _operator) const {
     switch (_operator) {
         case EQ_MORE:

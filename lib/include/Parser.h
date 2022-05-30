@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <list>
+#include <map>
 #include "Tuple.h"
 #include "Utilities.h"
 
@@ -64,6 +65,53 @@ enum TokenType {
     UNKNOWN_TOKEN, END_TOKEN
 };
 
+static const std::string END_OF_FILE = "\0";
+static const std::string BACKSLASH = "\\";
+
+static const std::map<std::string, int> WHITESPACES{
+        {" ", 0},
+        {"\t", 0},
+        {"\n", 0},
+        {"\v", 0},
+        {"\f", 0},
+        {"\r", 0},
+};
+
+static const std::map<std::string, TokenType> SIMPLE_SINGLE_TOKENS{
+        {"<", LESS_TOKEN},
+        {">", MORE_TOKEN},
+        {"=", EQUALS_TOKEN},
+        {"*", UNSPECIFIED_RELATION_TOKEN},
+        {"-", MINUS_TOKEN},
+        {":", COLON_TOKEN},
+        {",", COMA_TOKEN},
+        {END_OF_FILE, END_TOKEN}
+};
+
+static const std::vector<TokenType> SIMPLE_DOUBLE_TOKENS_PREFIXES {{LESS_TOKEN, MORE_TOKEN}};
+
+static const std::map<std::string, TokenType> SIMPLE_DOUBLE_TOKENS{
+        {"<=", LESS_EQUAL_TOKEN},
+        {">=", MORE_EQUAL_TOKEN},
+};
+
+static const std::map<std::string, TokenType> KEYWORD_TOKENS{
+        {"integer", INT_KEYWORD_TOKEN},
+        {"float", FLOAT_KEYWORD_TOKEN},
+        {"string", STRING_KEYWORD_TOKEN},
+};
+
+
+static std::map<std::string, std::string> ESCAPE_CHARACTERS = {
+        {"n", "\n"},        // New line
+        {"r", "\r"},        // Carriage return
+        {"t", "\t"},        // Tab
+        {"b", "\b"},        // Backspace
+        {"f", "\f"},        // Form feed
+        {"\\", BACKSLASH},  // Backslash
+        {"0", END_OF_FILE}, // End of file
+};
+
 
 
 class Token {
@@ -77,8 +125,8 @@ public:
     TokenType getType();
     Type getValueType();
 
-    int getIntegerValue() const;
-    double getDoubleValue() const;
+    [[nodiscard]] int getIntegerValue() const;
+    [[nodiscard]] double getDoubleValue() const;
     std::string* getStringValue();
 
     friend bool operator== (const Token& left, const Token& right);
@@ -103,7 +151,7 @@ public:
 private:
     std::string sourceText;
     std::string currentCharacter;
-    int currentCharacterIndex;
+    int currentCharacterIndex = 0;
 
     void nextCharacter();
     void omitWhitespaces();
