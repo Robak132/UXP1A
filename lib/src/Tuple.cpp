@@ -12,6 +12,7 @@ bool Tuple::compare(const Tuple& other) const {
     }
     return true;
 }
+
 std::string Tuple::toCSV() const {
     std::string outputString;
     unsigned long entitiesSize = entities.size();
@@ -22,7 +23,7 @@ std::string Tuple::toCSV() const {
     return outputString;
 }
 
-void Tuple::addSemaphoreAddress(int address) {
+void Tuple::setSemaphoreAddress(int address) {
     semaphoreAddress = address;
 }
 
