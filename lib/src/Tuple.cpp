@@ -23,3 +23,15 @@ std::string Tuple::toCSV() const {
     return outputString;
 }
 
+bool operator== (const Tuple& left, const Tuple& right) {
+    if (left.entities.size() != right.entities.size()) {
+        return false;
+    }
+
+    for (int i=0; i < left.entities.size(); i++) {
+        if (left.entities[i] != right.entities[i]) {
+            return false;
+        }
+    }
+    return true;
+}

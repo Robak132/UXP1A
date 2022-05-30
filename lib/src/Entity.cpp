@@ -125,3 +125,22 @@ std::string Entity::toString() const {
             return "";
     }
 }
+
+bool operator== (const Entity& left, const Entity& right) {
+    if (left.type == right.type and left.compareOperator == right.compareOperator) {
+        switch (left.type) {
+            case INT:
+                return left.intValue == right.intValue;
+            case FLOAT:
+                return Utilities::compare_float(left.doubleValue, right.intValue);
+            case STR:
+                return left.stringValue == right.stringValue;
+            case NONE:
+                return true;
+        }
+    } else return false;
+}
+
+bool operator!= (const Entity& left, const Entity& right) {
+    return !(left == right);
+}

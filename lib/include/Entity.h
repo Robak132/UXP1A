@@ -58,6 +58,10 @@ public:
     std::string toString() const;
     bool compare(const Entity& entity) const;
     bool compare(const Entity& entity, Operator _operator) const;
+
+    friend bool operator== (const Entity& left, const Entity& right);
+    friend bool operator!= (const Entity& left, const Entity& right);
+
 private:
     Entity() = default;
     Type type = INT;

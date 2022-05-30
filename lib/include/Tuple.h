@@ -18,6 +18,8 @@ public:
     friend std::ostream& operator << (std::ostream& outs, const Tuple& tuple) {
         return outs << tuple.toCSV();
     }
+    friend bool operator== (const Tuple& left, const Tuple& right);
+
 private:
     std::vector<Entity> entities;
 };
