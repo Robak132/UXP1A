@@ -3,9 +3,6 @@ project(main)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(writelock lib/src/example/writelock.cpp)
-add_executable(writelock2 lib/src/example/writelock2.cpp)
-add_executable(readlock lib/src/example/readlock.cpp)
 add_executable(lindatest
         lib/src/Main.cpp
         lib/src/Linda.cpp

@@ -87,7 +87,7 @@ TEST_CASE("Check toFilePattern()") {
             Entity(3.1),
             Entity(4),
     });
-    tuple.setSemaphoreAddress(12121212);
+    tuple.setSemKey(12121212);
 
     std::string result = tuple.toFilePattern();
     std::string correctCSV = "12121212,integer:=1,string:=\"2\",float:=3.1,integer:=4";
@@ -136,7 +136,7 @@ TEST_CASE("Reverse tests (parsing and converting to strings)") {
                 Entity(3.1),
                 Entity(4),
         });
-        tuple.setSemaphoreAddress(12121212);
+        tuple.setSemKey(12121212);
 
         std::string result = tuple.toFilePattern();
         std::string correctCSV = "12121212,integer:=1,string:=\"2\",float:=3.1,integer:=4";

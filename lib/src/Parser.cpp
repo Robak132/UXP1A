@@ -316,7 +316,7 @@ Tuple* Parser::parseFilePattern(const std::string& text) {
     std::vector<Entity> entities;
 
     Token* token = consumeToken(NUMERIC_LITERAL_TOKEN, true);
-    int semaphoreAddress = 0;
+    key_t semaphoreAddress = 0;
     if (token) {
         semaphoreAddress = token -> getIntegerValue();
         if (!semaphoreAddress) throw NoSemaphoreAddressException();
@@ -330,7 +330,7 @@ Tuple* Parser::parseFilePattern(const std::string& text) {
     }
 
     auto* tuple = new Tuple(entities);
-    tuple -> setSemaphoreAddress(semaphoreAddress);
+    tuple -> setSemKey(semaphoreAddress);
 
     return tuple;
 }

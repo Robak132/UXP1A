@@ -33,16 +33,16 @@ TEST_CASE("Split string") {
     }
 }
 
-TEST_CASE("Write to file") {
-    system("cp ../tests/resources/test.txt ../tests/resources/test3.txt ");
-    struct flock lock;
-    lock.l_type = F_RDLCK;
-    lock.l_start = 0;
-    lock.l_whence = SEEK_SET;
-    lock.l_len = 0;
-    FileManager fileManager("../tests/resources/test3.txt");
-    REQUIRE(fileManager.readFile() == "abcdefgh");
-}
+// TEST_CASE("Write to file") {
+//     system("cp ../tests/resources/test.txt ../tests/resources/test3.txt ");
+//     struct flock lock;
+//     lock.l_type = F_RDLCK;
+//     lock.l_start = 0;
+//     lock.l_whence = SEEK_SET;
+//     lock.l_len = 0;
+//     FileManager fileManager("../tests/resources/test3.txt");
+//     REQUIRE(fileManager.readFile() == "abcdefgh");
+// }
 
 TEST_CASE("File manager") {
     SECTION("Loads file") {
@@ -50,7 +50,7 @@ TEST_CASE("File manager") {
         REQUIRE(fileManager.readFile() == "abcdefgh");
     }
     SECTION("Loads file and split") {
-        FileManager fileManager("../tests/resources/fm_test2.txt");
+        FileManager fileManager("../tests/resources/fm_test3.txt");
         std::vector<std::string> vec = Utilities::splitString(fileManager.readFile());
         REQUIRE(vec[0] == "abcdefgh");
         REQUIRE(vec[1] == "save_test");

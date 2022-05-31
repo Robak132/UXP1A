@@ -30,6 +30,7 @@ TEST_CASE("Main functions") {
 
         FileManager fileManager("../tests/resources/data.csv");
         REQUIRE(fileManager.readFile() == R"(1,"abc",3.1415,"d")");
+        std::cout << fileManager.readFile()<<"\n";
     }
 
     SECTION("Input Mock") {
@@ -49,10 +50,13 @@ TEST_CASE("Main functions") {
                 "../tests/resources/data.csv",
                 "../tests/resources/processes.csv",
                 mockParser);
+        std::cout << "trying to input tuple\n";
         Tuple *result = linda.input(templateTuple);
-        REQUIRE(result->compare(testTuple1));
-
+        std::cout << "got a tuple\n";
         FileManager fileManager("../tests/resources/data.csv");
+        std::cout << fileManager.readFile()<<"\n";
+        REQUIRE(result ->compare(testTuple1));
+
 
         std::vector<std::string> readFileResult = Utilities::splitString(fileManager.readFile());
         std::string correctString = "10,\"abc\",3.1415,\r\n2,3,1,\"Ala ma kota\"";
@@ -70,7 +74,9 @@ TEST_CASE("Main functions") {
         Linda linda = Linda(
                 "../tests/resources/data.csv",
                 "../tests/resources/processes.csv");
+        std::cout << "trying to input tuple\n";
         Tuple *result = linda.input(R"(integer:1, string:*, float:*, string:"d")");
+        std::cout << "got a tuple\n";
         REQUIRE(result->compare(testTuple1));
 
         FileManager fileManager("../tests/resources/data.csv");
