@@ -315,10 +315,18 @@ Tuple* Parser::parseFilePattern(const std::string& text) {
 
     std::vector<Entity> entities;
 
-    Token* token = consumeToken(NUMERIC_LITERAL_TOKEN, true);
+    bool negationNeeded = false;
+    Token* token = consumeToken(MINUS_TOKEN, false);
+
+    if (token) negationNeeded = true;
+    token = consumeToken(NUMERIC_LITERAL_TOKEN, true);
     key_t semaphoreAddress = 0;
     if (token) {
-        semaphoreAddress = token -> getIntegerValue();
+        if (negationNeeded) {
+            semaphoreAddress = -1 * token -> getIntegerValue();
+        } else {
+            semaphoreAddress = token -> getIntegerValue();
+        }
         if (!semaphoreAddress) throw NoSemaphoreAddressException();
     }
 

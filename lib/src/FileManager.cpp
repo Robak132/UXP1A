@@ -21,7 +21,6 @@ void FileManager::create() {
 
 void FileManager::lockFile(flock &lock){
     if (file == -1) openFile();
-    std::cout << "locking file: "<< file<<std::endl;
     if ((fcntl(file,F_SETLKW,&lock))==-1){
         perror("Error while locking file");
         exit(1);
@@ -35,7 +34,6 @@ void FileManager::unlockFile(){
     closelock.l_whence = SEEK_SET;
     closelock.l_start = 0;
     closelock.l_len = 0;
-    std::cout << "unlocking file: "<< file<<std::endl;
     if ((fcntl(file,F_SETLKW,&closelock))==-1){
         perror("Error while unlocking file");
         exit(1);

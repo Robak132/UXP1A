@@ -3,15 +3,12 @@
 
 
 bool Tuple::compare(const Tuple& other) const {
-    std::cout<<"comparing\n";
     if (entities.size() != other.entities.size()) {
-        std::cout<<"wrong size\n";
         return false;
     }
 
     for (int i=0;i<entities.size();i++) {
         if(!entities[i].compare(other.entities[i])) {
-            std::cout<<"wrong item\n";
             return false;
         }
     }
