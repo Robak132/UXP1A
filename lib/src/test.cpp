@@ -1,5 +1,7 @@
-#include "../include/FileManager.h"
-
+#include <iostream>
+#include <cstring>
+#include <string>
+#include "../include/Linda.h"
 int main(){
     struct flock lock;
     lock.l_type    = F_WRLCK;

@@ -28,7 +28,9 @@ void Linda::output(Tuple& tuple) {
     std::cout << "output get sleeping"<<std::endl;
     Tuple* result = getTupleTemplate(tuple);
     if(result != nullptr){
+        std::cout << "output seminit\n";
         result -> semInit();
+        std::cout << "output sempost\n";
         result -> semPost();
     }
     dataFile->unlockFile();
@@ -150,7 +152,7 @@ Tuple* Linda::getTupleTemplate(Tuple& tuple){
     for (int i=0;i<data.size();i++) {
         Tuple* templateFound = stringParser->parseFilePattern(data[i]);
         std::cout << "got one of templates\n";
-        if (tuple.compare(*templateFound)) {
+        if (templateFound->compare(tuple)) {
             std::cout <<"found proper template\n";
             result = templateFound;
             resultIndex = i;
