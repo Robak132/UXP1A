@@ -254,6 +254,18 @@ TEST_CASE("Parser") {
 
         REQUIRE(*resultTuple == correctTuple);
     }
+    SECTION("Test file pattern: Real example") {
+        std::string inputLine = R"(-1777289756,integer:=1,string:*)";
+        Tuple correctTuple = Tuple(std::vector<Entity> {
+                Entity(1, EQUAL),
+                Entity(STR),
+        });
+        correctTuple.setSemaphoreAddress(-1777289756);
+        Parser parser = Parser();
+        Tuple* resultTuple = parser.parseFilePattern(inputLine);
+
+        REQUIRE(*resultTuple == correctTuple);
+    }
     SECTION("Test file pattern exception") {
         std::string inputLine = R"(123456.11, integer:600, float:*, string:"Simba", float:<3.14)";
         Parser parser = Parser();
