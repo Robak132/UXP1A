@@ -26,7 +26,7 @@ void Linda::output(Tuple& tuple) {
     std::cout << "Output process locked dataFile"<<std::endl;
     dataFile->appendLine(tuple.toCSV());
     std::cout << "Output process now is browsing sleepingProcesses file"<<std::endl;
-    Tuple* result = getTupleTemplate(tuple);
+    Tuple* result = getTupleTemplate(tuple, true);
     if(result != nullptr){
         std::cout << "Output process found matching template"<<std::endl;
         result -> semInit();
@@ -63,7 +63,7 @@ Tuple* Linda::input(Tuple& tupleTemplate, int timeout) {
             return getTuple(tupleTemplate, true);
         }
         else{
-            removeTupleTemplate(tupleTemplate);
+            getTupleTemplate(tupleTemplate, false);
             std::cout << "Input process waited too long"<<std::endl;
             return nullptr;
         }
@@ -100,7 +100,8 @@ Tuple* Linda::read(Tuple& tupleTemplate, int timeout) {
             result = getTuple(tupleTemplate, false);
         }
         else{
-            removeTupleTemplate(tupleTemplate);
+            getTupleTemplate(tupleTemplate, false);
+            tupleTemplate.semDelete();
             std::cout << "Read process waited too long"<<std::endl;
             return nullptr;
         }
@@ -142,7 +143,7 @@ Tuple* Linda::getTuple(Tuple& tuplePattern,  bool remove){
     return result;
 }
 
-Tuple* Linda::getTupleTemplate(Tuple& tuple){
+Tuple* Linda::getTupleTemplate(Tuple& tuple, bool isOutput){
     struct flock lock;
     lock.l_type    = F_WRLCK;
     lock.l_start   = 0;
@@ -155,44 +156,27 @@ Tuple* Linda::getTupleTemplate(Tuple& tuple){
     int resultIndex = -1;
     for (int i=0;i<data.size();i++) {
         Tuple* templateFound = stringParser->parseFilePattern(data[i]);
-        if (templateFound->compare(tuple)) {
-            std::cout <<"Output process found matching template\n";
-            result = templateFound;
-            resultIndex = i;
-            break;
+        if (isOutput) {
+            if (templateFound->compare(tuple)) {
+                std::cout <<"Output process found matching template\n";
+                result = templateFound;
+                resultIndex = i;
+                break;
+            }
+        }
+        else if (*templateFound == tuple){
+                std::cout <<"Read/Input process found  it's semKey\n";
+                result = templateFound;
+                resultIndex = i;
+                break;
         }
     }
     if(resultIndex != -1){
         data.erase(data.begin()+resultIndex);
         sleepingProcesses->writeFile(data);
-        std::cout << "Output process removed matching template"<<std::endl;
+        std::cout << "Process removed template"<<std::endl;
     }
     sleepingProcesses->unlockFile();
-    std::cout << "Output process unlocked sleepingProcess file"<<std::endl;
+    std::cout << "Process unlocked sleepingProcess file"<<std::endl;
     return result;
-}
-
-void Linda::removeTupleTemplate(Tuple& tupleTemplate){
-    struct flock lock;
-    lock.l_type    = F_WRLCK;
-    lock.l_start   = 0;
-    lock.l_whence  = SEEK_SET;
-    lock.l_len     = 0;
-    sleepingProcesses ->lockFile(lock);
-    std::vector<std::string> data = Utilities::splitString(sleepingProcesses->readFile());
-    Tuple* result = nullptr;
-    int resultIndex = -1;
-    for (int i=0;i<data.size();i++) {
-        Tuple* templateFound = stringParser->parseFilePattern(data[i]);
-        if (*templateFound==tupleTemplate) {
-            result = templateFound;
-            resultIndex = i;
-            break;
-        }
-    }
-    if(resultIndex != -1){
-        data.erase(data.begin()+resultIndex);
-        sleepingProcesses->writeFile(data);
-    }
-    sleepingProcesses->unlockFile();
 }

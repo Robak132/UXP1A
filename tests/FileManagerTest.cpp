@@ -32,20 +32,23 @@ TEST_CASE("Split string") {
         REQUIRE(vec[2] == "bbbbbbbb");
     }
 }
-
-TEST_CASE("Write to file") {
-    system("cp ../tests/resources/test.txt ../tests/resources/test3.txt ");
-    FileManager fileManager("../tests/resources/test3.txt");
-    REQUIRE(fileManager.readFile() == "abcdefgh");
-}
-
 TEST_CASE("File manager") {
     SECTION("Loads file") {
         FileManager fileManager("../tests/resources/fm_test.txt");
         REQUIRE(fileManager.readFile() == "abcdefgh");
     }
     SECTION("Loads file and split") {
+        FileManager fileManager("../tests/resources/fm_test2.txt");
+        std::vector<std::string> vec = Utilities::splitString(fileManager.readFile());
+        REQUIRE(vec[0] == "abcdefgh");
+        REQUIRE(vec[1] == "aaaaaaaa");
+        REQUIRE(vec[2] == "bbbbbbbb");
+    }
+    SECTION("Append line to file") {
+        system("cp ../tests/resources/fm_test.txt ../tests/resources/fm_test3.txt ");
         FileManager fileManager("../tests/resources/fm_test3.txt");
+        fileManager.appendLine("save_test");
+
         std::vector<std::string> vec = Utilities::splitString(fileManager.readFile());
         REQUIRE(vec[0] == "abcdefgh");
         REQUIRE(vec[1] == "save_test");

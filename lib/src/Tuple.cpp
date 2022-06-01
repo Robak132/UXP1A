@@ -69,13 +69,13 @@ int Tuple::semWait(int timeout){
     time.tv_sec = timeout;
     time.tv_nsec = 0;
     int value = semtimedop(semId, &lock, 1, &time);
-    semDelete();
     return value;
 }
 
 int Tuple::semPost(){
     struct sembuf unlock = {0, 1, 0};
     int value = semop(semId, &unlock, 1);
+    semDelete();
     return value;
 }
 

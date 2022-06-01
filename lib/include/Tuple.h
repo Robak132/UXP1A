@@ -15,7 +15,7 @@ public:
     Tuple() = default;
     Tuple(Tuple const &other) {
         entities = other.entities;
-        semKey = 0;
+        semKey = other.semKey;
     }
     explicit Tuple(std::vector<Entity> _entities) : entities(std::move(_entities)) { semKey = 0;}
     [[nodiscard]] bool compare(const Tuple& other) const;
