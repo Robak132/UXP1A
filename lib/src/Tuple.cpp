@@ -1,4 +1,6 @@
 #include "../include/Tuple.h"
+#include <iostream>
+
 
 bool Tuple::compare(const Tuple& other) const {
     if (entities.size() != other.entities.size()) {
@@ -36,21 +38,56 @@ std::string Tuple::toPattern() const {
 std::string Tuple::toFilePattern() const {
     std::string outputString;
 
-    outputString += std::to_string(semaphoreAddress) + ",";
+    outputString += std::to_string(semKey) + ",";
     outputString += toPattern();
 
     return outputString;
 }
 
-void Tuple::setSemaphoreAddress(int address) {
-    semaphoreAddress = address;
+void Tuple::setSemKey(key_t address) {
+    semKey = address;
+}
+
+void Tuple::semCreate(){
+    int sid = syscall(SYS_gettid);
+	semKey = ftok(".", sid);
+	semId = semget(semKey, 1, IPC_CREAT | IPC_EXCL | 0660);
+}
+
+void Tuple::semInit(){
+    semId = semget(semKey, 1, 0660);
+}
+
+void Tuple::semDelete(){
+    semctl(semId, 0, IPC_RMID);
+    semKey = -1;
+}
+
+int Tuple::semWait(int timeout){
+    struct sembuf lock = {0, -1, 0};
+    timespec time;
+    time.tv_sec = timeout;
+    time.tv_nsec = 0;
+    int value = semtimedop(semId, &lock, 1, &time);
+    return value;
+}
+
+int Tuple::semPost(){
+    struct sembuf unlock = {0, 1, 0};
+    int value = semop(semId, &unlock, 1);
+    semDelete();
+    return value;
+}
+
+key_t Tuple::getSemKey(){
+    return semKey;
 }
 
 bool operator== (const Tuple& left, const Tuple& right) {
     if (left.entities.size() != right.entities.size()) {
         return false;
     }
-    if (left.semaphoreAddress != right.semaphoreAddress) {
+    if (left.semKey != right.semKey) {
         return false;
     }
 

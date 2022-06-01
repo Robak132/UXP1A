@@ -50,9 +50,9 @@ TEST_CASE("Main functions") {
                 "../tests/resources/processes.csv",
                 mockParser);
         Tuple *result = linda.input(templateTuple);
-        REQUIRE(result->compare(testTuple1));
-
         FileManager fileManager("../tests/resources/data.csv");
+        REQUIRE(result ->compare(testTuple1));
+
 
         std::vector<std::string> readFileResult = Utilities::splitString(fileManager.readFile());
         std::string correctString = "10,\"abc\",3.1415,\r\n2,3,1,\"Ala ma kota\"";

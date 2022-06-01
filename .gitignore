@@ -37,6 +37,21 @@
 # CMake
 /cmake-build*
 /CMakeFiles
+*.cmake
 
 # Testing temp files
 /Testing/Temporary
+/generated-includes
+
+/.vscode
+/_deps
+
+CMakeCache.txt
+readlock
+writelock
+lindatest
+/tests/CatchTests
+CatchTests
+catch.hpp
+/build
+Makefile

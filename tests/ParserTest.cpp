@@ -248,7 +248,7 @@ TEST_CASE("Parser") {
                 Entity("Simba", EQUAL),
                 Entity(3.14, LESS),
         });
-        correctTuple.setSemaphoreAddress(123456);
+        correctTuple.setSemKey(123456);
         Parser parser = Parser();
         Tuple* resultTuple = parser.parseFilePattern(inputLine);
 
@@ -260,7 +260,7 @@ TEST_CASE("Parser") {
                 Entity(1, EQUAL),
                 Entity(STR),
         });
-        correctTuple.setSemaphoreAddress(-1777289756);
+        correctTuple.setSemKey(-1777289756);
         Parser parser = Parser();
         Tuple* resultTuple = parser.parseFilePattern(inputLine);
 

@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <fcntl.h>
 
 class FileManager {
 public:
@@ -18,10 +19,14 @@ public:
     void create();
     void openFile();
     void closeFile();
+
+    void lockFile(flock &lock);
+    void unlockFile();
+    
 private:
     std::string file_path;
     int file = -1;
-
+    
     void writeLine(const std::string &line) const;
 };
 #endif /* FILE_MANAGER_H */

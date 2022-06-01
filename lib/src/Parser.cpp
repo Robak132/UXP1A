@@ -320,7 +320,7 @@ Tuple* Parser::parseFilePattern(const std::string& text) {
 
     if (token) negationNeeded = true;
     token = consumeToken(NUMERIC_LITERAL_TOKEN, true);
-    int semaphoreAddress = 0;
+    key_t semaphoreAddress = 0;
     if (token) {
         if (negationNeeded) {
             semaphoreAddress = -1 * token -> getIntegerValue();
@@ -338,7 +338,7 @@ Tuple* Parser::parseFilePattern(const std::string& text) {
     }
 
     auto* tuple = new Tuple(entities);
-    tuple -> setSemaphoreAddress(semaphoreAddress);
+    tuple -> setSemKey(semaphoreAddress);
 
     return tuple;
 }
