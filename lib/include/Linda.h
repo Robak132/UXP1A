@@ -25,5 +25,6 @@ private:
 
     Tuple* getTuple(Tuple& tupleTemplate,  bool remove);
     Tuple* getTupleTemplate(Tuple& tuple);
+    void removeTupleTemplate(Tuple& tupleTemplate);
 };
 #endif /* LINDA_H */

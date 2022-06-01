@@ -33,16 +33,11 @@ TEST_CASE("Split string") {
     }
 }
 
-// TEST_CASE("Write to file") {
-//     system("cp ../tests/resources/test.txt ../tests/resources/test3.txt ");
-//     struct flock lock;
-//     lock.l_type = F_RDLCK;
-//     lock.l_start = 0;
-//     lock.l_whence = SEEK_SET;
-//     lock.l_len = 0;
-//     FileManager fileManager("../tests/resources/test3.txt");
-//     REQUIRE(fileManager.readFile() == "abcdefgh");
-// }
+TEST_CASE("Write to file") {
+    system("cp ../tests/resources/test.txt ../tests/resources/test3.txt ");
+    FileManager fileManager("../tests/resources/test3.txt");
+    REQUIRE(fileManager.readFile() == "abcdefgh");
+}
 
 TEST_CASE("File manager") {
     SECTION("Loads file") {

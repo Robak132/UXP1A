@@ -63,7 +63,7 @@ Tuple* Linda::input(Tuple& tupleTemplate, int timeout) {
             return getTuple(tupleTemplate, true);
         }
         else{
-            Tuple* removed = getTupleTemplate(tupleTemplate);
+            removeTupleTemplate(tupleTemplate);
             std::cout << "Input process waited too long"<<std::endl;
             return nullptr;
         }
@@ -100,7 +100,7 @@ Tuple* Linda::read(Tuple& tupleTemplate, int timeout) {
             result = getTuple(tupleTemplate, false);
         }
         else{
-            Tuple* result = getTupleTemplate(tupleTemplate);
+            removeTupleTemplate(tupleTemplate);
             std::cout << "Read process waited too long"<<std::endl;
             return nullptr;
         }
@@ -149,14 +149,14 @@ Tuple* Linda::getTupleTemplate(Tuple& tuple){
     lock.l_whence  = SEEK_SET;
     lock.l_len     = 0;
     sleepingProcesses ->lockFile(lock);
-    std::cout << "Process locked sleepingProcess file"<<std::endl;
+    std::cout << "Output process locked sleepingProcess file"<<std::endl;
     std::vector<std::string> data = Utilities::splitString(sleepingProcesses->readFile());
     Tuple* result = nullptr;
     int resultIndex = -1;
     for (int i=0;i<data.size();i++) {
         Tuple* templateFound = stringParser->parseFilePattern(data[i]);
         if (templateFound->compare(tuple)) {
-            std::cout <<"Process found matching template\n";
+            std::cout <<"Output process found matching template\n";
             result = templateFound;
             resultIndex = i;
             break;
@@ -165,9 +165,34 @@ Tuple* Linda::getTupleTemplate(Tuple& tuple){
     if(resultIndex != -1){
         data.erase(data.begin()+resultIndex);
         sleepingProcesses->writeFile(data);
-        std::cout << "Process removed matching template"<<std::endl;
+        std::cout << "Output process removed matching template"<<std::endl;
     }
     sleepingProcesses->unlockFile();
-    std::cout << "Process unlocked sleepingProcess file"<<std::endl;
+    std::cout << "Output process unlocked sleepingProcess file"<<std::endl;
     return result;
+}
+
+void Linda::removeTupleTemplate(Tuple& tupleTemplate){
+    struct flock lock;
+    lock.l_type    = F_WRLCK;
+    lock.l_start   = 0;
+    lock.l_whence  = SEEK_SET;
+    lock.l_len     = 0;
+    sleepingProcesses ->lockFile(lock);
+    std::vector<std::string> data = Utilities::splitString(sleepingProcesses->readFile());
+    Tuple* result = nullptr;
+    int resultIndex = -1;
+    for (int i=0;i<data.size();i++) {
+        Tuple* templateFound = stringParser->parseFilePattern(data[i]);
+        if (*templateFound==tupleTemplate) {
+            result = templateFound;
+            resultIndex = i;
+            break;
+        }
+    }
+    if(resultIndex != -1){
+        data.erase(data.begin()+resultIndex);
+        sleepingProcesses->writeFile(data);
+    }
+    sleepingProcesses->unlockFile();
 }
