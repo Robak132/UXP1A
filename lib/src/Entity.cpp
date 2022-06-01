@@ -127,15 +127,15 @@ bool Entity::compare(const Entity& entity, Operator _operator) const {
 bool Entity::compareInt(const Entity &entity, Operator _operator) const {
     switch (_operator) {
         case EQ_MORE:
-            return intValue >= entity.intValue;
+            return intValue <= entity.intValue;
         case EQUAL:
             return intValue == entity.intValue;
         case LESS:
-            return intValue < entity.intValue;
-        case MORE:
             return intValue > entity.intValue;
+        case MORE:
+            return intValue < entity.intValue;
         case EQ_LESS:
-            return intValue <= entity.intValue;
+            return intValue >= entity.intValue;
         case ANY:
         default:
             return true;
@@ -145,15 +145,15 @@ bool Entity::compareInt(const Entity &entity, Operator _operator) const {
 bool Entity::compareDouble(const Entity &entity, Operator _operator) const {
     switch (_operator) {
         case EQ_MORE:
-            return doubleValue >= entity.doubleValue;
+            return doubleValue <= entity.doubleValue;
         case EQUAL:
             return doubleValue == entity.doubleValue;
         case LESS:
-            return doubleValue < entity.doubleValue;
-        case MORE:
             return doubleValue > entity.doubleValue;
+        case MORE:
+            return doubleValue < entity.doubleValue;
         case EQ_LESS:
-            return doubleValue <= entity.doubleValue;
+            return doubleValue >= entity.doubleValue;
         case ANY:
         default:
             return true;
@@ -161,15 +161,15 @@ bool Entity::compareDouble(const Entity &entity, Operator _operator) const {
 bool Entity::compareString(const Entity &entity, Operator _operator) const {
     switch (_operator) {
         case EQ_MORE:
-            return stringValue >= entity.stringValue;
+            return stringValue <= entity.stringValue;
         case EQUAL:
             return stringValue == entity.stringValue;
         case LESS:
-            return stringValue < entity.stringValue;
-        case MORE:
             return stringValue > entity.stringValue;
+        case MORE:
+            return stringValue < entity.stringValue;
         case EQ_LESS:
-            return stringValue <= entity.stringValue;
+            return stringValue >= entity.stringValue;
         case ANY:
         default:
             return true;
