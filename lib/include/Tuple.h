@@ -24,12 +24,12 @@ public:
     [[nodiscard]] std::string toFilePattern() const;
     
     void setSemKey(key_t address);    
-    int semWait(int timeout);
+    [[nodiscard]] int semWait(int timeout) const;
     int semPost();
     void semInit();
     void semCreate();
     void semDelete();
-    key_t getSemKey();
+    [[nodiscard]] key_t getSemKey() const;
 
     friend std::ostream& operator << (std::ostream& outs, const Tuple& tuple) {
         return outs << tuple.toCSV();

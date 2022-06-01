@@ -1,6 +1,5 @@
 #include <string>
 #include <utility>
-#include <typeinfo>
 #include "../include/Linda.h"
 
 Linda::Linda(std::string dataFilePath, std::string sleepingProcessesPath, IParser* parser) {
@@ -17,7 +16,7 @@ void Linda::output(const std::string& stringTemplate) {
 }
 
 void Linda::output(Tuple& tuple) {
-    struct flock lock;
+    struct flock lock{};
     lock.l_type    = F_WRLCK;  
     lock.l_start   = 0;
     lock.l_whence  = SEEK_SET;
@@ -47,7 +46,7 @@ Tuple* Linda::input(Tuple& tupleTemplate, int timeout) {
     if (result == nullptr) {
         std::cout << "Input process did not find matching tuple"<<std::endl;
         tupleTemplate.semCreate();
-        struct flock lock;
+        struct flock lock{};
         lock.l_type    = F_WRLCK;  
         lock.l_start   = 0;
         lock.l_whence  = SEEK_SET;
@@ -84,7 +83,7 @@ Tuple* Linda::read(Tuple& tupleTemplate, int timeout) {
     if (result == nullptr){
         std::cout << "Read process did not find matching tuple"<<std::endl;
         tupleTemplate.semCreate();
-        struct flock lock;
+        struct flock lock{};
         lock.l_type    = F_WRLCK;  
         lock.l_start   = 0;
         lock.l_whence  = SEEK_SET;
@@ -111,7 +110,7 @@ Tuple* Linda::read(Tuple& tupleTemplate, int timeout) {
 }
 
 Tuple* Linda::getTuple(Tuple& tuplePattern,  bool remove){
-    struct flock lock;
+    struct flock lock{};
     if(remove)
         lock.l_type    = F_WRLCK;
     else 
@@ -144,7 +143,7 @@ Tuple* Linda::getTuple(Tuple& tuplePattern,  bool remove){
 }
 
 Tuple* Linda::getTupleTemplate(Tuple& tuple, bool isOutput){
-    struct flock lock;
+    struct flock lock{};
     lock.l_type    = F_WRLCK;
     lock.l_start   = 0;
     lock.l_whence  = SEEK_SET;

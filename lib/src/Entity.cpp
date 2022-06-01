@@ -66,7 +66,7 @@ Entity Entity::createStringEntity(const std::string& value, Operator anOperator)
 
 Type Entity::getType() {
     return type;
-};
+}
 
 int Entity::getIntValue() const {
     return intValue;

@@ -1,6 +1,5 @@
 #include "../lib/include/Tuple.h"
 #include "../lib/include/Linda.h"
-#include "../lib/include/Utilities.h"
 #include "catch.hpp"
 
 TEST_CASE("Main functions") {

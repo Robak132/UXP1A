@@ -29,7 +29,7 @@ void FileManager::lockFile(flock &lock){
 
 void FileManager::unlockFile(){
     if (file == -1) openFile();
-    struct flock closelock;
+    struct flock closelock{};
     closelock.l_type = F_UNLCK;
     closelock.l_whence = SEEK_SET;
     closelock.l_start = 0;

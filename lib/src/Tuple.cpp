@@ -63,9 +63,9 @@ void Tuple::semDelete(){
     semKey = -1;
 }
 
-int Tuple::semWait(int timeout){
+int Tuple::semWait(int timeout) const{
     struct sembuf lock = {0, -1, 0};
-    timespec time;
+    timespec time{};
     time.tv_sec = timeout;
     time.tv_nsec = 0;
     int value = semtimedop(semId, &lock, 1, &time);
@@ -79,7 +79,7 @@ int Tuple::semPost(){
     return value;
 }
 
-key_t Tuple::getSemKey(){
+key_t Tuple::getSemKey() const{
     return semKey;
 }
 
