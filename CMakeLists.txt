@@ -35,4 +35,31 @@ add_executable(CatchTests
         lib/src/Parser.cpp
         lib/src/FileManager.cpp
         lib/src/Utilities.cpp)
+
+add_executable(outputer
+        tests/workers/outputer.cpp
+        lib/src/Tuple.cpp
+        lib/src/Entity.cpp
+        lib/src/Linda.cpp
+        lib/src/Parser.cpp
+        lib/src/FileManager.cpp
+        lib/src/Utilities.cpp)
+
+add_executable(inputer
+        tests/workers/inputer.cpp
+        lib/src/Tuple.cpp
+        lib/src/Entity.cpp
+        lib/src/Linda.cpp
+        lib/src/Parser.cpp
+        lib/src/FileManager.cpp
+        lib/src/Utilities.cpp)
+
+add_executable(reader
+        tests/workers/reader.cpp
+        lib/src/Tuple.cpp
+        lib/src/Entity.cpp
+        lib/src/Linda.cpp
+        lib/src/Parser.cpp
+        lib/src/FileManager.cpp
+        lib/src/Utilities.cpp)
 target_include_directories(CatchTests PUBLIC "${CMAKE_CURRENT_BINARY_DIR}")
