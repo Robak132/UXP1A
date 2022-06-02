@@ -76,33 +76,33 @@ TEST_CASE("Compare Entity: operators") {
         REQUIRE(patternEntity.compare(testEntity, EQUAL));
         REQUIRE(!patternEntity2.compare(testEntity, EQUAL));
     }
-    SECTION("LESS") {
+    SECTION("MORE") {
         Entity patternEntity = Entity::createIntEntity(5);
         Entity patternEntity2 = Entity::createIntEntity(15);
-        REQUIRE(patternEntity.compare(testEntity, LESS));
-        REQUIRE(!patternEntity2.compare(testEntity, LESS));
-    }
-    SECTION("MORE") {
-        Entity patternEntity = Entity::createIntEntity(15);
-        Entity patternEntity2 = Entity::createIntEntity(5);
         REQUIRE(patternEntity.compare(testEntity, MORE));
         REQUIRE(!patternEntity2.compare(testEntity, MORE));
     }
-    SECTION("EQ_LESS") {
-        Entity patternEntity = Entity::createIntEntity(10);
+    SECTION("LESS") {
+        Entity patternEntity = Entity::createIntEntity(15);
         Entity patternEntity2 = Entity::createIntEntity(5);
-        Entity patternEntity3 = Entity::createIntEntity(15);
-        REQUIRE(patternEntity.compare(testEntity, EQ_LESS));
-        REQUIRE(patternEntity2.compare(testEntity, EQ_LESS));
-        REQUIRE(!patternEntity3.compare(testEntity, EQ_LESS));
+        REQUIRE(patternEntity.compare(testEntity, LESS));
+        REQUIRE(!patternEntity2.compare(testEntity, LESS));
     }
     SECTION("EQ_MORE") {
         Entity patternEntity = Entity::createIntEntity(10);
         Entity patternEntity2 = Entity::createIntEntity(5);
         Entity patternEntity3 = Entity::createIntEntity(15);
         REQUIRE(patternEntity.compare(testEntity, EQ_MORE));
-        REQUIRE(!patternEntity2.compare(testEntity, EQ_MORE));
-        REQUIRE(patternEntity3.compare(testEntity, EQ_MORE));
+        REQUIRE(patternEntity2.compare(testEntity, EQ_MORE));
+        REQUIRE(!patternEntity3.compare(testEntity, EQ_MORE));
+    }
+    SECTION("EQ_LESS") {
+        Entity patternEntity = Entity::createIntEntity(10);
+        Entity patternEntity2 = Entity::createIntEntity(5);
+        Entity patternEntity3 = Entity::createIntEntity(15);
+        REQUIRE(patternEntity.compare(testEntity, EQ_LESS));
+        REQUIRE(!patternEntity2.compare(testEntity, EQ_LESS));
+        REQUIRE(patternEntity3.compare(testEntity, EQ_LESS));
     }
     SECTION("ANY") {
         Entity patternEntity = Entity::createIntEntity(-10);
