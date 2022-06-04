@@ -21,7 +21,7 @@ public:
     void closeFile();
 
     void lockFile(flock &lock);
-    void unlockFile();
+    void unlockFile(flock &lock);
     
 private:
     std::string file_path;

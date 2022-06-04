@@ -27,14 +27,10 @@ void FileManager::lockFile(flock &lock){
     }
 }
 
-void FileManager::unlockFile(){
+void FileManager::unlockFile(flock &lock){
     if (file == -1) openFile();
-    struct flock closelock{};
-    closelock.l_type = F_UNLCK;
-    closelock.l_whence = SEEK_SET;
-    closelock.l_start = 0;
-    closelock.l_len = 0;
-    if ((fcntl(file,F_SETLKW,&closelock))==-1){
+    lock.l_type = F_UNLCK;
+    if ((fcntl(file,F_SETLKW,&lock))==-1){
         perror("Error while unlocking file");
         exit(1);
     }
