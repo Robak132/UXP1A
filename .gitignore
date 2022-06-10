@@ -52,6 +52,9 @@ writelock
 build/lindatest
 /tests/CatchTests
 CatchTests
+Makefile
 catch.hpp
 /build
-Makefile
+!build/inputer
+!build/outputer
+!build/reader
