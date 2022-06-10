@@ -12,4 +12,3 @@ start=$(date +%s)
 ./inputer aaa 2
 end=$(date +%s)
 printf "\nElapsed Time: $(($end-$start)) seconds\n"
-
